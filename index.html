@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>aktham.net | Network & Cloud Security Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#090b0f;--bg2:#0e1118;--bg3:#131720;--card:#171b24;
+  --border:#ffffff0d;--border2:#3b82f622;--border3:#3b82f638;
+  --acc:#3b82f6;--acc2:#60a5fa;--acc3:#1d4ed8;
+  --acc-dim:rgba(59,130,246,0.07);
+  --text:#eef1f8;--text2:#7d8a9e;--text3:#354050;
+  --warn:#fbbf24;--ok:#34d399;
+  --mono:'JetBrains Mono',monospace;--display:'Sora',sans-serif;
+}
+html,body{height:100%;overflow:hidden;}
+body{background:var(--bg);color:var(--text);font-family:var(--display);font-size:15px;line-height:1.7;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    radial-gradient(1px 1px at 8% 12%,rgba(255,255,255,.28) 0,transparent 100%),
+    radial-gradient(1px 1px at 25% 60%,rgba(255,255,255,.16) 0,transparent 100%),
+    radial-gradient(1px 1px at 47% 22%,rgba(255,255,255,.22) 0,transparent 100%),
+    radial-gradient(1px 1px at 68% 78%,rgba(255,255,255,.18) 0,transparent 100%),
+    radial-gradient(1px 1px at 83% 38%,rgba(255,255,255,.13) 0,transparent 100%),
+    radial-gradient(1px 1px at 15% 88%,rgba(255,255,255,.10) 0,transparent 100%),
+    radial-gradient(1px 1px at 58% 8%, rgba(255,255,255,.20) 0,transparent 100%),
+    radial-gradient(1px 1px at 92% 92%,rgba(255,255,255,.15) 0,transparent 100%),
+    radial-gradient(1px 1px at 38% 50%,rgba(255,255,255,.10) 0,transparent 100%),
+    radial-gradient(1px 1px at 72% 30%,rgba(255,255,255,.09) 0,transparent 100%),
+    radial-gradient(1px 1px at 52% 72%,rgba(255,255,255,.12) 0,transparent 100%);}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:60px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 5rem;background:rgba(9,11,15,.92);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);}
+.nav-logo{font-family:var(--mono);font-size:.82rem;color:var(--text);font-weight:400;
+  letter-spacing:.04em;display:flex;align-items:center;gap:.55rem;text-decoration:none;}
+.nav-logo-mark{width:20px;height:20px;border:1.5px solid var(--acc);border-radius:4px;
+  display:flex;align-items:center;justify-content:center;}
+.nav-logo-mark svg{width:10px;height:10px;fill:none;stroke:var(--acc);stroke-width:2.5;}
+.nav-links{display:flex;list-style:none;}
+.nav-links a{font-family:var(--mono);font-size:.72rem;color:var(--text2);text-decoration:none;
+  padding:.35rem 1rem;transition:color .18s;position:relative;letter-spacing:.03em;}
+.nav-links a:hover{color:var(--text);}
+.nav-links a.active{color:var(--text);}
+.nav-links a.active::after{content:'';position:absolute;bottom:-1px;left:1rem;right:1rem;height:1px;background:var(--acc);}
+
+/* PAGES */
+#app{position:fixed;top:60px;left:0;right:0;bottom:0;overflow:hidden;}
+.page{position:absolute;inset:0;overflow-y:auto;opacity:0;pointer-events:none;
+  transform:translateY(14px);transition:opacity .3s ease,transform .3s ease;}
+.page.active{opacity:1;pointer-events:all;transform:none;}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .55s ease,transform .55s ease;}
+.reveal-left{opacity:0;transform:translateX(-22px);transition:opacity .55s ease,transform .55s ease;}
+.reveal-right{opacity:0;transform:translateX(22px);transition:opacity .55s ease,transform .55s ease;}
+.reveal.visible,.reveal-left.visible,.reveal-right.visible{opacity:1;transform:none;}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
+.d4{transition-delay:.32s}.d5{transition-delay:.40s}.d6{transition-delay:.48s}
+
+/* SHARED */
+.wrap{max-width:1360px;margin:0 auto;padding:4.5rem 5rem;}
+.eyebrow{font-family:var(--mono);font-size:.67rem;font-weight:500;color:var(--acc);
+  letter-spacing:.18em;text-transform:uppercase;margin-bottom:.6rem;}
+.sec-title{font-size:clamp(1.7rem,2.8vw,2.4rem);font-weight:800;color:var(--text);
+  letter-spacing:-.025em;line-height:1.1;margin-bottom:.9rem;}
+.sec-title span{color:var(--acc);}
+.chip{display:inline-block;font-family:var(--mono);font-size:.64rem;color:var(--text2);
+  background:var(--card);border:1px solid var(--border2);padding:.2rem .6rem;border-radius:4px;letter-spacing:.02em;}
+.page-footer{padding:2rem 5rem;border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;}
+.pf-l{font-family:var(--mono);font-size:.65rem;color:var(--text3);}
+.btn-fill{font-family:var(--mono);font-size:.75rem;font-weight:500;color:#fff;background:var(--acc);
+  border:none;padding:.65rem 1.5rem;border-radius:6px;cursor:pointer;text-decoration:none;
+  display:inline-flex;align-items:center;gap:.45rem;transition:background .18s,transform .15s;letter-spacing:.03em;}
+.btn-fill:hover{background:var(--acc2);transform:translateY(-1px);}
+.btn-ghost{font-family:var(--mono);font-size:.75rem;font-weight:500;color:var(--text2);background:transparent;
+  border:1px solid var(--border2);padding:.65rem 1.5rem;border-radius:6px;cursor:pointer;text-decoration:none;
+  display:inline-flex;align-items:center;gap:.45rem;transition:all .18s;letter-spacing:.03em;}
+.btn-ghost:hover{color:var(--text);border-color:var(--acc);background:var(--acc-dim);}
+
+/* HOME */
+#pg-home .home-inner{max-width:1360px;margin:0 auto;padding:4rem 5rem 0;
+  min-height:calc(100vh - 60px);display:flex;flex-direction:column;}
+.avail{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.69rem;
+  color:var(--acc2);border:1px solid var(--border2);background:rgba(59,130,246,.06);
+  padding:.3rem .85rem;border-radius:100px;margin-bottom:2rem;letter-spacing:.04em;align-self:flex-start;}
+.avail-dot{width:5px;height:5px;border-radius:50%;background:var(--acc);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(59,130,246,.4)}50%{box-shadow:0 0 0 5px rgba(59,130,246,0)}}
+.hero-row{display:grid;grid-template-columns:1fr minmax(0,460px);gap:3rem;align-items:start;flex:1;}
+h1.hname{font-size:clamp(2.6rem,5vw,4.8rem);font-weight:800;line-height:1.0;letter-spacing:-.03em;margin-bottom:.3rem;}
+h1.hname span{color:var(--acc);display:block;}
+.htitle{font-family:var(--mono);font-size:.85rem;color:var(--text2);margin:.6rem 0 1rem;letter-spacing:.04em;}
+.hdesc{font-size:.9rem;color:var(--text2);max-width:480px;line-height:1.85;margin-bottom:2rem;font-weight:300;}
+.hbtns{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2rem;}
+.hsocials{display:flex;align-items:center;gap:1rem;}
+.hsocials a{color:var(--text3);transition:color .18s;display:flex;}
+.hsocials a:hover{color:var(--acc);}
+.hdiv{width:1px;height:15px;background:var(--text3);}
+.hstats{display:flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-top:2rem;max-width:480px;}
+.hstat{flex:1;padding:.9rem 1.1rem;border-right:1px solid var(--border);}
+.hstat:last-child{border-right:none;}
+.hstat-n{font-size:1.35rem;font-weight:800;color:var(--text);}
+.hstat-l{font-family:var(--mono);font-size:.57rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-top:.1rem;}
+
+/* MobaXterm */
+.moba{border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,.09);width:100%;}
+.moba-bar{background:#1a1d26;padding:.5rem .85rem;display:flex;align-items:center;border-bottom:1px solid rgba(255,255,255,.07);}
+.moba-tabs{display:flex;}
+.moba-tab{font-family:var(--mono);font-size:.62rem;padding:.22rem .8rem;cursor:default;letter-spacing:.03em;}
+.moba-tab.act{background:#0f1219;color:var(--acc2);border-bottom:1px solid var(--acc);}
+.moba-tab.ina{background:#141720;color:var(--text3);}
+.moba-tr{margin-left:auto;font-family:var(--mono);font-size:.6rem;color:var(--text3);}
+.moba-body{background:#0b0d12;padding:.85rem 1rem 1rem;font-family:var(--mono);font-size:.7rem;
+  line-height:1.8;height:310px;overflow-y:auto;}
+.moba-body::-webkit-scrollbar{width:3px;}
+.moba-body::-webkit-scrollbar-thumb{background:var(--text3);border-radius:2px;}
+.l-prompt{color:#4ade80;}.l-cmd{color:var(--text);}.l-cmt{color:#374151;font-style:italic;}
+.l-kw{color:var(--acc2);}.l-val{color:#fcd34d;}
+.l-cursor{display:inline-block;width:7px;height:.85em;background:var(--acc);vertical-align:middle;animation:blink 1s step-end infinite;}
+@keyframes blink{50%{opacity:0}}
+
+/* Home nav cards */
+.home-nav-section{padding:3rem 5rem;max-width:1360px;margin:0 auto;width:100%;}
+.hn-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-top:1.5rem;}
+.hn-card{background:var(--card);border:1px solid var(--border);border-radius:10px;
+  padding:1.2rem 1.4rem;display:flex;align-items:flex-start;gap:.9rem;
+  transition:border-color .18s,background .18s,transform .15s;cursor:pointer;}
+.hn-card:hover{border-color:var(--border2);background:var(--bg3);transform:translateY(-2px);}
+.hn-ico{width:32px;height:32px;background:var(--acc-dim);border:1px solid var(--border2);
+  border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.hn-ico svg{width:14px;height:14px;fill:none;stroke:var(--acc);stroke-width:2;}
+.hn-title{font-size:.85rem;font-weight:700;color:var(--text);margin-bottom:.2rem;}
+.hn-desc{font-size:.74rem;color:var(--text3);line-height:1.5;}
+
+/* ABOUT */
+.about-cols{display:grid;grid-template-columns:1.1fr 1fr;gap:3.5rem;align-items:start;margin-bottom:4.5rem;}
+.about-p{font-size:.9rem;color:var(--text2);margin-bottom:.95rem;line-height:1.85;font-weight:300;}
+.about-chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1.25rem;}
+.about-cards{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.ac{background:var(--card);padding:1.25rem;transition:background .18s;}
+.ac:hover{background:var(--bg3);}
+.ac-ico{width:30px;height:30px;background:var(--acc-dim);border:1px solid var(--border2);border-radius:6px;display:flex;align-items:center;justify-content:center;margin-bottom:.75rem;}
+.ac-ico svg{width:13px;height:13px;fill:none;stroke:var(--acc);stroke-width:2;}
+.ac-t{font-size:.83rem;font-weight:600;color:var(--text);margin-bottom:.22rem;}
+.ac-d{font-size:.71rem;color:var(--text3);line-height:1.5;}
+.skill-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem 3rem;margin-bottom:4rem;}
+.sk-head{display:flex;justify-content:space-between;margin-bottom:.42rem;}
+.sk-name{font-size:.82rem;color:var(--text);}
+.sk-pct{font-family:var(--mono);font-size:.67rem;color:var(--acc);}
+.sk-track{height:3px;background:var(--card);border-radius:2px;overflow:hidden;}
+.sk-fill{height:100%;background:linear-gradient(90deg,var(--acc3),var(--acc));border-radius:2px;width:0;transition:width 1.3s cubic-bezier(.4,0,.2,1);}
+.tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;}
+.tc{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:1.15rem 1.35rem;transition:border-color .18s;}
+.tc:hover{border-color:var(--border2);}
+.tc-hd{display:flex;align-items:center;gap:.55rem;margin-bottom:.8rem;}
+.tc-dot{width:6px;height:6px;border-radius:50%;background:var(--acc);flex-shrink:0;}
+.tc-cat{font-size:.79rem;font-weight:600;color:var(--text);}
+
+/* EXPERIENCE TIMELINE */
+.tl{position:relative;padding-left:3.2rem;margin-bottom:3rem;}
+.tl::before{content:'';position:absolute;left:15px;top:16px;bottom:16px;width:1px;
+  background:linear-gradient(to bottom,rgba(59,130,246,.8) 0%,rgba(59,130,246,.3) 40%,rgba(59,130,246,.08) 75%,transparent 100%);
+  z-index:0;}
+.tl-item{position:relative;margin-bottom:2.5rem;}
+.tl-item:last-child{margin-bottom:0;}
+.tl-ico{position:absolute;left:-3.2rem;top:0;width:32px;height:32px;
+  border:1px solid var(--border2);border-radius:7px;display:flex;align-items:center;justify-content:center;z-index:1;}
+.tl-ico.curr{background:var(--bg2);border-color:var(--border3);}
+.tl-ico.past{background:var(--bg2);border-color:var(--border);}
+.tl-ico.curr svg{fill:none;stroke:var(--acc);stroke-width:1.8;width:13px;height:13px;}
+.tl-ico.past svg{fill:none;stroke:var(--text3);stroke-width:1.8;width:13px;height:13px;}
+.tl-meta{display:flex;align-items:center;gap:.65rem;margin-bottom:.22rem;flex-wrap:wrap;}
+.tl-date{font-family:var(--mono);font-size:.66rem;color:var(--text3);letter-spacing:.05em;}
+.tl-curr{font-family:var(--mono);font-size:.59rem;color:var(--acc);background:var(--acc-dim);border:1px solid var(--border2);padding:.1rem .48rem;border-radius:3px;letter-spacing:.06em;}
+.tl-role{font-size:.92rem;font-weight:700;color:var(--text);margin-bottom:.12rem;}
+.tl-role.past{color:var(--text2);}
+.tl-co{font-family:var(--mono);font-size:.7rem;color:var(--acc);letter-spacing:.03em;margin-bottom:.7rem;}
+.tl-co.past{color:var(--text3);}
+.tl-ul{list-style:none;display:flex;flex-direction:column;gap:.3rem;}
+.tl-ul li{font-size:.82rem;color:var(--text2);padding-left:1rem;position:relative;line-height:1.65;font-weight:300;}
+.tl-ul li::before{content:'–';position:absolute;left:0;color:var(--text3);}
+
+/* VOLUNTEERING */
+.vol-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:1.2rem;}
+.vol-card{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:1.15rem 1.35rem;transition:border-color .18s;}
+.vol-card:hover{border-color:var(--border2);}
+.vol-badge{font-family:var(--mono);font-size:.59rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--acc);background:var(--acc-dim);border:1px solid var(--border2);
+  padding:.16rem .48rem;border-radius:3px;display:inline-block;margin-bottom:.6rem;}
+.vol-title{font-size:.83rem;font-weight:600;color:var(--text);margin-bottom:.3rem;}
+.vol-desc{font-size:.76rem;color:var(--text3);line-height:1.55;}
+.ieee-proj{background:var(--card);border:1px solid var(--border2);border-radius:9px;padding:1.3rem 1.45rem;margin-top:.8rem;}
+.ieee-dev{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--mono);font-size:.6rem;
+  color:var(--warn);background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.2);
+  padding:.15rem .5rem;border-radius:3px;margin-bottom:.7rem;}
+.ieee-dev-dot{width:5px;height:5px;border-radius:50%;background:var(--warn);animation:pulse 2s infinite;}
+
+/* CERTS - shared accordion rows */
+.oc-list{display:flex;flex-direction:column;border:1px solid var(--border);border-radius:9px;overflow:hidden;}
+.oc{display:flex;align-items:center;gap:.95rem;padding:.75rem 1.1rem;border-bottom:1px solid var(--border);cursor:pointer;transition:background .18s;}
+.oc:last-child{border-bottom:none;}
+.oc:hover,.oc.open{background:var(--card);}
+.oc-pill{font-family:var(--mono);font-size:.56rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;padding:.18rem .52rem;border-radius:4px;flex-shrink:0;min-width:56px;text-align:center;}
+.oc-pill.done{background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.22);color:var(--acc2);}
+.oc-pill.prog{background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.2);color:var(--warn);}
+.oc-info{flex:1;}
+.oc-nm{font-size:.83rem;font-weight:500;color:var(--text);}
+.oc-org{font-family:var(--mono);font-size:.64rem;color:var(--text3);margin-top:.08rem;}
+.oc-yr{font-family:var(--mono);font-size:.63rem;color:var(--text3);flex-shrink:0;}
+.oc-expand{overflow:hidden;max-height:0;transition:max-height .35s ease;background:var(--bg2);padding:0 1.1rem;}
+.oc-expand.open{max-height:600px;padding:.85rem 1.1rem;}
+.topic-chip{display:inline-block;font-family:var(--mono);font-size:.6rem;color:var(--acc2);background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.18);padding:.13rem .48rem;border-radius:3px;margin:.12rem .12rem 0 0;}
+.topics-lbl{font-family:var(--mono);font-size:.56rem;color:var(--text3);text-transform:uppercase;letter-spacing:.12em;margin:.7rem 0 .38rem;}
+
+/* CCNA nested module cards inside expand */
+.cc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:9px;overflow:hidden;margin-top:.75rem;}
+.cc{background:var(--card);padding:1.05rem 1.1rem;cursor:pointer;transition:background .18s;}
+.cc:hover,.cc.open{background:var(--bg3);}
+.cc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.45rem;}
+.cc-ico{width:25px;height:25px;background:var(--acc-dim);border:1px solid var(--border2);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.cc-ico svg{width:10px;height:10px;fill:none;stroke:var(--acc);stroke-width:2;}
+.cc-num{font-family:var(--mono);font-size:.57rem;color:var(--text3);letter-spacing:.1em;}
+.cc-t{font-size:.76rem;font-weight:600;color:var(--text);margin-bottom:.22rem;line-height:1.35;}
+.cc-d{font-size:.68rem;color:var(--text3);line-height:1.45;}
+.cc-topics{overflow:hidden;max-height:0;transition:max-height .3s ease;}
+.cc-topics.open{max-height:200px;}
+.cc-link{display:inline-flex;align-items:center;gap:.28rem;font-family:var(--mono);font-size:.6rem;color:var(--acc);margin-top:.6rem;text-decoration:none;transition:color .18s;}
+.cc-link:hover{color:var(--acc2);}
+.cc-link svg{width:8px;height:8px;fill:none;stroke:currentColor;stroke-width:2;}
+
+/* PUBS */
+.pub-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.pub{background:var(--card);padding:1.35rem 1.5rem;border-bottom:1px solid var(--border);}
+.pub:last-child{border-bottom:none;}
+.pub-badge{font-family:var(--mono);font-size:.57rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.16rem .52rem;border-radius:3px;display:inline-block;margin-bottom:.62rem;}
+.pub-badge.published{color:var(--acc);background:var(--acc-dim);border:1px solid var(--border2);}
+.pub-badge.prep{color:var(--warn);background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.18);}
+.pub-title{font-size:.86rem;font-weight:500;color:var(--text);margin-bottom:.42rem;line-height:1.5;}
+.pub-meta{font-family:var(--mono);font-size:.65rem;color:var(--text3);line-height:1.6;}
+.pub-link{display:inline-flex;align-items:center;gap:.28rem;font-family:var(--mono);font-size:.63rem;color:var(--acc);margin-top:.52rem;text-decoration:none;}
+.pub-link:hover{color:var(--acc2);}
+.pub-link svg{width:8px;height:8px;fill:none;stroke:currentColor;stroke-width:2;}
+
+/* PROJECTS */
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;
+  background:var(--border);border:1px solid var(--border);border-radius:11px;overflow:hidden;}
+.pc{background:var(--card);padding:1.55rem;transition:background .18s;cursor:pointer;position:relative;overflow:hidden;}
+.pc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--acc),transparent);transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+.pc:hover{background:var(--bg3);}
+.pc:hover::after{transform:scaleX(1);}
+.pc-badge{font-family:var(--mono);font-size:.57rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--acc);background:var(--acc-dim);border:1px solid var(--border2);
+  padding:.16rem .52rem;border-radius:3px;display:inline-block;margin-bottom:.65rem;}
+.pc-num{font-family:var(--mono);font-size:.6rem;color:var(--text3);letter-spacing:.12em;margin-bottom:.42rem;}
+.pc-title{font-size:.9rem;font-weight:700;color:var(--text);margin-bottom:.5rem;line-height:1.3;}
+.pc-desc{font-size:.78rem;color:var(--text2);line-height:1.65;margin-bottom:.85rem;font-weight:300;}
+.pc-arrow{font-family:var(--mono);font-size:.65rem;color:var(--text3);transition:color .18s;}
+.pc:hover .pc-arrow{color:var(--acc);}
+
+/* CONTACT - full width stacked */
+.contact-stack{display:flex;flex-direction:column;gap:2.5rem;}
+.contact-intro p{font-size:.87rem;color:var(--text2);margin-bottom:.82rem;line-height:1.85;font-weight:300;}
+.sc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.55rem;margin-top:1.4rem;}
+.sc{display:flex;align-items:center;gap:.65rem;padding:.75rem .9rem;border:1px solid var(--border);
+  border-radius:8px;text-decoration:none;background:var(--card);transition:border-color .18s,background .18s,transform .15s;}
+.sc:hover{border-color:var(--border2);background:var(--bg3);transform:translateY(-2px);}
+.sc-ico{width:30px;height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.sc-lbl{font-family:var(--mono);font-size:.57rem;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;white-space:nowrap;}
+.sc-val{font-size:.76rem;color:var(--text);font-weight:500;margin-top:.04rem;white-space:nowrap;}
+.fw{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:1.65rem;}
+.fw-title{font-size:.97rem;font-weight:700;color:var(--text);margin-bottom:.22rem;}
+.fw-sub{font-size:.78rem;color:var(--text3);margin-bottom:1.4rem;}
+.fg{margin-bottom:.85rem;}
+.fl{display:block;font-family:var(--mono);font-size:.6rem;font-weight:500;text-transform:uppercase;
+  letter-spacing:.12em;color:var(--text3);margin-bottom:.35rem;}
+.fi,.ft{width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);
+  font-family:var(--display);font-size:.84rem;padding:.66rem .88rem;border-radius:6px;
+  outline:none;transition:border-color .18s;font-weight:300;}
+.fi:focus,.ft:focus{border-color:rgba(59,130,246,.35);}
+.ft{resize:vertical;min-height:95px;}
+.fi::placeholder,.ft::placeholder{color:var(--text3);}
+.fgrow{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#" onclick="goto('home',null);return false;">
+    <div class="nav-logo-mark"><svg viewBox="0 0 12 12"><path d="M2 6h8M6 2v8" stroke-linecap="round"/></svg></div>
+    aktham.net
+  </a>
+  <ul class="nav-links">
+    <li><a href="#" class="active" data-page="home"       onclick="goto('home',this);return false;">Home</a></li>
+    <li><a href="#" data-page="about"      onclick="goto('about',this);return false;">About</a></li>
+    <li><a href="#" data-page="experience" onclick="goto('experience',this);return false;">Experience</a></li>
+    <li><a href="#" data-page="projects"   onclick="goto('projects',this);return false;">Projects</a></li>
+    <li><a href="#" data-page="contact"    onclick="goto('contact',this);return false;">Contact</a></li>
+  </ul>
+</nav>
+
+<div id="app">
+
+<!-- ═══════════════════════════ HOME ═══════════════════════════ -->
+<div class="page active" id="pg-home">
+<div class="home-inner">
+  <div class="avail reveal"><div class="avail-dot"></div>Available for opportunities</div>
+  <div class="hero-row">
+    <div>
+      <h1 class="hname reveal d1">Aktham<span>Alarabi</span></h1>
+      <p class="htitle reveal d2">// Network &amp; Cloud Security Engineer · CCNA</p>
+      <p class="hdesc reveal d3">Network and systems security engineer with hands-on experience in enterprise networking, SOC operations, cloud infrastructure, and ITSM. Building secure, well-configured networks — one interface at a time.</p>
+      <div class="hbtns reveal d4">
+        <a class="btn-fill" href="#" onclick="goto('experience',null);return false;">View Experience →</a>
+        <a class="btn-ghost" href="#" onclick="goto('contact',null);return false;">Contact Me</a>
+      </div>
+      <div class="hsocials reveal d5">
+        <a href="https://www.linkedin.com/in/aktham-alarabi-0819b8346" target="_blank" title="LinkedIn">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 10v7M12 13a3 3 0 016 0v4"/></svg></a>
+        <a href="mailto:aktham.alarabi@gmail.com" title="Email">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg></a>
+        <div class="hdiv"></div>
+        <a href="https://www.youtube.com/@Jrx70611" target="_blank" title="YouTube">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://wa.me/962798859514" target="_blank" title="WhatsApp">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></a>
+      </div>
+      <div class="hstats reveal d6">
+        <div class="hstat"><div class="hstat-n">20+</div><div class="hstat-l">Lab Projects</div></div>
+        <div class="hstat"><div class="hstat-n">7+</div><div class="hstat-l">Certifications</div></div>
+        <div class="hstat"><div class="hstat-n">2</div><div class="hstat-l">IEEE Papers</div></div>
+        <div class="hstat"><div class="hstat-n">3</div><div class="hstat-l">Roles Held</div></div>
+      </div>
+    </div>
+    <div class="reveal-right d2" style="align-self:start;padding-top:.5rem;">
+      <div class="moba">
+        <div class="moba-bar">
+          <div class="moba-tabs">
+            <div class="moba-tab act">R1 – SSH Session</div>
+            <div class="moba-tab ina">Local terminal</div>
+          </div>
+          <div class="moba-tr">MobaXterm · aktham@lab</div>
+        </div>
+        <div class="moba-body" id="mobaBody"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="home-nav-section">
+  <div class="eyebrow reveal">Explore</div>
+  <h2 class="sec-title reveal d1">Portfolio <span>Sections</span></h2>
+  <div class="hn-grid reveal d2">
+    <div class="hn-card" onclick="goto('about',null)"><div class="hn-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><div><div class="hn-title">About</div><div class="hn-desc">Background, skills, and a quick overview of my focus areas.</div></div></div>
+    <div class="hn-card" onclick="goto('experience',null)"><div class="hn-ico"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg></div><div><div class="hn-title">Experience</div><div class="hn-desc">Internships, certifications, volunteering, and training.</div></div></div>
+    <div class="hn-card" onclick="goto('projects',null)"><div class="hn-ico"><svg viewBox="0 0 24 24"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"/></svg></div><div><div class="hn-title">Projects</div><div class="hn-desc">GNS3, Packet Tracer, and real-world security lab projects.</div></div></div>
+    <div class="hn-card" onclick="goto('contact',null)"><div class="hn-ico"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg></div><div><div class="hn-title">Contact</div><div class="hn-desc">Reach out via email or connect on platforms I use most.</div></div></div>
+    <div class="hn-card" onclick="goto('experience',null)"><div class="hn-ico"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><div><div class="hn-title">Certifications</div><div class="hn-desc">CCNA, Azure, Security+, BTL-1 with topics breakdown.</div></div></div>
+    <div class="hn-card" onclick="goto('about',null)"><div class="hn-ico"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div><div><div class="hn-title">Skills &amp; Tools</div><div class="hn-desc">Technical skill bars and full tools &amp; technologies arsenal.</div></div></div>
+  </div>
+</div>
+<div class="page-footer"><span class="pf-l">© 2025 Aktham Khaleel Alarabi</span><span class="pf-l" style="color:var(--text2);font-size:.68rem;">aktham.net</span><span class="pf-l">Network &amp; Cloud Security Engineer</span></div>
+</div>
+
+<!-- ═══════════════════════════ ABOUT ═══════════════════════════ -->
+<div class="page" id="pg-about">
+<div class="wrap">
+  <div class="eyebrow reveal">About</div>
+  <h2 class="sec-title reveal d1">Background &amp; <span>Expertise</span></h2>
+  <div class="about-cols">
+    <div class="reveal-left d1">
+      <p class="about-p">I'm a network and systems security engineer based in Amman, Jordan. I graduated with a BSc in Electrical Engineering (Network &amp; Systems Security) from Al-Balqa Applied University in February 2026 with a GPA of 3.24/4.00.</p>
+      <p class="about-p">My focus spans enterprise network design and security, cloud infrastructure on Microsoft Azure, SIEM-based threat detection with Splunk, and ITSM platform implementation. I build and test configurations in GNS3 and Cisco Packet Tracer — everything from basic switching to full IPSec VPN deployments.</p>
+      <p class="about-p">Currently working as an ITSM Consultant at DIMA Solutions implementing OpenText SMAX aligned with ITIL practices, while volunteering with the IEEE Computer Society's Member Development team.</p>
+      <div class="about-chips">
+        <span class="chip">Network Engineering</span><span class="chip">Cloud Infrastructure</span>
+        <span class="chip">Network Security</span><span class="chip">SIEM &amp; SOC</span>
+        <span class="chip">ITSM / ITIL</span><span class="chip">Python &amp; API</span>
+      </div>
+    </div>
+    <div class="about-cards reveal-right d2">
+      <div class="ac"><div class="ac-ico"><svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2v-4M9 21H5a2 2 0 01-2-2v-4m0 0h18"/></svg></div><div class="ac-t">Network Engineering</div><div class="ac-d">Routing, switching, VLANs, OSPF, EIGRP, HSRP</div></div>
+      <div class="ac"><div class="ac-ico"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div><div class="ac-t">Cloud Infrastructure</div><div class="ac-d">Azure AZ-104/500, IAM, virtual networks</div></div>
+      <div class="ac"><div class="ac-ico"><svg viewBox="0 0 24 24"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z"/></svg></div><div class="ac-t">Network Security</div><div class="ac-d">Firewalls, IDS/IPS, VPN, AAA, ACLs, Syslog</div></div>
+      <div class="ac"><div class="ac-ico"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div class="ac-t">ITSM Services</div><div class="ac-d">OpenText SMAX, IT Service Manager, ITIL</div></div>
+    </div>
+  </div>
+  <div class="eyebrow reveal">Expertise</div>
+  <h2 class="sec-title reveal d1">Technical <span>Skills</span></h2>
+  <div class="skill-grid reveal d2" id="skillBars">
+    <div class="sk"><div class="sk-head"><span class="sk-name">Network Engineering</span><span class="sk-pct">88%</span></div><div class="sk-track"><div class="sk-fill" data-w="88"></div></div></div>
+    <div class="sk"><div class="sk-head"><span class="sk-name">Network Security</span><span class="sk-pct">82%</span></div><div class="sk-track"><div class="sk-fill" data-w="82"></div></div></div>
+    <div class="sk"><div class="sk-head"><span class="sk-name">Routing &amp; Protocols</span><span class="sk-pct">85%</span></div><div class="sk-track"><div class="sk-fill" data-w="85"></div></div></div>
+    <div class="sk"><div class="sk-head"><span class="sk-name">Cloud Engineering (Azure)</span><span class="sk-pct">72%</span></div><div class="sk-track"><div class="sk-fill" data-w="72"></div></div></div>
+    <div class="sk"><div class="sk-head"><span class="sk-name">SIEM &amp; Log Analysis</span><span class="sk-pct">78%</span></div><div class="sk-track"><div class="sk-fill" data-w="78"></div></div></div>
+    <div class="sk"><div class="sk-head"><span class="sk-name">ITSM / ITIL</span><span class="sk-pct">55%</span></div><div class="sk-track"><div class="sk-fill" data-w="55"></div></div></div>
+    <div class="sk"><div class="sk-head"><span class="sk-name">Penetration Testing</span><span class="sk-pct">48%</span></div><div class="sk-track"><div class="sk-fill" data-w="48"></div></div></div>
+    <div class="sk"><div class="sk-head"><span class="sk-name">Python &amp; API</span><span class="sk-pct">42%</span></div><div class="sk-track"><div class="sk-fill" data-w="42"></div></div></div>
+  </div>
+  <div class="eyebrow reveal" style="margin-top:3.5rem;">Arsenal</div>
+  <h2 class="sec-title reveal d1">Tools &amp; <span>Technologies</span></h2>
+  <div class="tools-grid reveal d2">
+    <div class="tc"><div class="tc-hd"><div class="tc-dot"></div><span class="tc-cat">Network Security</span></div><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="chip">OPNsense</span><span class="chip">FortiGate</span><span class="chip">Cisco IOS</span><span class="chip">Suricata IDS/IPS</span><span class="chip">Wireshark</span><span class="chip">IPSec VPN</span><span class="chip">AAA / TACACS+</span><span class="chip">ACLs</span></div></div>
+    <div class="tc"><div class="tc-hd"><div class="tc-dot"></div><span class="tc-cat">Routing &amp; Switching</span></div><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="chip">OSPF</span><span class="chip">EIGRP</span><span class="chip">RIP</span><span class="chip">HSRP</span><span class="chip">VLAN / VTP</span><span class="chip">STP / EtherChannel</span><span class="chip">NAT / PAT</span><span class="chip">DHCP</span><span class="chip">SSH v2</span></div></div>
+    <div class="tc"><div class="tc-hd"><div class="tc-dot"></div><span class="tc-cat">Network Emulation &amp; Simulation</span></div><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="chip">GNS3</span><span class="chip">Cisco Packet Tracer</span><span class="chip">EVE-NG</span></div></div>
+    <div class="tc"><div class="tc-hd"><div class="tc-dot"></div><span class="tc-cat">Cloud Engineering (Azure)</span></div><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="chip">Azure Virtual Networks</span><span class="chip">Entra ID / IAM</span><span class="chip">Azure Security Center</span><span class="chip">NSG / Firewall</span><span class="chip">VMs &amp; Scale Sets</span><span class="chip">Containerization</span><span class="chip">VMware</span><span class="chip">VirtualBox</span></div></div>
+    <div class="tc"><div class="tc-hd"><div class="tc-dot"></div><span class="tc-cat">SIEM &amp; Monitoring</span></div><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="chip">Splunk Enterprise</span><span class="chip">Sysmon</span><span class="chip">SPL Detection Rules</span><span class="chip">Tenable Nessus</span><span class="chip">Tcpdump</span><span class="chip">Tshark</span></div></div>
+    <div class="tc"><div class="tc-hd"><div class="tc-dot"></div><span class="tc-cat">Penetration Testing</span></div><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="chip">Metasploit</span><span class="chip">Hydra</span><span class="chip">Nessus</span><span class="chip">John the Ripper</span><span class="chip">Burp Suite</span><span class="chip">Kali Linux</span></div></div>
+    <div class="tc"><div class="tc-hd"><div class="tc-dot"></div><span class="tc-cat">ITSM Services</span></div><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="chip">OpenText SMAX</span><span class="chip">IT Service Manager</span><span class="chip">ITIL Framework</span><span class="chip">Incident Management</span><span class="chip">Change Management</span><span class="chip">SLA Workflows</span></div></div>
+    <div class="tc"><div class="tc-hd"><div class="tc-dot"></div><span class="tc-cat">Programming &amp; API</span></div><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="chip">Python</span><span class="chip">REST API</span><span class="chip">VirusTotal API</span><span class="chip">Bash</span><span class="chip">FastAPI</span></div></div>
+  </div>
+</div>
+<div class="page-footer"><span class="pf-l">© 2025 Aktham Khaleel Alarabi</span><span class="pf-l" style="color:var(--text2);font-size:.68rem;">aktham.net</span><span class="pf-l">Network &amp; Cloud Security Engineer</span></div>
+</div>
+
+<!-- ═══════════════════════════ EXPERIENCE ═══════════════════════════ -->
+<div class="page" id="pg-experience">
+<div class="wrap">
+  <div class="eyebrow reveal">Journey</div>
+  <h2 class="sec-title reveal d1">Experience &amp; <span>Training</span></h2>
+  <p class="reveal d2" style="font-size:.87rem;color:var(--text2);max-width:540px;margin-bottom:3rem;font-weight:300;">A timeline of roles and experiences shaping my hands-on engineering and security work.</p>
+  <div class="tl">
+    <div class="tl-item reveal d1">
+      <div class="tl-ico curr"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg></div>
+      <div class="tl-meta"><span class="tl-date">Feb 2026 – Present</span><span class="tl-curr">Current</span></div>
+      <div class="tl-role">ITSM Consultant</div>
+      <div class="tl-co">DIMA Solutions Ltd, Co. — Amman, Jordan</div>
+      <ul class="tl-ul">
+        <li>Implementing and configuring enterprise ITSM platforms (OpenText SMAX) aligned with ITIL service management practices.</li>
+        <li>Managing and optimizing SMAX and IT Service Manager environments to improve operations and incident resolution.</li>
+        <li>Translating business requirements into automated ITSM workflows to improve service delivery efficiency.</li>
+      </ul>
+    </div>
+    <div class="tl-item reveal d2">
+      <div class="tl-ico past"><svg viewBox="0 0 24 24"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z"/></svg></div>
+      <div class="tl-meta"><span class="tl-date">Nov 2025 – Jan 2026</span></div>
+      <div class="tl-role past">Cybersecurity Intern — SOC Analyst</div>
+      <div class="tl-co past">Specialized Technical Services (STS) · ZainTECH Company</div>
+      <ul class="tl-ul">
+        <li>Built a defensive SIEM infrastructure using Splunk Enterprise and Sysmon with custom SPL detection rules for C2 traffic.</li>
+        <li>Conducted authorized Black Box penetration tests — breached targets via VPN hash cracking (IKEv1) and privilege escalation.</li>
+        <li>Carried out risk assessments with Tenable Nessus and wrote remediation plans for critical legacy system flaws.</li>
+        <li>Built Python scripts automating threat intelligence via VirusTotal API — reduced manual analysis time by ~40%.</li>
+      </ul>
+    </div>
+    <div class="tl-item reveal d3">
+      <div class="tl-ico past"><svg viewBox="0 0 24 24"><path d="M12 15a3 3 0 100-6 3 3 0 000 6z"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></div>
+      <div class="tl-meta"><span class="tl-date">Oct 2025 – Jan 2026</span></div>
+      <div class="tl-role past">Technical Support Intern</div>
+      <div class="tl-co past">General Computers and Electronics Co. (GCE) — Part-Time</div>
+      <ul class="tl-ul">
+        <li>Led large-scale Windows OS deployments for the Ministry of Education and Public Security Directorate.</li>
+        <li>Managed end-to-end hardware provisioning, diagnostics, and delivery logistics for government projects.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- VOLUNTEERING -->
+  <div class="reveal" style="margin-bottom:3rem;">
+    <div class="eyebrow">Community</div>
+    <h2 class="sec-title" style="margin-bottom:1.1rem;">Volunteering — <span>IEEE Computer Society</span></h2>
+    <p style="font-size:.84rem;color:var(--text2);max-width:540px;margin-bottom:1.4rem;font-weight:300;">Member Development (MD) Team, Amman · Feb 2026 – Present. Rotated through multiple leadership roles to maximise community impact.</p>
+    <div class="vol-grid">
+      <div class="vol-card"><div class="vol-badge">The Librarian</div><div class="vol-title">Knowledge Provider</div><div class="vol-desc">Shared technical articles, PDFs, and summaries in the community's technical-news channel to maintain consistent learning resources for all members.</div></div>
+      <div class="vol-card"><div class="vol-badge">Engagement Leader</div><div class="vol-title">Community Activation</div><div class="vol-desc">Organized games, Q&amp;A sessions, and themed challenges. Built a Python Discord bot with slash commands, leaderboards, and admin controls for automated quiz delivery.</div></div>
+      <div class="vol-card"><div class="vol-badge">Tech Leader</div><div class="vol-title">Peer Education</div><div class="vol-desc">Delivered technical workshops to help community members build skills through peer learning and hands-on sessions.</div></div>
+      <div class="vol-card"><div class="vol-badge">Data Keeper</div><div class="vol-title">Analytics &amp; Tracking</div><div class="vol-desc">Tracked workshop attendance, recorded sessions, monitored less active members, and provided engagement insights to support community growth.</div></div>
+    </div>
+    <div class="ieee-proj">
+      <div class="ieee-dev"><div class="ieee-dev-dot"></div>Under Development</div>
+      <div style="font-size:.88rem;font-weight:700;color:var(--text);margin-bottom:.5rem;">IEEE Project — Automated Ethical Hacker Platform</div>
+      <div style="font-size:.8rem;color:var(--text2);line-height:1.7;font-weight:300;">Building an automated ethical hacking platform that detects vulnerabilities in websites and applications — designed for startups, developers, and small businesses. Features automated scanning (SQL Injection, XSS, open ports), ownership verification, multi-level testing from basic to enterprise-level, and detailed reports with risk levels and recommended fixes.</div>
+    </div>
+  </div>
+
+  <!-- CERTIFICATIONS -->
+  <div class="reveal">
+    <div class="eyebrow">Career Path</div>
+    <h2 class="sec-title" style="margin-bottom:1.4rem;">Certifications &amp; <span>Training</span></h2>
+
+    <!-- CCNA as same accordion style -->
+    <div class="oc-list" style="margin-bottom:1.2rem;">
+      <div class="oc" onclick="toggleOC(this,'ccna-exp')">
+        <div class="oc-pill done">CCNA</div>
+        <div class="oc-info">
+          <div class="oc-nm">Cisco Certified Network Associate</div>
+          <div class="oc-org">Cisco Systems · 3 courses completed · Certified May 2025</div>
+        </div>
+        <a href="https://www.credly.com/badges/d17649e0-b61d-473b-93a3-ff35fc203d67" target="_blank"
+           onclick="event.stopPropagation()"
+           style="font-family:var(--mono);font-size:.62rem;color:var(--acc);text-decoration:none;margin-right:.75rem;white-space:nowrap;">View Badge ↗</a>
+        <div class="oc-yr">May 2025</div>
+      </div>
+      <div class="oc-expand" id="ccna-exp">
+        <div style="display:flex;gap:3px;margin-bottom:.65rem;">
+          <div style="height:3px;flex:1;border-radius:2px;background:var(--acc);"></div>
+          <div style="height:3px;flex:1;border-radius:2px;background:var(--acc);"></div>
+          <div style="height:3px;flex:1;border-radius:2px;background:var(--acc);"></div>
+        </div>
+        <div style="font-family:var(--mono);font-size:.63rem;color:var(--text3);margin-bottom:.85rem;">All 3 courses completed — CCNA Certified</div>
+        <div class="cc-grid">
+          <div class="cc" onclick="toggleCC(this,'ccna1')">
+            <div class="cc-top"><div class="cc-ico"><svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2v-4M9 21H5a2 2 0 01-2-2v-4m0 0h18"/></svg></div><span class="cc-num">01</span></div>
+            <div class="cc-t">Introduction to Networks (ITN)</div>
+            <div class="cc-d">OSI model, IPv4/IPv6, Ethernet, subnetting fundamentals.</div>
+            <div class="cc-topics" id="ccna1"><div class="topics-lbl">Topics Covered</div><div><span class="topic-chip">OSI Model</span><span class="topic-chip">IPv4 &amp; IPv6</span><span class="topic-chip">Ethernet</span><span class="topic-chip">Subnetting</span><span class="topic-chip">ARP</span><span class="topic-chip">Basic Routing</span></div></div>
+            <a class="cc-link" href="https://www.credly.com/badges/1fba1219-b499-47de-942b-9bb5e1a40e1f" target="_blank" onclick="event.stopPropagation()">Credly Badge <svg viewBox="0 0 10 10"><path d="M1 1h8v8M9 1L1 9" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+          <div class="cc" onclick="toggleCC(this,'ccna2')">
+            <div class="cc-top"><div class="cc-ico"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><span class="cc-num">02</span></div>
+            <div class="cc-t">Switching, Routing &amp; Wireless Essentials (SRWE)</div>
+            <div class="cc-d">VLANs, STP, inter-VLAN routing, OSPF, wireless LAN.</div>
+            <div class="cc-topics" id="ccna2"><div class="topics-lbl">Topics Covered</div><div><span class="topic-chip">VLANs &amp; VTP</span><span class="topic-chip">STP / RSTP</span><span class="topic-chip">EtherChannel</span><span class="topic-chip">OSPF</span><span class="topic-chip">EIGRP</span><span class="topic-chip">Wireless LAN</span><span class="topic-chip">Wi-Fi 6</span></div></div>
+            <a class="cc-link" href="https://www.credly.com/badges/f7942c42-d4d7-4867-b42a-ca9032456cc4" target="_blank" onclick="event.stopPropagation()">Credly Badge <svg viewBox="0 0 10 10"><path d="M1 1h8v8M9 1L1 9" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+          <div class="cc" onclick="toggleCC(this,'ccna3')">
+            <div class="cc-top"><div class="cc-ico"><svg viewBox="0 0 24 24"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z"/></svg></div><span class="cc-num">03</span></div>
+            <div class="cc-t">Enterprise Networking, Security &amp; Automation (ENSA)</div>
+            <div class="cc-d">ACLs, NAT, IPSec VPN, QoS, REST API, network automation.</div>
+            <div class="cc-topics" id="ccna3"><div class="topics-lbl">Topics Covered</div><div><span class="topic-chip">ACLs</span><span class="topic-chip">NAT / PAT</span><span class="topic-chip">IPSec VPN</span><span class="topic-chip">QoS</span><span class="topic-chip">SNMP</span><span class="topic-chip">Syslog</span><span class="topic-chip">REST API</span><span class="topic-chip">Python Automation</span><span class="topic-chip">Ansible</span></div></div>
+            <a class="cc-link" href="https://www.credly.com/badges/6a3177b1-fc47-434d-88cf-a45a99362ad7" target="_blank" onclick="event.stopPropagation()">Credly Badge <svg viewBox="0 0 10 10"><path d="M1 1h8v8M9 1L1 9" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Other certs -->
+    <div class="oc-list">
+      <div class="oc" onclick="toggleOC(this,'btl1x')"><div class="oc-pill done">BTL-1</div><div class="oc-info"><div class="oc-nm">Blue Team Level 1</div><div class="oc-org">Blue Team Labs — Training Completed</div></div><div class="oc-yr">Completed</div></div>
+      <div class="oc-expand" id="btl1x"><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="topic-chip">Phishing Analysis</span><span class="topic-chip">Security Fundamentals</span><span class="topic-chip">Threat Intelligence</span><span class="topic-chip">SIEM</span><span class="topic-chip">Incident Response</span><span class="topic-chip">Digital Forensics</span></div></div>
+      <div class="oc" onclick="toggleOC(this,'secx')"><div class="oc-pill done">SEC+</div><div class="oc-info"><div class="oc-nm">CompTIA Security+</div><div class="oc-org">CompTIA — Training Completed</div></div><div class="oc-yr">Completed</div></div>
+      <div class="oc-expand" id="secx"><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="topic-chip">Threats &amp; Vulnerabilities</span><span class="topic-chip">Architecture &amp; Design</span><span class="topic-chip">Cryptography &amp; PKI</span><span class="topic-chip">Identity &amp; Access</span><span class="topic-chip">Risk Management</span></div></div>
+      <div class="oc" onclick="toggleOC(this,'az900x')"><div class="oc-pill done">AZ-900</div><div class="oc-info"><div class="oc-nm">Microsoft Azure Fundamentals</div><div class="oc-org">Microsoft — Training Completed</div></div><div class="oc-yr">Completed</div></div>
+      <div class="oc-expand" id="az900x"><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="topic-chip">Cloud Concepts</span><span class="topic-chip">Core Azure Services</span><span class="topic-chip">Pricing &amp; SLA</span><span class="topic-chip">Azure Governance</span></div></div>
+      <div class="oc" onclick="toggleOC(this,'az104x')"><div class="oc-pill done">AZ-104</div><div class="oc-info"><div class="oc-nm">Microsoft Azure Administrator</div><div class="oc-org">Microsoft — Training Completed</div></div><div class="oc-yr">Completed</div></div>
+      <div class="oc-expand" id="az104x"><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="topic-chip">Entra ID / IAM</span><span class="topic-chip">Virtual Networks</span><span class="topic-chip">Storage</span><span class="topic-chip">VM Management</span><span class="topic-chip">Monitoring</span><span class="topic-chip">Load Balancer</span></div></div>
+      <div class="oc" onclick="toggleOC(this,'az500x')"><div class="oc-pill done">AZ-500</div><div class="oc-info"><div class="oc-nm">Microsoft Azure Security Engineer</div><div class="oc-org">Microsoft — Training Completed</div></div><div class="oc-yr">Completed</div></div>
+      <div class="oc-expand" id="az500x"><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="topic-chip">Azure Defender</span><span class="topic-chip">Key Vault</span><span class="topic-chip">RBAC</span><span class="topic-chip">NSG &amp; Firewall</span><span class="topic-chip">Sentinel</span><span class="topic-chip">Zero Trust</span></div></div>
+      <div class="oc" onclick="toggleOC(this,'az305x')"><div class="oc-pill prog">AZ-305</div><div class="oc-info"><div class="oc-nm">Microsoft Azure Solutions Architect</div><div class="oc-org">Microsoft — In Progress</div></div><div class="oc-yr">2025 →</div></div>
+      <div class="oc-expand" id="az305x"><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="topic-chip">Infrastructure Design</span><span class="topic-chip">High Availability</span><span class="topic-chip">Disaster Recovery</span><span class="topic-chip">Cost Optimization</span></div></div>
+    </div>
+  </div>
+
+  <!-- PUBLICATIONS -->
+  <div style="margin-top:3rem;" class="reveal">
+    <div class="eyebrow">Research</div>
+    <h2 class="sec-title" style="margin-bottom:1.2rem;">IEEE <span>Publications</span></h2>
+    <div class="pub-wrap">
+      <div class="pub">
+        <span class="pub-badge published">IEEE · Published</span>
+        <div class="pub-title">Sustainability in Three Dimensions: Mapping the Metaverse's Blueprint on Sustainable Development Goals (SDGs) through a Bibliometric Journey</div>
+        <div class="pub-meta">S. Alabidi, K. Alarabi, O. A. Khurma, A. Alarabi, R. Taani · 25th ACIT, Amman, Dec. 2024 · DOI: 10.1109/ACIT62805.2024.10876936</div>
+        <a class="pub-link" href="https://ieeexplore.ieee.org/document/10876936/" target="_blank">View on IEEE Xplore <svg viewBox="0 0 10 10"><path d="M1 1h8v8M9 1L1 9" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+      <div class="pub">
+        <span class="pub-badge prep">Under Preparation</span>
+        <div class="pub-title">Exploring the Role of the Metaverse in Achieving SDG 3: A Bibliometric Analysis of its Impact on Teacher Mental Pollution and Well-being</div>
+        <div class="pub-meta">S. Alabidi, K. Alarabi, O. A. Khurma, A. Alarabi, R. Taani · EMCEI, Sfax, Tunisia, 2025</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="page-footer"><span class="pf-l">© 2025 Aktham Khaleel Alarabi</span><span class="pf-l" style="color:var(--text2);font-size:.68rem;">aktham.net</span><span class="pf-l">Network &amp; Cloud Security Engineer</span></div>
+</div>
+
+<!-- ═══════════════════════════ PROJECTS ═══════════════════════════ -->
+<div class="page" id="pg-projects">
+<div class="wrap">
+  <div class="eyebrow reveal">Work</div>
+  <h2 class="sec-title reveal d1">Selected <span>Projects</span></h2>
+  <p class="reveal d2" style="font-size:.87rem;color:var(--text2);max-width:560px;margin-bottom:2.5rem;font-weight:300;">GNS3, Cisco Packet Tracer, and real-world lab projects covering routing, switching, security, VPN, wireless, and more.</p>
+  <div class="proj-grid reveal d3">
+    <div class="pc"><div class="pc-badge">Capstone · AI + Security</div><div class="pc-num">001</div><div class="pc-title">Conversational Firewall Management</div><div class="pc-desc">AI-driven NL interface for OPNsense NGFW. Translates natural language to REST API firewall actions. RBAC, Argon2, real-time SSE dashboards.</div><div style="display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.85rem;"><span class="chip">FastAPI</span><span class="chip">OPNsense</span><span class="chip">GNS3</span><span class="chip">Suricata</span></div><div class="pc-arrow">View topology demo →</div></div>
+    <div class="pc"><div class="pc-badge">Security · SIEM</div><div class="pc-num">002</div><div class="pc-title">Enterprise SIEM &amp; Attack Detection Lab</div><div class="pc-desc">Production Splunk SIEM with SPL rules for brute-force, DoS, Metasploit RCE, and PowerShell obfuscation. Full SOC dashboards.</div><div style="display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.85rem;"><span class="chip">Splunk</span><span class="chip">Sysmon</span><span class="chip">Metasploit</span><span class="chip">Python</span></div><div class="pc-arrow">View topology demo →</div></div>
+    <div class="pc"><div class="pc-badge">Network · Performance</div><div class="pc-num">003</div><div class="pc-title">HAProxy Load Balancing Evaluation</div><div class="pc-desc">Controlled performance analysis of Round Robin, Least Connections, and Source-IP under baseline and degraded conditions.</div><div style="display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.85rem;"><span class="chip">HAProxy</span><span class="chip">Ubuntu</span><span class="chip">GNS3</span><span class="chip">ApacheBench</span></div><div class="pc-arrow">View topology demo →</div></div>
+    <div class="pc"><div class="pc-badge">IoT · Protocol Research</div><div class="pc-num">004</div><div class="pc-title">IoT Protocol Analysis: MQTT vs CoAP</div><div class="pc-desc">Experimental comparison under constrained IoT conditions. MQTT reliable but 10× latency spike; CoAP lower latency but ~12% packet drop.</div><div style="display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.85rem;"><span class="chip">Python</span><span class="chip">MQTT</span><span class="chip">CoAP</span><span class="chip">GNS3</span><span class="chip">Azure VM</span></div><div class="pc-arrow">View topology demo →</div></div>
+  </div>
+  <div style="margin-top:1.25rem;padding:1.2rem 1.4rem;background:var(--card);border:1px solid var(--border2);border-radius:9px;display:flex;align-items:center;gap:.95rem;" class="reveal">
+    <div style="width:32px;height:32px;background:var(--acc-dim);border:1px solid var(--border2);border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--acc)" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></div>
+    <div><div style="font-size:.82rem;font-weight:600;color:var(--text);">20+ lab projects — not all shown here, more coming soon</div><div style="font-family:var(--mono);font-size:.66rem;color:var(--text3);margin-top:.1rem;">GNS3 and Cisco Packet Tracer topologies covering routing, switching, security, VPN, wireless, and more. Detailed project pages being added progressively.</div></div>
+  </div>
+</div>
+<div class="page-footer"><span class="pf-l">© 2025 Aktham Khaleel Alarabi</span><span class="pf-l" style="color:var(--text2);font-size:.68rem;">aktham.net</span><span class="pf-l">Network &amp; Cloud Security Engineer</span></div>
+</div>
+
+<!-- ═══════════════════════════ CONTACT ═══════════════════════════ -->
+<div class="page" id="pg-contact">
+<div class="wrap">
+  <div class="eyebrow reveal">Connect</div>
+  <h2 class="sec-title reveal d1">Say <span>Hello</span></h2>
+  <div class="contact-stack">
+    <div class="reveal d2">
+      <div class="contact-intro">
+        <p>Open to full-time roles, freelance security and networking projects, research collaborations, and consulting across network engineering, cloud infrastructure, and ITSM.</p>
+        <p>I also post network lab walkthroughs and cryptography tutorials on YouTube — check the channel for hands-on content.</p>
+      </div>
+      <div class="sc-grid">
+        <a class="sc" href="https://www.linkedin.com/in/aktham-alarabi-0819b8346" target="_blank"><div class="sc-ico" style="background:rgba(10,102,194,.12);border:1px solid rgba(10,102,194,.25);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0a66c2" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 10v7M12 13a3 3 0 016 0v4"/></svg></div><div><div class="sc-lbl">LinkedIn</div><div class="sc-val">aktham-alarabi</div></div></a>
+        <a class="sc" href="https://wa.me/962798859514" target="_blank"><div class="sc-ico" style="background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.22);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#25d366" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></div><div><div class="sc-lbl">WhatsApp</div><div class="sc-val">+962 79 885 9514</div></div></a>
+        <a class="sc" href="mailto:aktham.alarabi@gmail.com"><div class="sc-ico" style="background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.22);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--acc)" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg></div><div><div class="sc-lbl">Email</div><div class="sc-val">aktham.alarabi@gmail</div></div></a>
+        <a class="sc" href="https://www.instagram.com/vfbb/" target="_blank"><div class="sc-ico" style="background:rgba(225,48,108,.1);border:1px solid rgba(225,48,108,.22);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#e1306c" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><circle cx="17.5" cy="6.5" r=".5" fill="#e1306c"/></svg></div><div><div class="sc-lbl">Instagram</div><div class="sc-val">@vfbb</div></div></a>
+        <a class="sc" href="https://www.facebook.com/aktham.alarabi.3/" target="_blank"><div class="sc-ico" style="background:rgba(24,119,242,.1);border:1px solid rgba(24,119,242,.22);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1877f2" stroke-width="2"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></div><div><div class="sc-lbl">Facebook</div><div class="sc-val">aktham.alarabi.3</div></div></a>
+        <a class="sc" href="https://www.youtube.com/@Jrx70611" target="_blank"><div class="sc-ico" style="background:rgba(255,0,0,.1);border:1px solid rgba(255,0,0,.18);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ff0000" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#ff0000" stroke="none"/></svg></div><div><div class="sc-lbl">YouTube</div><div class="sc-val">Networks &amp; Cryptography</div></div></a>
+      </div>
+    </div>
+    <div class="fw reveal d3">
+      <div class="fw-title">Send a Message</div>
+      <div class="fw-sub">I'll get back to you within 24 hours.</div>
+      <div class="fgrow">
+        <div class="fg"><label class="fl">First Name</label><input class="fi" id="fn" type="text" placeholder="Aktham"/></div>
+        <div class="fg"><label class="fl">Last Name</label><input class="fi" id="ln" type="text" placeholder="Alarabi"/></div>
+      </div>
+      <div class="fg"><label class="fl">Email</label><input class="fi" id="em" type="email" placeholder="your@email.com"/></div>
+      <div class="fg"><label class="fl">Subject</label><input class="fi" id="sub" type="text" placeholder="Project inquiry, job opportunity..."/></div>
+      <div class="fg"><label class="fl">Message</label><textarea class="ft" id="msg" placeholder="Tell me about your project or opportunity..."></textarea></div>
+      <button class="btn-fill" onclick="sendMsg()" style="width:100%;justify-content:center;">Send Message →</button>
+    </div>
+  </div>
+</div>
+<div class="page-footer"><span class="pf-l">© 2025 Aktham Khaleel Alarabi</span><span class="pf-l" style="color:var(--text2);font-size:.68rem;">aktham.net</span><span class="pf-l">Network &amp; Cloud Security Engineer</span></div>
+</div>
+
+</div>
+<script>
+function goto(id,el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('pg-'+id).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
+  if(el){el.classList.add('active');}
+  else{document.querySelectorAll('.nav-links a[data-page]').forEach(a=>{if(a.dataset.page===id)a.classList.add('active');});}
+  setTimeout(()=>{observePage(id);if(id==='about')setTimeout(animSkills,300);},40);
+}
+function observePage(id){
+  const pg=document.getElementById('pg-'+id);if(!pg)return;
+  const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});},{threshold:0.06});
+  pg.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>io.observe(el));
+}
+['home','about','experience','projects','contact'].forEach(observePage);
+function animSkills(){document.querySelectorAll('#skillBars .sk-fill').forEach(el=>{el.style.width=el.dataset.w+'%';});}
+
+/* TERMINAL — very slow, like a real person typing */
+const cfgLines=[
+  'enable','configure terminal','',
+  'hostname R1','no ip domain-lookup','ip domain-name lab.local',
+  'service password-encryption','service timestamps log datetime msec','',
+  '! AAA with TACACS+','aaa new-model','',
+  'tacacs server TAC1','  address ipv4 192.168.20.50','  key TacacsKey123','',
+  'aaa group server tacacs+ TACACS-GRP','  server name TAC1','',
+  'aaa authentication login default group TACACS-GRP local',
+  'aaa authorization exec default group TACACS-GRP local','',
+  'enable secret Str0ngEnableP@ss!',
+  'username admin privilege 15 secret L0calFallbackP@ss!','',
+  '! SSH v2','crypto key generate rsa modulus 2048',
+  'ip ssh version 2','ip ssh time-out 60','ip ssh authentication-retries 3','',
+  '! Syslog to Splunk SIEM',
+  'logging host 192.168.20.60 transport udp port 514',
+  'logging trap informational','',
+  '! DHCP pools',
+  'ip dhcp excluded-address 192.168.10.1 192.168.10.20',
+  'ip dhcp pool VLAN10_USERS',
+  '  network 192.168.10.0 255.255.255.0',
+  '  default-router 192.168.10.1','  dns-server 8.8.8.8','',
+  '! HSRP subinterfaces',
+  'interface GigabitEthernet0/0.10',
+  '  encapsulation dot1Q 10',
+  '  ip address 192.168.10.2 255.255.255.0',
+  '  standby 10 ip 192.168.10.1',
+  '  standby 10 priority 110','  standby 10 preempt','',
+  '! EIGRP 100','router eigrp 100','  eigrp router-id 1.1.1.1',
+  '  passive-interface default',
+  '  no passive-interface GigabitEthernet0/1',
+  '  network 192.168.10.0 0.0.0.255',
+  '  network 203.0.113.0 0.0.0.3','  no auto-summary','',
+  '! NAT/PAT overload',
+  'ip nat inside source list NAT_INSIDE interface GigabitEthernet0/1 overload','',
+  '! WAN ACL','ip access-list extended WAN-IN',
+  '  permit udp any host 203.0.113.2 eq 500',
+  '  permit tcp 10.10.10.0 0.0.0.255 host 203.0.113.2 eq 22',
+  '  deny ip any any log','',
+  '! Site-to-site VPN','crypto isakmp policy 10',
+  '  encr aes 256','  hash sha256','  group 14',
+  'crypto isakmp key MySharedKey123 address 203.0.113.6','',
+  'banner motd ^C','Authorized access only.','^C','',
+  'end','write memory'
+];
+/* ── TERMINAL TYPEWRITER ── */
+/* Determines CSS class for a fully-typed line */
+function lineClass(line){
+  const tr=line.trim();
+  if(!tr) return 'plain';
+  if(tr.startsWith('!')) return 'comment';
+  const kw=/^(enable|configure terminal|end|exit|write memory|hostname|no |ip |interface |router |crypto |aaa |logging|username|enable secret|banner|service|line |tacacs|standby|encapsulation|network|passive|permit|deny)/;
+  return kw.test(tr)?'keyword':'plain';
+}
+
+/* Build final coloured HTML for a complete line */
+function colorLine(line){
+  if(!line.trim()) return '';
+  if(line.trim().startsWith('!')) return `<span class="l-cmt">${line}</span>`;
+  const kw=/^(enable|configure terminal|end|exit|write memory|hostname|no |ip |interface |router |crypto |aaa |logging|username|enable secret|banner|service|line |tacacs|standby|encapsulation|network|passive|permit|deny)/;
+  if(kw.test(line.trim())){
+    const m=line.match(/^(\s*)([\w][\w -]*)(.*)$/);
+    if(m) return `${m[1]}<span class="l-kw">${m[2]}</span><span class="l-val">${m[3]}</span>`;
+  }
+  return `<span class="l-cmd">${line}</span>`;
+}
+
+function runMoba(){
+  const body=document.getElementById('mobaBody');
+  if(!body) return;
+
+  let lineIdx=0;
+  let promptEl=null;
+  let typingDiv=null; // the div currently being typed into
+
+  /* Add/refresh the prompt line at the bottom */
+  function addPrompt(){
+    if(promptEl) promptEl.remove();
+    promptEl=document.createElement('div');
+    promptEl.innerHTML='<span class="l-prompt">R1(config)#</span>&nbsp;<span class="l-cursor"></span>';
+    body.appendChild(promptEl);
+    body.scrollTop=body.scrollHeight;
+  }
+
+  /* After a line finishes typing, apply full syntax colouring */
+  function applyColor(div,line){
+    div.innerHTML=colorLine(line);
+  }
+
+  /* Type a single line character by character, then call done() */
+  function typeLine(line, done){
+    /* Empty / blank line — skip typing, just add a spacer */
+    if(!line.trim()){
+      const div=document.createElement('div');
+      div.innerHTML='&nbsp;';
+      body.appendChild(div);
+      body.scrollTop=body.scrollHeight;
+      setTimeout(done, 160);
+      return;
+    }
+
+    /* Comment lines — type a bit faster, no prompt needed before */
+    const isComment=line.trim().startsWith('!');
+
+    /* Create a working div that shows plain text while typing */
+    typingDiv=document.createElement('div');
+    /* Apply dim colour while typing in progress */
+    if(isComment) typingDiv.className='l-cmt';
+    else typingDiv.className='l-cmd';
+    body.appendChild(typingDiv);
+
+    let charIdx=0;
+    /* Speed: comments 28ms/char, normal 32ms/char */
+    const charDelay=isComment?28:32;
+
+    function typeChar(){
+      if(charIdx<=line.length){
+        /* Show typed chars + blinking cursor */
+        const typed=line.slice(0,charIdx);
+        typingDiv.innerHTML=(isComment
+          ? `<span class="l-cmt">${typed}</span>`
+          : `<span class="l-cmd">${typed}</span>`)
+          +'<span class="l-cursor"></span>';
+        body.scrollTop=body.scrollHeight;
+        charIdx++;
+        setTimeout(typeChar, charDelay);
+      } else {
+        /* Finished typing — remove cursor, apply syntax colour */
+        applyColor(typingDiv, line);
+        typingDiv=null;
+        /* Pause after line before next: comments shorter, normal longer */
+        const pauseAfter=isComment?180:320;
+        setTimeout(done, pauseAfter);
+      }
+    }
+    typeChar();
+  }
+
+  /* Main loop — processes one line at a time */
+  function nextLine(){
+    if(lineIdx>=cfgLines.length){
+      /* All done — leave final prompt */
+      addPrompt();
+      return;
+    }
+    const line=cfgLines[lineIdx++];
+
+    /* Remove prompt while typing */
+    if(promptEl){ promptEl.remove(); promptEl=null; }
+
+    typeLine(line, ()=>{
+      /* Re-add prompt, then move to next line after a short gap */
+      addPrompt();
+      setTimeout(nextLine, line.trim()===''?120:200);
+    });
+  }
+
+  /* Initial prompt then start */
+  addPrompt();
+  setTimeout(nextLine, 900);
+}
+setTimeout(runMoba, 800);
+
+function toggleCC(card,id){
+  const el=document.getElementById(id);const was=el.classList.contains('open');
+  document.querySelectorAll('.cc-topics').forEach(t=>t.classList.remove('open'));
+  document.querySelectorAll('.cc').forEach(c=>c.classList.remove('open'));
+  if(!was){el.classList.add('open');card.classList.add('open');}
+}
+function toggleOC(row,id){
+  const el=document.getElementById(id);const was=el.classList.contains('open');
+  document.querySelectorAll('.oc-expand').forEach(e=>e.classList.remove('open'));
+  document.querySelectorAll('.oc').forEach(r=>r.classList.remove('open'));
+  if(!was){el.classList.add('open');row.classList.add('open');}
+}
+function sendMsg(){
+  const fn=document.getElementById('fn').value.trim();
+  const em=document.getElementById('em').value.trim();
+  const msg=document.getElementById('msg').value.trim();
+  if(!fn||!em||!msg){alert('Please fill in your name, email, and message.');return;}
+  alert('Message sent! Thanks '+fn+' — I\'ll get back to you soon.');
+}
+</script>
+</body>
+</html>
