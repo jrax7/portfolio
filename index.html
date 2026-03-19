@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>aktham.net | Network & Cloud Security Engineer</title>
+<title>portfolio.aktham.net | Network & Cloud Security Engineer</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -16,6 +16,14 @@
   --warn:#fbbf24;--ok:#34d399;
   --mono:'JetBrains Mono',monospace;--display:'Sora',sans-serif;
 }
+body.light{
+  --bg:#f0f4f8;--bg2:#e4eaf2;--bg3:#d8e2ed;--card:#ffffff;
+  --border:#00000012;--border2:#3b82f630;--border3:#3b82f650;
+  --acc:#2563eb;--acc2:#3b82f6;--acc3:#1d4ed8;
+  --acc-dim:rgba(59,130,246,0.08);
+  --text:#0f172a;--text2:#475569;--text3:#94a3b8;
+}
+body{transition:background .3s,color .3s;}
 html,body{height:100%;overflow:hidden;}
 body{background:var(--bg);color:var(--text);font-family:var(--display);font-size:15px;line-height:1.7;}
 body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
@@ -32,16 +40,32 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     radial-gradient(1px 1px at 72% 30%,rgba(255,255,255,.09) 0,transparent 100%),
     radial-gradient(1px 1px at 52% 72%,rgba(255,255,255,.12) 0,transparent 100%);}
 
+body.light::before{opacity:0;}
+.hero-name-row{display:flex;align-items:center;gap:1.8rem;margin-bottom:.5rem;}
+.hero-photo{width:140px;height:140px;border-radius:50%;object-fit:cover;object-position:center top;
+  border:2px solid var(--border3);flex-shrink:0;
+  box-shadow:0 0 0 5px rgba(59,130,246,.1),0 0 28px rgba(59,130,246,.22);
+  display:block;}
+
+/* THEME TOGGLE */
+.theme-toggle{width:36px;height:36px;border-radius:8px;border:1px solid var(--border2);
+  background:var(--card);color:var(--text2);cursor:pointer;display:flex;align-items:center;
+  justify-content:center;transition:all .18s;flex-shrink:0;margin-left:.75rem;}
+.theme-toggle:hover{color:var(--text);border-color:var(--border3);background:var(--bg3);}
+.theme-toggle svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;transition:opacity .2s;}
+
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:200;height:60px;
   display:flex;align-items:center;justify-content:space-between;
   padding:0 5rem;background:rgba(9,11,15,.92);backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--border);}
-.nav-logo{font-family:var(--mono);font-size:.82rem;color:var(--text);font-weight:400;
-  letter-spacing:.04em;display:flex;align-items:center;gap:.55rem;text-decoration:none;}
-.nav-logo-mark{width:20px;height:20px;border:1.5px solid var(--acc);border-radius:4px;
-  display:flex;align-items:center;justify-content:center;}
-.nav-logo-mark svg{width:10px;height:10px;fill:none;stroke:var(--acc);stroke-width:2.5;}
+  border-bottom:1px solid var(--border);transition:background .3s,border-color .3s;}
+body.light nav{background:rgba(240,244,248,.92);border-bottom:1px solid var(--border);}
+.nav-logo{display:flex;align-items:center;gap:0;text-decoration:none;user-select:none;}
+.nav-logo-wordmark{font-family:var(--mono);font-size:.88rem;font-weight:600;color:var(--text);letter-spacing:.01em;line-height:1;}
+.nav-logo-wordmark .nl-first{color:var(--text2);}
+.nav-logo-wordmark .nl-last{color:var(--text);}
+.nav-logo-wordmark .nl-dot{color:var(--acc);margin:0 .05em;}
+.nav-logo-wordmark .nl-domain{color:var(--text3);font-size:.72rem;font-weight:400;}
 .nav-links{display:flex;list-style:none;}
 .nav-links a{font-family:var(--mono);font-size:.72rem;color:var(--text2);text-decoration:none;
   padding:.35rem 1rem;transition:color .18s;position:relative;letter-spacing:.03em;}
@@ -52,7 +76,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:60px;
 /* PAGES */
 #app{position:fixed;top:60px;left:0;right:0;bottom:0;overflow:hidden;}
 .page{position:absolute;inset:0;overflow-y:auto;opacity:0;pointer-events:none;
-  transform:translateY(14px);transition:opacity .3s ease,transform .3s ease;}
+  transform:translateY(14px);transition:opacity .3s ease,transform .3s ease;outline:none;}
 .page.active{opacity:1;pointer-events:all;transform:none;}
 
 /* REVEAL */
@@ -92,21 +116,21 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:60px;
   padding:.3rem .85rem;border-radius:100px;margin-bottom:2rem;letter-spacing:.04em;align-self:flex-start;}
 .avail-dot{width:5px;height:5px;border-radius:50%;background:var(--acc);animation:pulse 2s infinite;}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(59,130,246,.4)}50%{box-shadow:0 0 0 5px rgba(59,130,246,0)}}
-.hero-row{display:grid;grid-template-columns:1fr minmax(0,460px);gap:3rem;align-items:start;flex:1;}
+.hero-row{display:grid;grid-template-columns:1fr minmax(0,560px);gap:2.5rem;align-items:start;flex:1;}
 h1.hname{font-size:clamp(2.6rem,5vw,4.8rem);font-weight:800;line-height:1.0;letter-spacing:-.03em;margin-bottom:.3rem;}
 h1.hname span{color:var(--acc);display:block;}
 .htitle{font-family:var(--mono);font-size:.85rem;color:var(--text2);margin:.6rem 0 1rem;letter-spacing:.04em;}
 .hdesc{font-size:.9rem;color:var(--text2);max-width:480px;line-height:1.85;margin-bottom:2rem;font-weight:300;}
-.hbtns{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2rem;}
-.hsocials{display:flex;align-items:center;gap:1rem;}
+.hbtns{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2.5rem;}
+.hsocials{display:flex;align-items:center;gap:1.2rem;margin-bottom:2.5rem;}
 .hsocials a{color:var(--text3);transition:color .18s;display:flex;}
 .hsocials a:hover{color:var(--acc);}
 .hdiv{width:1px;height:15px;background:var(--text3);}
-.hstats{display:flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-top:2rem;max-width:480px;}
-.hstat{flex:1;padding:.9rem 1.1rem;border-right:1px solid var(--border);}
+.hstats{display:flex;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-top:0;max-width:560px;}
+.hstat{flex:1;padding:1.3rem 1.4rem;border-right:1px solid var(--border);}
 .hstat:last-child{border-right:none;}
-.hstat-n{font-size:1.35rem;font-weight:800;color:var(--text);}
-.hstat-l{font-family:var(--mono);font-size:.57rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-top:.1rem;}
+.hstat-n{font-size:1.7rem;font-weight:800;color:var(--text);}
+.hstat-l{font-family:var(--mono);font-size:.57rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-top:.2rem;}
 
 /* MobaXterm */
 .moba{border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,.09);width:100%;}
@@ -117,11 +141,15 @@ h1.hname span{color:var(--acc);display:block;}
 .moba-tab.ina{background:#141720;color:var(--text3);}
 .moba-tr{margin-left:auto;font-family:var(--mono);font-size:.6rem;color:var(--text3);}
 .moba-body{background:#0b0d12;padding:.85rem 1rem 1rem;font-family:var(--mono);font-size:.7rem;
-  line-height:1.8;height:310px;overflow-y:auto;}
+  line-height:1.8;height:360px;overflow-y:auto;}
 .moba-body::-webkit-scrollbar{width:3px;}
 .moba-body::-webkit-scrollbar-thumb{background:var(--text3);border-radius:2px;}
-.l-prompt{color:#4ade80;}.l-cmd{color:var(--text);}.l-cmt{color:#374151;font-style:italic;}
+.l-prompt-user{color:#facc15;font-weight:600;}   /* R1> yellow  */
+.l-prompt-priv{color:#4ade80;font-weight:600;}   /* R1# green   */
+.l-prompt-conf{color:#60a5fa;font-weight:600;}   /* R1(config)# blue */
+.l-cmd{color:var(--text);}.l-cmt{color:#374151;font-style:italic;}
 .l-kw{color:var(--acc2);}.l-val{color:#fcd34d;}
+.l-prompt{color:#4ade80;}
 .l-cursor{display:inline-block;width:7px;height:.85em;background:var(--acc);vertical-align:middle;animation:blink 1s step-end infinite;}
 @keyframes blink{50%{opacity:0}}
 
@@ -234,6 +262,24 @@ h1.hname span{color:var(--acc);display:block;}
 .cc-link:hover{color:var(--acc2);}
 .cc-link svg{width:8px;height:8px;fill:none;stroke:currentColor;stroke-width:2;}
 
+/* CERT PDF VIEWER */
+.cert-pdf-overlay{position:fixed;inset:0;z-index:1100;background:rgba(5,7,11,.95);
+  display:none;flex-direction:column;}
+.cert-pdf-overlay.open{display:flex;}
+.cert-pdf-bar{display:flex;align-items:center;justify-content:space-between;
+  padding:.75rem 1.5rem;border-bottom:1px solid var(--border);background:var(--bg);flex-shrink:0;}
+.cert-pdf-title{font-family:var(--mono);font-size:.75rem;color:var(--text);font-weight:500;}
+.cert-pdf-actions{display:flex;gap:.5rem;align-items:center;}
+.cert-pdf-close{font-family:var(--mono);font-size:.68rem;color:var(--text2);background:var(--card);
+  border:1px solid var(--border);padding:.35rem .85rem;border-radius:6px;cursor:pointer;
+  transition:all .18s;display:flex;align-items:center;gap:.4rem;}
+.cert-pdf-close:hover{color:var(--text);border-color:var(--border2);}
+.cert-pdf-frame{flex:1;border:none;background:var(--bg2);}
+.cert-view-btn{font-family:var(--mono);font-size:.58rem;color:var(--acc);background:var(--acc-dim);
+  border:1px solid var(--border2);padding:.15rem .5rem;border-radius:3px;cursor:pointer;
+  transition:all .18s;white-space:nowrap;margin-right:.5rem;}
+.cert-view-btn:hover{background:rgba(59,130,246,.15);border-color:var(--acc);}
+
 /* PUBS */
 .pub-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden;}
 .pub{background:var(--card);padding:1.35rem 1.5rem;border-bottom:1px solid var(--border);}
@@ -263,19 +309,37 @@ h1.hname span{color:var(--acc);display:block;}
 .pc-desc{font-size:.78rem;color:var(--text2);line-height:1.65;margin-bottom:.85rem;font-weight:300;}
 .pc-arrow{font-family:var(--mono);font-size:.65rem;color:var(--text3);transition:color .18s;}
 .pc:hover .pc-arrow{color:var(--acc);}
+.pc-soon{display:inline-flex;align-items:center;gap:.35rem;font-family:var(--mono);font-size:.58rem;
+  font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--warn);background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.2);
+  padding:.22rem .6rem;border-radius:4px;margin-bottom:.85rem;}
+.pc-soon-dot{width:5px;height:5px;border-radius:50%;background:var(--warn);animation:pulse 2s infinite;}
+.pc-soon-note{font-family:var(--mono);font-size:.63rem;color:var(--text3);line-height:1.6;
+  border-top:1px solid var(--border);padding-top:.7rem;margin-top:.2rem;}
 
-/* CONTACT - full width stacked */
-.contact-stack{display:flex;flex-direction:column;gap:2.5rem;}
-.contact-intro p{font-size:.87rem;color:var(--text2);margin-bottom:.82rem;line-height:1.85;font-weight:300;}
-.sc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.55rem;margin-top:1.4rem;}
-.sc{display:flex;align-items:center;gap:.65rem;padding:.75rem .9rem;border:1px solid var(--border);
-  border-radius:8px;text-decoration:none;background:var(--card);transition:border-color .18s,background .18s,transform .15s;}
-.sc:hover{border-color:var(--border2);background:var(--bg3);transform:translateY(-2px);}
-.sc-ico{width:30px;height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.sc-lbl{font-family:var(--mono);font-size:.57rem;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;white-space:nowrap;}
-.sc-val{font-size:.76rem;color:var(--text);font-weight:500;margin-top:.04rem;white-space:nowrap;}
-.fw{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:1.65rem;}
-.fw-title{font-size:.97rem;font-weight:700;color:var(--text);margin-bottom:.22rem;}
+/* CONTACT */
+.contact-layout{display:grid;grid-template-columns:1fr 1.5fr;gap:3rem;align-items:start;}
+.contact-intro-text{font-size:.87rem;color:var(--text2);margin-bottom:1.5rem;line-height:1.85;font-weight:300;}
+.contact-info-cards{display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.5rem;}
+.cic{display:flex;align-items:center;gap:.85rem;padding:.85rem 1rem;border:1px solid var(--border);
+  border-radius:10px;background:var(--card);transition:border-color .18s,background .18s,transform .15s;
+  text-decoration:none;cursor:pointer;}
+.cic:hover{border-color:var(--border2);background:var(--bg3);transform:translateX(3px);}
+.cic-ico{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.cic-label{font-family:var(--mono);font-size:.58rem;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.18rem;}
+.cic-val{font-size:.84rem;color:var(--text);font-weight:500;}
+.cic-copy{margin-left:auto;font-family:var(--mono);font-size:.6rem;color:var(--text3);
+  background:var(--bg2);border:1px solid var(--border);padding:.2rem .55rem;border-radius:4px;
+  transition:all .18s;white-space:nowrap;}
+.cic:hover .cic-copy{color:var(--acc);border-color:var(--border2);}
+.cic-copy.copied{color:var(--ok);border-color:rgba(52,211,153,.3);background:rgba(52,211,153,.07);}
+.contact-socials-row{display:flex;gap:.55rem;flex-wrap:wrap;margin-top:.2rem;}
+.cs-btn{display:flex;align-items:center;gap:.45rem;padding:.5rem .9rem;border:1px solid var(--border);
+  border-radius:8px;background:var(--card);text-decoration:none;transition:all .18s;
+  font-family:var(--mono);font-size:.68rem;color:var(--text2);}
+.cs-btn:hover{border-color:var(--border2);background:var(--bg3);color:var(--text);transform:translateY(-1px);}
+.fw{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.75rem;}
+.fw-title{font-size:1rem;font-weight:700;color:var(--text);margin-bottom:.22rem;}
 .fw-sub{font-size:.78rem;color:var(--text3);margin-bottom:1.4rem;}
 .fg{margin-bottom:.85rem;}
 .fl{display:block;font-family:var(--mono);font-size:.6rem;font-weight:500;text-transform:uppercase;
@@ -284,17 +348,186 @@ h1.hname span{color:var(--acc);display:block;}
   font-family:var(--display);font-size:.84rem;padding:.66rem .88rem;border-radius:6px;
   outline:none;transition:border-color .18s;font-weight:300;}
 .fi:focus,.ft:focus{border-color:rgba(59,130,246,.35);}
-.ft{resize:vertical;min-height:95px;}
+.ft{resize:vertical;min-height:100px;}
 .fi::placeholder,.ft::placeholder{color:var(--text3);}
 .fgrow{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;}
+
+/* FOOTER */
+.site-footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 5rem 1.2rem;
+  max-width:100%;}
+.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:2.5rem;max-width:1360px;margin:0 auto 2rem;}
+.footer-brand-name{font-family:var(--mono);font-size:.9rem;font-weight:600;color:var(--text);
+  margin-bottom:.6rem;letter-spacing:.04em;}
+.footer-brand-name span{color:var(--acc);}
+.footer-tagline{font-size:.8rem;color:var(--text3);line-height:1.7;max-width:240px;font-weight:300;}
+.footer-col-title{font-family:var(--mono);font-size:.6rem;font-weight:600;color:var(--text2);
+  text-transform:uppercase;letter-spacing:.12em;margin-bottom:.85rem;}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:.45rem;}
+.footer-links a{font-size:.8rem;color:var(--text3);text-decoration:none;transition:color .16s;}
+.footer-links a:hover{color:var(--text);}
+.footer-socials{display:flex;gap:.55rem;flex-wrap:wrap;}
+.footer-soc{width:34px;height:34px;border-radius:7px;border:1px solid var(--border);background:var(--card);
+  display:flex;align-items:center;justify-content:center;text-decoration:none;
+  color:var(--text3);transition:all .18s;}
+.footer-soc:hover{color:var(--text);border-color:var(--border2);background:var(--bg3);}
+.footer-bottom{max-width:1360px;margin:0 auto;padding-top:1.2rem;border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;}
+.footer-copy{font-family:var(--mono);font-size:.63rem;color:var(--text3);}
+.footer-built{font-family:var(--mono);font-size:.63rem;color:var(--text3);}
+.footer-built span{color:var(--acc);}
+
+/* ── PROJECT MODAL ── */
+.proj-modal-overlay{position:fixed;inset:0;z-index:999;background:rgba(5,7,11,.92);
+  opacity:0;pointer-events:none;transition:opacity .32s ease;}
+.proj-modal-overlay.open{opacity:1;pointer-events:all;}
+.proj-modal{position:absolute;inset:20px;background:var(--bg2);border:1px solid var(--border2);
+  border-radius:16px;overflow:hidden;display:flex;flex-direction:column;
+  transform:translateY(30px) scale(.97);transition:transform .32s cubic-bezier(.2,0,.1,1);}
+.proj-modal-overlay.open .proj-modal{transform:none;}
+.proj-modal-topbar{display:flex;align-items:center;justify-content:space-between;
+  padding:.75rem 1.5rem;border-bottom:1px solid var(--border);background:var(--bg);flex-shrink:0;}
+.modal-tabs{display:flex;gap:0;border:1px solid var(--border);border-radius:7px;overflow:hidden;}
+.modal-tab{font-family:var(--mono);font-size:.65rem;padding:.35rem .9rem;cursor:pointer;
+  color:var(--text3);background:transparent;border:none;transition:all .18s;letter-spacing:.04em;}
+.modal-tab.active{background:var(--acc);color:#fff;}
+.modal-tab:hover:not(.active){color:var(--text);background:var(--card);}
+.modal-close{width:28px;height:28px;border-radius:6px;border:1px solid var(--border);
+  background:transparent;color:var(--text3);cursor:pointer;display:flex;align-items:center;
+  justify-content:center;transition:all .18s;font-size:1rem;line-height:1;}
+.modal-close:hover{color:var(--text);border-color:var(--border2);background:var(--card);}
+.proj-modal-body{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;}
+.proj-modal-body::-webkit-scrollbar{width:4px;}
+.proj-modal-body::-webkit-scrollbar-thumb{background:var(--text3);border-radius:2px;}
+
+/* Modal panel system */
+.modal-panel{display:none;padding:0;}
+.modal-panel.active{display:block;}
+
+/* Overview panel */
+.mp-hero{padding:2rem 2.5rem 1.5rem;border-bottom:1px solid var(--border);
+  background:linear-gradient(135deg,rgba(59,130,246,.04) 0%,transparent 60%);}
+.mp-badge-row{display:flex;align-items:center;gap:.6rem;margin-bottom:1rem;}
+.mp-badge{font-family:var(--mono);font-size:.58rem;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--acc);background:var(--acc-dim);
+  border:1px solid var(--border2);padding:.18rem .55rem;border-radius:3px;}
+.mp-status{font-family:var(--mono);font-size:.58rem;color:var(--ok);
+  background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);
+  padding:.18rem .55rem;border-radius:3px;}
+.mp-title{font-size:clamp(1.3rem,2.5vw,2rem);font-weight:800;color:var(--text);
+  letter-spacing:-.025em;line-height:1.15;margin-bottom:.6rem;}
+.mp-title span{color:var(--acc);}
+.mp-desc{font-size:.88rem;color:var(--text2);line-height:1.85;font-weight:300;max-width:680px;}
+.mp-chips{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:1rem;}
+
+.mp-stats-row{display:grid;grid-template-columns:repeat(4,1fr);
+  border-bottom:1px solid var(--border);}
+.mp-stat{padding:1.1rem 1.5rem;border-right:1px solid var(--border);}
+.mp-stat:last-child{border-right:none;}
+.mp-stat-n{font-size:1.3rem;font-weight:800;color:var(--text);}
+.mp-stat-l{font-family:var(--mono);font-size:.58rem;color:var(--text3);
+  text-transform:uppercase;letter-spacing:.08em;margin-top:.1rem;}
+
+.mp-body{padding:2rem 2.5rem;}
+.mp-section{margin-bottom:2.5rem;}
+.mp-section-title{font-family:var(--mono);font-size:.65rem;font-weight:600;color:var(--acc);
+  letter-spacing:.14em;text-transform:uppercase;margin-bottom:.65rem;
+  display:flex;align-items:center;gap:.5rem;}
+.mp-section-title::after{content:'';flex:1;height:1px;background:var(--border);}
+.mp-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.mp-card{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:1.15rem 1.3rem;}
+.mp-card-title{font-size:.82rem;font-weight:600;color:var(--text);margin-bottom:.55rem;
+  display:flex;align-items:center;gap:.45rem;}
+.mp-card-ico{width:22px;height:22px;background:var(--acc-dim);border:1px solid var(--border2);
+  border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.mp-card-ico svg{width:10px;height:10px;fill:none;stroke:var(--acc);stroke-width:2;}
+.mp-card ul{list-style:none;display:flex;flex-direction:column;gap:.3rem;}
+.mp-card ul li{font-size:.78rem;color:var(--text2);padding-left:.9rem;position:relative;
+  line-height:1.6;font-weight:300;}
+.mp-card ul li::before{content:'–';position:absolute;left:0;color:var(--text3);}
+
+/* Topology SVG panel */
+.mp-topo{padding:1rem 2rem 2rem;}
+.topo-legend{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:1.2rem;}
+.topo-leg-item{display:flex;align-items:center;gap:.4rem;font-family:var(--mono);font-size:.62rem;color:var(--text3);}
+.topo-leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.topo-svg-wrap{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:.5rem;overflow:hidden;}
+
+/* Traffic flow panel */
+.mp-traffic{padding:1rem 2rem 2rem;}
+.traffic-tabs{display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap;}
+.traffic-tab{font-family:var(--mono);font-size:.65rem;padding:.4rem 1rem;border-radius:6px;
+  border:1px solid var(--border);color:var(--text3);cursor:pointer;transition:all .18s;background:transparent;}
+.traffic-tab.active{border-color:var(--acc);color:var(--acc);background:var(--acc-dim);}
+.traffic-tab:hover:not(.active){color:var(--text);border-color:var(--border2);}
+.traffic-panel{display:none;}
+.traffic-panel.active{display:block;}
+.flow-diagram{background:var(--bg);border:1px solid var(--border);border-radius:10px;
+  padding:.75rem 1rem;margin-bottom:1rem;overflow:hidden;}
+.flow-diagram svg{width:100%;height:auto;display:block;}
+.flow-steps{display:flex;flex-direction:column;gap:.6rem;}
+.flow-step{display:flex;gap:.85rem;align-items:flex-start;}
+.flow-step-num{font-family:var(--mono);font-size:.62rem;color:var(--acc);
+  background:var(--acc-dim);border:1px solid var(--border2);border-radius:4px;
+  padding:.18rem .52rem;flex-shrink:0;margin-top:.08rem;}
+.flow-step-text{font-size:.8rem;color:var(--text2);line-height:1.65;font-weight:300;}
+.flow-step-text strong{color:var(--text);font-weight:600;}
+
+/* Stack panel */
+.mp-stack{padding:1rem 2rem 2rem;}
+.stack-section{margin-bottom:2rem;}
+.stack-items{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.7rem;margin-top:.8rem;}
+.stack-item{background:var(--card);border:1px solid var(--border);border-radius:8px;
+  padding:.9rem 1.1rem;transition:border-color .18s;}
+.stack-item:hover{border-color:var(--border2);}
+.stack-item-name{font-size:.82rem;font-weight:600;color:var(--text);margin-bottom:.22rem;}
+.stack-item-role{font-size:.72rem;color:var(--text3);line-height:1.45;}
+.stack-tag{display:inline-block;font-family:var(--mono);font-size:.56rem;
+  color:var(--warn);background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.18);
+  padding:.1rem .38rem;border-radius:3px;margin-top:.35rem;}
+
+.modal-back-btn{font-family:var(--mono);font-size:.68rem;color:var(--text2);background:transparent;
+  border:1px solid var(--border);padding:.3rem .85rem;border-radius:6px;cursor:pointer;
+  display:inline-flex;align-items:center;gap:.4rem;transition:all .18s;letter-spacing:.03em;}
+.modal-back-btn:hover{color:var(--text);border-color:var(--border2);background:var(--card);}
+.modal-back-btn svg{flex-shrink:0;}
+
+/* Screenshots gallery */
+.mp-gallery{padding:.75rem 1.5rem 1.5rem;}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem;}
+.gallery-item{border-radius:8px;overflow:hidden;border:1px solid var(--border);
+  background:var(--card);cursor:pointer;transition:border-color .2s,transform .15s,box-shadow .2s;}
+.gallery-item:hover{border-color:var(--border3);transform:translateY(-2px);
+  box-shadow:0 6px 24px rgba(59,130,246,.15);}
+.gallery-item-img{overflow:hidden;background:#090b0f;height:150px;display:flex;align-items:flex-start;justify-content:center;}
+.gallery-item-img img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;transition:transform .3s;}
+.gallery-item:hover .gallery-item-img img{transform:scale(1.05);}
+.gallery-item-cap{padding:.55rem .75rem .65rem;}
+.gallery-item-cap strong{font-size:.78rem;color:var(--text2);display:block;font-weight:600;line-height:1.3;}
+
+/* Lightbox */
+.lightbox{position:fixed;inset:0;z-index:9999;background:rgba(5,7,11,.96);
+  display:none;flex-direction:column;align-items:center;justify-content:center;padding:2rem;}
+.lightbox.open{display:flex;}
+.lightbox-img{max-width:92vw;max-height:78vh;border-radius:10px;object-fit:contain;border:1px solid var(--border2);}
+.lightbox-cap{margin-top:1.2rem;text-align:center;}
+.lightbox-cap strong{font-size:1rem;color:var(--text);display:block;margin-bottom:.3rem;}
+.lightbox-cap span{font-family:var(--mono);font-size:.72rem;color:var(--text2);}
+.lightbox-close{position:absolute;top:1.2rem;right:1.5rem;font-family:var(--mono);font-size:.72rem;
+  color:var(--text3);background:var(--card);border:1px solid var(--border);
+  padding:.4rem 1rem;border-radius:6px;cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:.4rem;}
+.lightbox-close:hover{color:var(--text);border-color:var(--border2);}
+.lightbox-nav{display:flex;gap:.75rem;margin-top:1rem;}
+.lightbox-nav button{font-family:var(--mono);font-size:.7rem;color:var(--text2);background:var(--card);
+  border:1px solid var(--border);padding:.4rem 1.1rem;border-radius:6px;cursor:pointer;transition:all .18s;}
+.lightbox-nav button:hover{color:var(--text);border-color:var(--border2);}
 </style>
 </head>
 <body>
 
 <nav>
   <a class="nav-logo" href="#" onclick="goto('home',null);return false;">
-    <div class="nav-logo-mark"><svg viewBox="0 0 12 12"><path d="M2 6h8M6 2v8" stroke-linecap="round"/></svg></div>
-    aktham.net
+    <div class="nav-logo-wordmark"><span class="nl-first">aktham</span><span class="nl-dot">.</span><span class="nl-last">alarabi</span><span class="nl-domain">&nbsp;/ portfolio</span>
+    </div>
   </a>
   <ul class="nav-links">
     <li><a href="#" class="active" data-page="home"       onclick="goto('home',this);return false;">Home</a></li>
@@ -302,34 +535,324 @@ h1.hname span{color:var(--acc);display:block;}
     <li><a href="#" data-page="experience" onclick="goto('experience',this);return false;">Experience</a></li>
     <li><a href="#" data-page="projects"   onclick="goto('projects',this);return false;">Projects</a></li>
     <li><a href="#" data-page="contact"    onclick="goto('contact',this);return false;">Contact</a></li>
+    <li><a href="#" onclick="openGame();return false;" style="color:var(--acc);opacity:.5;letter-spacing:.06em;font-size:.68rem;border:1px solid var(--border2);padding:.2rem .6rem;border-radius:4px;transition:opacity .2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='.5'" title="...">psst.</a></li>
   </ul>
+  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle light/dark mode">
+    <svg id="iconMoon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+    <svg id="iconSun"  viewBox="0 0 24 24" style="display:none;"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+  </button>
 </nav>
+
+<!-- ═══════════════════════════ GAME OVERLAY ═══════════════════════════ -->
+<div id="gameOverlay" style="display:none;position:fixed;inset:0;z-index:2000;background:#05070b;flex-direction:column;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;">
+  <button onclick="closeGame()" style="position:absolute;top:1.2rem;right:1.5rem;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#7d8a9e;background:#171b24;border:1px solid #ffffff0d;padding:.4rem 1rem;border-radius:6px;cursor:pointer;z-index:10;">✕ Close</button>
+  <div id="gameUI" style="width:820px;max-width:95vw;">
+    <!-- HUD -->
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding:0 4px;">
+      <div>
+        <span id="gScore" style="font-size:1.1rem;font-weight:700;color:#eef1f8;">SCORE: 0</span>
+        <span id="gBest" style="font-size:.7rem;color:#7d8a9e;margin-left:12px;">BEST: 0</span>
+      </div>
+      <div id="gWave" style="font-size:.85rem;color:#60a5fa;font-weight:600;">WAVE 1</div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div id="gCombo" style="font-size:.75rem;color:#fbbf24;font-weight:700;min-width:80px;text-align:right;"></div>
+        <div style="background:#0d1117;border:1px solid #3b82f630;border-radius:6px;overflow:hidden;width:140px;height:14px;">
+          <div id="gHpBar" style="height:100%;width:100%;background:#34d399;transition:width .2s,background .3s;border-radius:6px;"></div>
+        </div>
+        <div id="gHpTxt" style="font-size:.7rem;color:#eef1f8;min-width:42px;">HP 100%</div>
+      </div>
+    </div>
+    <!-- Arena -->
+    <div id="gArena" style="position:relative;width:820px;max-width:95vw;height:440px;background:#07090e;border:1px solid #3b82f618;border-radius:12px;overflow:hidden;">
+      <!-- Grid bg via CSS -->
+      <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(59,130,246,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;"></div>
+      <!-- Firewall wall -->
+      <div style="position:absolute;top:0;bottom:0;left:62%;width:4px;background:linear-gradient(to bottom,transparent,#3b82f6aa,#3b82f6,#3b82f6aa,transparent);box-shadow:0 0 18px #3b82f688;pointer-events:none;"></div>
+      <div style="position:absolute;top:50%;left:62%;transform:translate(-50%,-50%) rotate(90deg);font-size:9px;color:#3b82f655;letter-spacing:.12em;white-space:nowrap;pointer-events:none;">FIREWALL</div>
+      <!-- Server -->
+      <div id="gServer" style="position:absolute;right:18px;top:50%;transform:translateY(-50%);width:48px;height:90px;background:#0d1117;border:2px solid #34d399;border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;">
+        <div style="width:8px;height:8px;border-radius:50%;background:#34d399;box-shadow:0 0 6px #34d399;"></div>
+        <div style="width:8px;height:8px;border-radius:50%;background:#3b82f6;"></div>
+        <div style="width:8px;height:8px;border-radius:50%;background:#3b82f6;"></div>
+        <div style="font-size:7px;color:#475569;margin-top:2px;">SRV</div>
+      </div>
+      <!-- Packets injected here by JS -->
+      <!-- Game over screen -->
+      <div id="gOver" style="display:none;position:absolute;inset:0;background:rgba(5,7,11,.92);flex-direction:column;align-items:center;justify-content:center;cursor:pointer;" onclick="gameRestart()">
+        <div style="font-size:2rem;font-weight:800;color:#ef4444;margin-bottom:8px;">BREACH DETECTED</div>
+        <div style="font-size:.78rem;color:#7d8a9e;margin-bottom:20px;">The server has been compromised.</div>
+        <div id="gOverScore" style="font-size:1.6rem;font-weight:700;color:#eef1f8;margin-bottom:6px;"></div>
+        <div id="gOverHS" style="font-size:.75rem;color:#fbbf24;margin-bottom:24px;min-height:20px;"></div>
+        <div style="font-size:.8rem;color:#3b82f6;border:1px solid #3b82f640;padding:.5rem 1.4rem;border-radius:6px;">[ CLICK TO RESTART ]</div>
+      </div>
+      <!-- Start screen -->
+      <div id="gStart" style="position:absolute;inset:0;background:rgba(5,7,11,.88);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;" onclick="gameStart()">
+        <div style="font-size:1.6rem;font-weight:800;color:#eef1f8;margin-bottom:6px;">🛡️ FIREWALL DEFENDER</div>
+        <div style="font-size:.78rem;color:#7d8a9e;margin-bottom:4px;">Protect the server from incoming attacks.</div>
+        <div style="font-size:.72rem;color:#60a5fa;margin-bottom:24px;">Click <span style="color:#ef4444">RED</span> packets to block · Let <span style="color:#34d399">GREEN</span> ones through</div>
+        <div style="font-size:.8rem;color:#3b82f6;border:1px solid #3b82f640;padding:.5rem 1.4rem;border-radius:6px;">[ CLICK TO START ]</div>
+      </div>
+    </div>
+    <div style="font-size:.65rem;color:#2d3f55;margin-top:8px;text-align:center;">Click red attack packets before they reach the firewall · Green = legitimate traffic, don't block!</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var score=0,hp=100,wave=1,combo=0,comboT=0,running=false,over=false;
+  var spawnT=0,spawnI=2200,waveT=0,pkts=[];
+  var hs=parseInt(localStorage.getItem('fwHS')||'0');
+  var interval=null,waveInt=null;
+
+  var BAD=['SYN FLOOD','DDOS','MALWARE','SQL INJECT','RANSOMWARE','EXPLOIT','BRUTE FORCE','ZERO-DAY','PORT SCAN','SPOOF'];
+  var GOOD=['HTTP GET','DNS QUERY','HTTPS','SSH AUTH','NTP SYNC','BGP UPDATE','TLS 1.3','ICMP PING'];
+
+  window.openGame=function(){
+    var overlay=document.getElementById('gameOverlay');
+    overlay.style.display='flex';
+    // If game is over or never started, reset to start screen
+    if(!running){
+      stopGame();
+      score=0;hp=100;wave=1;combo=0;comboT=0;over=false;
+      spawnI=2200;
+      document.getElementById('gOver').style.display='none';
+      document.getElementById('gStart').style.display='flex';
+      updateHUD();
+    }
+  };
+  window.closeGame=function(){
+    document.getElementById('gameOverlay').style.display='none';
+    stopGame();
+  };
+  window.gameStart=function(){
+    document.getElementById('gStart').style.display='none';
+    startGame();
+  };
+  window.gameRestart=function(){
+    document.getElementById('gOver').style.display='none';
+    stopGame();
+    score=0;hp=100;wave=1;combo=0;comboT=0;over=false;
+    spawnI=2200;
+    updateHUD();
+    startGame();
+  };
+
+  function startGame(){
+    running=true;
+    last=Date.now(); // reset timestamp so first tick has dt≈0
+    // reset server border
+    var srv=document.getElementById('gServer');
+    if(srv)srv.style.borderColor='#34d399';
+    scheduleSpawn();
+    waveInt=setInterval(function(){
+      if(!running||over)return;
+      wave++;
+      spawnI=Math.max(600,spawnI-150);
+      document.getElementById('gWave').textContent='WAVE '+wave;
+      showWaveBanner();
+    },12000);
+    interval=setInterval(tick,33);
+  }
+
+  function stopGame(){
+    running=false;
+    clearInterval(interval);clearInterval(waveInt);
+    clearTimeout(spawnTimeout); // prevent stale spawns after close
+    interval=null;waveInt=null;spawnTimeout=null;
+    pkts.forEach(function(p){if(p.el&&p.el.parentNode)p.el.parentNode.removeChild(p.el);});
+    pkts=[];
+  }
+
+  var spawnTimeout=null;
+  function scheduleSpawn(){
+    if(!running||over)return;
+    var jitter=(Math.random()*.4+.8)*spawnI;
+    spawnTimeout=setTimeout(function(){
+      if(running&&!over){spawnPacket();scheduleSpawn();}
+    },jitter);
+  }
+
+  function spawnPacket(){
+    var bad=Math.random()<(0.4+wave*0.04);
+    var lbl=bad?BAD[Math.floor(Math.random()*BAD.length)]:GOOD[Math.floor(Math.random()*GOOD.length)];
+    var spd=80+wave*18+Math.random()*30; // px/sec
+    var arena=document.getElementById('gArena');
+    var aH=arena.offsetHeight;
+    var y=40+Math.random()*(aH-80);
+    var el=document.createElement('div');
+    var hue=bad?(Math.random()*18):(130+Math.random()*20);
+    var col='hsl('+hue+',85%,55%)';
+    el.style.cssText='position:absolute;left:-120px;top:'+y+'px;transform:translateY(-50%);'+
+      'background:'+col+';color:#fff;font-family:\'JetBrains Mono\',monospace;font-size:7px;font-weight:700;'+
+      'padding:5px 10px;border-radius:4px;cursor:pointer;user-select:none;white-space:nowrap;'+
+      'box-shadow:0 0 12px '+col+'88;border:1px solid rgba(255,255,255,0.15);'+
+      'transition:transform .08s;z-index:5;';
+    el.textContent=lbl;
+    // arrow
+    el.innerHTML=lbl+'<span style="margin-left:6px;opacity:.7;">▶</span>';
+    el.onclick=function(e){
+      e.stopPropagation();
+      clickPacket(p);
+    };
+    el.onmouseenter=function(){el.style.transform='translateY(-50%) scale(1.08)';};
+    el.onmouseleave=function(){el.style.transform='translateY(-50%) scale(1)';};
+    arena.appendChild(el);
+    var p={el:el,bad:bad,lbl:lbl,x:-110,y:y,spd:spd,col:col,alive:true};
+    pkts.push(p);
+  }
+
+  var last=Date.now();
+  function tick(){
+    if(!running||over)return;
+    var now=Date.now(),dt=(now-last)/1000;last=now;
+    if(dt>0.1)dt=0.1;
+    var arena=document.getElementById('gArena');
+    var aW=arena.offsetWidth;
+    var fwX=aW*0.62;
+
+    if(comboT>0){comboT-=dt*1000;if(comboT<=0){combo=0;document.getElementById('gCombo').textContent='';}}
+
+    pkts=pkts.filter(function(p){
+      if(!p.alive)return false;
+      p.x+=p.spd*dt;
+      if(p.el)p.el.style.left=p.x+'px';
+      // bad packet hits firewall
+      if(p.bad&&p.x>=fwX-60){
+        removePacket(p);
+        takeDamage(12);
+        flashArena('#ef4444');
+        combo=0;document.getElementById('gCombo').textContent='';
+        return false;
+      }
+      // good packet exits right — fine
+      if(!p.bad&&p.x>aW+20){removePacket(p);return false;}
+      // bad packet that somehow exits — shouldn't happen but just in case
+      if(p.bad&&p.x>aW+20){removePacket(p);return false;}
+      return true;
+    });
+  }
+
+  function clickPacket(p){
+    if(!p.alive||over)return;
+    p.alive=false;
+    if(p.bad){
+      score+=10*(1+Math.min(combo,9));
+      combo++;comboT=1500;
+      document.getElementById('gCombo').textContent='x'+combo+' COMBO!';
+      popEffect(p,'#34d399','BLOCKED!');
+    } else {
+      takeDamage(10);
+      combo=0;document.getElementById('gCombo').textContent='';
+      popEffect(p,'#ef4444','PENALTY!');
+    }
+    removePacket(p);
+    updateHUD();
+  }
+
+  function removePacket(p){
+    p.alive=false;
+    if(p.el&&p.el.parentNode){p.el.parentNode.removeChild(p.el);p.el=null;}
+  }
+
+  function takeDamage(n){
+    hp=Math.max(0,hp-n);
+    updateHUD();
+    if(hp<=0)gameOver();
+  }
+
+  function popEffect(p,col,txt){
+    var arena=document.getElementById('gArena');
+    var pop=document.createElement('div');
+    pop.style.cssText='position:absolute;left:'+(p.x+30)+'px;top:'+(p.y-30)+'px;'+
+      'color:'+col+';font-family:\'JetBrains Mono\',monospace;font-size:.7rem;font-weight:700;'+
+      'pointer-events:none;z-index:20;transition:all .5s ease;';
+    pop.textContent=txt;
+    arena.appendChild(pop);
+    requestAnimationFrame(function(){
+      pop.style.transform='translateY(-28px)';pop.style.opacity='0';
+    });
+    setTimeout(function(){if(pop.parentNode)pop.parentNode.removeChild(pop);},500);
+  }
+
+  function flashArena(col){
+    var arena=document.getElementById('gArena');
+    var f=document.createElement('div');
+    f.style.cssText='position:absolute;inset:0;background:'+col+';opacity:.18;pointer-events:none;z-index:30;border-radius:12px;';
+    arena.appendChild(f);
+    setTimeout(function(){if(f.parentNode)f.parentNode.removeChild(f);},200);
+  }
+
+  function updateHUD(){
+    document.getElementById('gScore').textContent='SCORE: '+score;
+    document.getElementById('gBest').textContent='BEST: '+Math.max(score,hs);
+    var pct=Math.max(0,hp);
+    document.getElementById('gHpBar').style.width=pct+'%';
+    document.getElementById('gHpBar').style.background=hp>50?'#34d399':hp>25?'#fbbf24':'#ef4444';
+    document.getElementById('gHpTxt').textContent='HP '+hp+'%';
+    // server border color
+    var srv=document.getElementById('gServer');
+    if(srv)srv.style.borderColor=hp>50?'#34d399':hp>25?'#fbbf24':'#ef4444';
+    // server led
+    var led=srv?srv.querySelector('div'):null;
+    if(led)led.style.background=hp>50?'#34d399':hp>25?'#fbbf24':'#ef4444';
+  }
+
+  function showWaveBanner(){
+    var arena=document.getElementById('gArena');
+    var b=document.createElement('div');
+    b.style.cssText='position:absolute;inset:0;display:flex;align-items:center;justify-content:center;'+
+      'font-family:\'Sora\',sans-serif;font-size:2.8rem;font-weight:800;color:#3b82f6;'+
+      'pointer-events:none;z-index:25;transition:opacity .8s;';
+    b.textContent='WAVE '+wave;
+    arena.appendChild(b);
+    setTimeout(function(){b.style.opacity='0';},1200);
+    setTimeout(function(){if(b.parentNode)b.parentNode.removeChild(b);},2000);
+  }
+
+  function gameOver(){
+    over=true;running=false;
+    clearInterval(interval);clearInterval(waveInt);
+    clearTimeout(spawnTimeout);
+    if(score>hs){hs=score;localStorage.setItem('fwHS',score);}
+    document.getElementById('gOverScore').textContent='SCORE: '+score;
+    document.getElementById('gOverHS').textContent=score>=hs&&score>0?'🏆 NEW HIGH SCORE!':'Best: '+hs;
+    document.getElementById('gOver').style.display='flex';
+  }
+})();
+</script>
+
+
 
 <div id="app">
 
 <!-- ═══════════════════════════ HOME ═══════════════════════════ -->
-<div class="page active" id="pg-home">
+<div class="page active" id="pg-home" tabindex="-1">
 <div class="home-inner">
   <div class="avail reveal"><div class="avail-dot"></div>Available for opportunities</div>
   <div class="hero-row">
     <div>
-      <h1 class="hname reveal d1">Aktham<span>Alarabi</span></h1>
+      <div class="hero-name-row reveal d1">
+        <img class="hero-photo" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBAUEBAYFBQUGBgYHCQ4JCQgICRINDQoOFRIWFhUSFBQXGiEcFxgfGRQUHScdHyIjJSUlFhwpLCgkKyEkJST/2wBDAQYGBgkICREJCREkGBQYJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCT/wAARCAHgAeADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD6Eooor1TzAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAorB17x34a8MkpqmsWsEw/5Yht8n/fK5P51xF9+0Z4Ut5GW2tNSu0X+MKqA/TJzWcq0I7s0jSnLZHqtFfOXir9pHWbwtBoNnBpcfeaUiaX8P4R+Rrgb74s+KbucJL4o1SJyBjFwUBP4YwD+VYSxkE9Fc3jg5vfQ+y80V8iad8bfGumqoOu3UzAcJPtkz7/MORXUaZ+01rsADX9lp11GMAnaYyffKn+lCxkHugeDmtj6Torx/Sf2lfD93P5Go6Zd2Lj7xWRZNvfocZH0rvNF+I3hXXyFstatvMxny5j5Tfk2P0raNeEtmYyozjujpKKM5APryKK1MgooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACioL29ttNtJby8uI7e3hUvJLI21UA7k187fFT46jXM6T4dubi0surXCMY5Lg9hn+Ffbqayq1Y01qa06Tm7I9k8Z/E3w94Iif7fcNPdLj/AEW3w0nPTd2UfWvC/HP7QGuasTbadM+k2cnH7jh8ejSdc/TFeSahrkjFfMZnlZt0hZt3OevuaxHv3Z3Vn3K3OR+lcFSvOfkjvp0IQ31Zs3WoG6lYRsSC2WdmxuPuepqnPM6MC7YTGVXpjIrPMixMSm4Mec+tQSSzTM2d57kjmslE0cjUuNRHBaXIIHB7fjVOa+aWTLuTt4GfSqflnG6XcfbvVxZrcx4UAqOzdfzotYV29wiu90SwBzlDlMnpUsVy6liOq53A/wAQ71AyW0oDRyhD/dYcU9Y8IdrAuM5UdDQM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" alt="Aktham Alarabi"/>
+        <h1 class="hname" style="margin-bottom:0;">Aktham<span>Alarabi</span></h1>
+      </div>
       <p class="htitle reveal d2">// Network &amp; Cloud Security Engineer · CCNA</p>
       <p class="hdesc reveal d3">Network and systems security engineer with hands-on experience in enterprise networking, SOC operations, cloud infrastructure, and ITSM. Building secure, well-configured networks — one interface at a time.</p>
       <div class="hbtns reveal d4">
-        <a class="btn-fill" href="#" onclick="goto('experience',null);return false;">View Experience →</a>
+        <a class="btn-fill" href="#" onclick="goto('projects',null);return false;">View Projects →</a>
         <a class="btn-ghost" href="#" onclick="goto('contact',null);return false;">Contact Me</a>
+        <a class="btn-ghost" href="#" onclick="openCertPdf('cv/aktham_alarabi_cv.pdf','Aktham Alarabi — CV');return false;" style="gap:.4rem;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+          View CV
+        </a>
       </div>
       <div class="hsocials reveal d5">
-        <a href="https://www.linkedin.com/in/aktham-alarabi-0819b8346" target="_blank" title="LinkedIn">
+        <a href="https://www.linkedin.com/in/aktham-alarabi/" target="_blank" title="LinkedIn">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 10v7M12 13a3 3 0 016 0v4"/></svg></a>
-        <a href="mailto:aktham.alarabi@gmail.com" title="Email">
+        <a onclick="copyEmail(null);return false;" href="#" title="Email">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg></a>
         <div class="hdiv"></div>
         <a href="https://www.youtube.com/@Jrx70611" target="_blank" title="YouTube">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg></a>
-        <a href="https://wa.me/962798859514" target="_blank" title="WhatsApp">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></a>
       </div>
       <div class="hstats reveal d6">
         <div class="hstat"><div class="hstat-n">20+</div><div class="hstat-l">Lab Projects</div></div>
@@ -364,11 +887,58 @@ h1.hname span{color:var(--acc);display:block;}
     <div class="hn-card" onclick="goto('about',null)"><div class="hn-ico"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div><div><div class="hn-title">Skills &amp; Tools</div><div class="hn-desc">Technical skill bars and full tools &amp; technologies arsenal.</div></div></div>
   </div>
 </div>
-<div class="page-footer"><span class="pf-l">© 2025 Aktham Khaleel Alarabi</span><span class="pf-l" style="color:var(--text2);font-size:.68rem;">aktham.net</span><span class="pf-l">Network &amp; Cloud Security Engineer</span></div>
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-name">Aktham<span> Alarabi</span></div>
+      <p class="footer-tagline">Network &amp; Cloud Security Engineer — building secure, scalable infrastructure one lab at a time.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Navigate</div>
+      <ul class="footer-links">
+        <li><a href="#" onclick="goto('home',null);return false;">Home</a></li>
+        <li><a href="#" onclick="goto('about',null);return false;">About</a></li>
+        <li><a href="#" onclick="goto('experience',null);return false;">Experience</a></li>
+        <li><a href="#" onclick="goto('projects',null);return false;">Projects</a></li>
+        <li><a href="#" onclick="goto('contact',null);return false;">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Credentials</div>
+      <ul class="footer-links">
+        <li><a href="#" onclick="goto('experience',null);return false;">Certifications</a></li>
+        <li><a href="https://ieeexplore.ieee.org/document/10876936/" target="_blank">IEEE Publication</a></li>
+        <li><a href="https://www.credly.com/badges/f7942c42-d4d7-4867-b42a-ca9032456cc4" target="_blank">CCNA Badge</a></li>
+        <li><a href="cv/aktham_alarabi_cv.pdf" target="_blank">Download CV</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Connect</div>
+      <div class="footer-socials">
+        <a class="footer-soc" href="https://www.linkedin.com/in/aktham-alarabi/" target="_blank" title="LinkedIn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 10v7M12 13a3 3 0 016 0v4"/></svg>
+        </a>
+        <a class="footer-soc" onclick="copyEmail(null)" style="cursor:pointer;" title="Copy Email">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+        </a>
+        <a class="footer-soc" href="https://www.youtube.com/@Jrx70611" target="_blank" title="YouTube">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a class="footer-soc" href="https://www.instagram.com/vfbb/" target="_blank" title="Instagram">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 Aktham Khaleel Alarabi · All rights reserved.</span>
+    <span class="footer-built">portfolio<span>.aktham.net</span></span>
+  </div>
+</footer>
 </div>
 
 <!-- ═══════════════════════════ ABOUT ═══════════════════════════ -->
-<div class="page" id="pg-about">
+<div class="page" id="pg-about" tabindex="-1">
 <div class="wrap">
   <div class="eyebrow reveal">About</div>
   <h2 class="sec-title reveal d1">Background &amp; <span>Expertise</span></h2>
@@ -415,11 +985,58 @@ h1.hname span{color:var(--acc);display:block;}
     <div class="tc"><div class="tc-hd"><div class="tc-dot"></div><span class="tc-cat">Programming &amp; API</span></div><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="chip">Python</span><span class="chip">REST API</span><span class="chip">VirusTotal API</span><span class="chip">Bash</span><span class="chip">FastAPI</span></div></div>
   </div>
 </div>
-<div class="page-footer"><span class="pf-l">© 2025 Aktham Khaleel Alarabi</span><span class="pf-l" style="color:var(--text2);font-size:.68rem;">aktham.net</span><span class="pf-l">Network &amp; Cloud Security Engineer</span></div>
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-name">Aktham<span> Alarabi</span></div>
+      <p class="footer-tagline">Network &amp; Cloud Security Engineer — building secure, scalable infrastructure one lab at a time.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Navigate</div>
+      <ul class="footer-links">
+        <li><a href="#" onclick="goto('home',null);return false;">Home</a></li>
+        <li><a href="#" onclick="goto('about',null);return false;">About</a></li>
+        <li><a href="#" onclick="goto('experience',null);return false;">Experience</a></li>
+        <li><a href="#" onclick="goto('projects',null);return false;">Projects</a></li>
+        <li><a href="#" onclick="goto('contact',null);return false;">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Credentials</div>
+      <ul class="footer-links">
+        <li><a href="#" onclick="goto('experience',null);return false;">Certifications</a></li>
+        <li><a href="https://ieeexplore.ieee.org/document/10876936/" target="_blank">IEEE Publication</a></li>
+        <li><a href="https://www.credly.com/badges/f7942c42-d4d7-4867-b42a-ca9032456cc4" target="_blank">CCNA Badge</a></li>
+        <li><a href="cv/aktham_alarabi_cv.pdf" target="_blank">Download CV</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Connect</div>
+      <div class="footer-socials">
+        <a class="footer-soc" href="https://www.linkedin.com/in/aktham-alarabi/" target="_blank" title="LinkedIn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 10v7M12 13a3 3 0 016 0v4"/></svg>
+        </a>
+        <a class="footer-soc" onclick="copyEmail(null)" style="cursor:pointer;" title="Copy Email">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+        </a>
+        <a class="footer-soc" href="https://www.youtube.com/@Jrx70611" target="_blank" title="YouTube">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a class="footer-soc" href="https://www.instagram.com/vfbb/" target="_blank" title="Instagram">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 Aktham Khaleel Alarabi · All rights reserved.</span>
+    <span class="footer-built">portfolio<span>.aktham.net</span></span>
+  </div>
+</footer>
 </div>
 
 <!-- ═══════════════════════════ EXPERIENCE ═══════════════════════════ -->
-<div class="page" id="pg-experience">
+<div class="page" id="pg-experience" tabindex="-1">
 <div class="wrap">
   <div class="eyebrow reveal">Journey</div>
   <h2 class="sec-title reveal d1">Experience &amp; <span>Training</span></h2>
@@ -429,7 +1046,7 @@ h1.hname span{color:var(--acc);display:block;}
       <div class="tl-ico curr"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg></div>
       <div class="tl-meta"><span class="tl-date">Feb 2026 – Present</span><span class="tl-curr">Current</span></div>
       <div class="tl-role">ITSM Consultant</div>
-      <div class="tl-co">DIMA Solutions Ltd, Co. — Amman, Jordan</div>
+      <div class="tl-co"><a href="https://dima.solutions/" target="_blank" style="color:var(--acc);text-decoration:none;transition:color .18s;" onmouseover="this.style.color='var(--acc2)'" onmouseout="this.style.color='var(--acc)'">DIMA Solutions Ltd, Co.</a> — Amman, Jordan</div>
       <ul class="tl-ul">
         <li>Implementing and configuring enterprise ITSM platforms (OpenText SMAX) aligned with ITIL service management practices.</li>
         <li>Managing and optimizing SMAX and IT Service Manager environments to improve operations and incident resolution.</li>
@@ -439,23 +1056,24 @@ h1.hname span{color:var(--acc);display:block;}
     <div class="tl-item reveal d2">
       <div class="tl-ico past"><svg viewBox="0 0 24 24"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z"/></svg></div>
       <div class="tl-meta"><span class="tl-date">Nov 2025 – Jan 2026</span></div>
-      <div class="tl-role past">Cybersecurity Intern — SOC Analyst</div>
-      <div class="tl-co past">Specialized Technical Services (STS) · ZainTECH Company</div>
+      <div class="tl-role past">Security Operations Center Analyst — Intern</div>
+      <div class="tl-co past"><a href="https://www.stsarabia.com/Default/EN" target="_blank" style="color:var(--text3);text-decoration:none;transition:color .18s;" onmouseover="this.style.color='var(--acc)'" onmouseout="this.style.color='var(--text3)'">Specialized Technical Services (STS)</a> · <a href="https://zaintech.com/en" target="_blank" style="color:var(--text3);text-decoration:none;transition:color .18s;" onmouseover="this.style.color='var(--acc)'" onmouseout="this.style.color='var(--text3)'">ZainTECH Company</a> — Amman, Jordan · On-site</div>
       <ul class="tl-ul">
-        <li>Built a defensive SIEM infrastructure using Splunk Enterprise and Sysmon with custom SPL detection rules for C2 traffic.</li>
+        <li>Engineered a defensive SIEM infrastructure using Splunk Enterprise and Sysmon to detect advanced threats and C2 traffic, with custom SPL detection rules.</li>
         <li>Conducted authorized Black Box penetration tests — breached targets via VPN hash cracking (IKEv1) and privilege escalation.</li>
-        <li>Carried out risk assessments with Tenable Nessus and wrote remediation plans for critical legacy system flaws.</li>
-        <li>Built Python scripts automating threat intelligence via VirusTotal API — reduced manual analysis time by ~40%.</li>
+        <li>Utilized Tenable Nessus for vulnerability management; identified critical flaws in legacy systems and authored remediation plans.</li>
+        <li>Developed custom Python scripts to automate threat intelligence gathering via the VirusTotal API, significantly reducing manual analysis time.</li>
       </ul>
     </div>
     <div class="tl-item reveal d3">
       <div class="tl-ico past"><svg viewBox="0 0 24 24"><path d="M12 15a3 3 0 100-6 3 3 0 000 6z"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></div>
       <div class="tl-meta"><span class="tl-date">Oct 2025 – Jan 2026</span></div>
-      <div class="tl-role past">Technical Support Intern</div>
-      <div class="tl-co past">General Computers and Electronics Co. (GCE) — Part-Time</div>
+      <div class="tl-role past">Technical Engineer — Intern</div>
+      <div class="tl-co past"><a href="https://www.gce.com.jo/" target="_blank" style="color:var(--text3);text-decoration:none;transition:color .18s;" onmouseover="this.style.color='var(--acc)'" onmouseout="this.style.color='var(--text3)'">General Computers and Electronics Co. (GCE)</a> — Amman, Jordan · On-site · Part-Time</div>
       <ul class="tl-ul">
-        <li>Led large-scale Windows OS deployments for the Ministry of Education and Public Security Directorate.</li>
-        <li>Managed end-to-end hardware provisioning, diagnostics, and delivery logistics for government projects.</li>
+        <li>Provided technical support and infrastructure management for large-scale government projects, including the Ministry of Education and the Public Security Directorate.</li>
+        <li>Executed enterprise-wide Windows OS imaging and deployments using Ventoy and Hiren's BootCD to ensure standardized software configurations across workstations.</li>
+        <li>Managed end-to-end hardware provisioning, diagnosed software and hardware malfunctions, and coordinated logistical handover of IT assets to site administrators.</li>
       </ul>
     </div>
   </div>
@@ -491,6 +1109,7 @@ h1.hname span{color:var(--acc);display:block;}
           <div class="oc-nm">Cisco Certified Network Associate</div>
           <div class="oc-org">Cisco Systems · 3 courses completed · Certified May 2025</div>
         </div>
+        <button class="cert-view-btn" onclick="event.stopPropagation();openCertPdf('certs/ccna.pdf','CCNA — Cisco Certified Network Associate')">View Cert ↗</button>
         <a href="https://www.credly.com/badges/d17649e0-b61d-473b-93a3-ff35fc203d67" target="_blank"
            onclick="event.stopPropagation()"
            style="font-family:var(--mono);font-size:.62rem;color:var(--acc);text-decoration:none;margin-right:.75rem;white-space:nowrap;">View Badge ↗</a>
@@ -531,15 +1150,15 @@ h1.hname span{color:var(--acc);display:block;}
 
     <!-- Other certs -->
     <div class="oc-list">
-      <div class="oc" onclick="toggleOC(this,'btl1x')"><div class="oc-pill done">BTL-1</div><div class="oc-info"><div class="oc-nm">Blue Team Level 1</div><div class="oc-org">Blue Team Labs — Training Completed</div></div><div class="oc-yr">Completed</div></div>
+      <div class="oc" onclick="toggleOC(this,'btl1x')"><div class="oc-pill done">BTL-1</div><div class="oc-info"><div class="oc-nm">Blue Team Level 1</div><div class="oc-org">Blue Team Labs — Training Completed</div></div><button class="cert-view-btn" onclick="event.stopPropagation();openCertPdf('certs/btl1.pdf','Blue Team Level 1 (BTL-1)')">View Cert ↗</button><div class="oc-yr">Completed</div></div>
       <div class="oc-expand" id="btl1x"><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="topic-chip">Phishing Analysis</span><span class="topic-chip">Security Fundamentals</span><span class="topic-chip">Threat Intelligence</span><span class="topic-chip">SIEM</span><span class="topic-chip">Incident Response</span><span class="topic-chip">Digital Forensics</span></div></div>
-      <div class="oc" onclick="toggleOC(this,'secx')"><div class="oc-pill done">SEC+</div><div class="oc-info"><div class="oc-nm">CompTIA Security+</div><div class="oc-org">CompTIA — Training Completed</div></div><div class="oc-yr">Completed</div></div>
+      <div class="oc" onclick="toggleOC(this,'secx')"><div class="oc-pill done">SEC+</div><div class="oc-info"><div class="oc-nm">CompTIA Security+</div><div class="oc-org">CompTIA — Training Completed</div></div><button class="cert-view-btn" onclick="event.stopPropagation();openCertPdf('certs/security-plus.pdf','CompTIA Security+')">View Cert ↗</button><div class="oc-yr">Completed</div></div>
       <div class="oc-expand" id="secx"><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="topic-chip">Threats &amp; Vulnerabilities</span><span class="topic-chip">Architecture &amp; Design</span><span class="topic-chip">Cryptography &amp; PKI</span><span class="topic-chip">Identity &amp; Access</span><span class="topic-chip">Risk Management</span></div></div>
-      <div class="oc" onclick="toggleOC(this,'az900x')"><div class="oc-pill done">AZ-900</div><div class="oc-info"><div class="oc-nm">Microsoft Azure Fundamentals</div><div class="oc-org">Microsoft — Training Completed</div></div><div class="oc-yr">Completed</div></div>
+      <div class="oc" onclick="toggleOC(this,'az900x')"><div class="oc-pill done">AZ-900</div><div class="oc-info"><div class="oc-nm">Microsoft Azure Fundamentals</div><div class="oc-org">Microsoft — Training Completed</div></div><button class="cert-view-btn" onclick="event.stopPropagation();openCertPdf('certs/az900.pdf','Microsoft Azure Fundamentals (AZ-900)')">View Cert ↗</button><div class="oc-yr">Completed</div></div>
       <div class="oc-expand" id="az900x"><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="topic-chip">Cloud Concepts</span><span class="topic-chip">Core Azure Services</span><span class="topic-chip">Pricing &amp; SLA</span><span class="topic-chip">Azure Governance</span></div></div>
-      <div class="oc" onclick="toggleOC(this,'az104x')"><div class="oc-pill done">AZ-104</div><div class="oc-info"><div class="oc-nm">Microsoft Azure Administrator</div><div class="oc-org">Microsoft — Training Completed</div></div><div class="oc-yr">Completed</div></div>
+      <div class="oc" onclick="toggleOC(this,'az104x')"><div class="oc-pill done">AZ-104</div><div class="oc-info"><div class="oc-nm">Microsoft Azure Administrator</div><div class="oc-org">Microsoft — Training Completed</div></div><button class="cert-view-btn" onclick="event.stopPropagation();openCertPdf('certs/az104.pdf','Microsoft Azure Administrator (AZ-104)')">View Cert ↗</button><div class="oc-yr">Completed</div></div>
       <div class="oc-expand" id="az104x"><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="topic-chip">Entra ID / IAM</span><span class="topic-chip">Virtual Networks</span><span class="topic-chip">Storage</span><span class="topic-chip">VM Management</span><span class="topic-chip">Monitoring</span><span class="topic-chip">Load Balancer</span></div></div>
-      <div class="oc" onclick="toggleOC(this,'az500x')"><div class="oc-pill done">AZ-500</div><div class="oc-info"><div class="oc-nm">Microsoft Azure Security Engineer</div><div class="oc-org">Microsoft — Training Completed</div></div><div class="oc-yr">Completed</div></div>
+      <div class="oc" onclick="toggleOC(this,'az500x')"><div class="oc-pill done">AZ-500</div><div class="oc-info"><div class="oc-nm">Microsoft Azure Security Engineer</div><div class="oc-org">Microsoft — Training Completed</div></div><button class="cert-view-btn" onclick="event.stopPropagation();openCertPdf('certs/az500.pdf','Microsoft Azure Security Engineer (AZ-500)')">View Cert ↗</button><div class="oc-yr">Completed</div></div>
       <div class="oc-expand" id="az500x"><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="topic-chip">Azure Defender</span><span class="topic-chip">Key Vault</span><span class="topic-chip">RBAC</span><span class="topic-chip">NSG &amp; Firewall</span><span class="topic-chip">Sentinel</span><span class="topic-chip">Zero Trust</span></div></div>
       <div class="oc" onclick="toggleOC(this,'az305x')"><div class="oc-pill prog">AZ-305</div><div class="oc-info"><div class="oc-nm">Microsoft Azure Solutions Architect</div><div class="oc-org">Microsoft — In Progress</div></div><div class="oc-yr">2025 →</div></div>
       <div class="oc-expand" id="az305x"><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="topic-chip">Infrastructure Design</span><span class="topic-chip">High Availability</span><span class="topic-chip">Disaster Recovery</span><span class="topic-chip">Cost Optimization</span></div></div>
@@ -565,49 +1184,185 @@ h1.hname span{color:var(--acc);display:block;}
     </div>
   </div>
 </div>
-<div class="page-footer"><span class="pf-l">© 2025 Aktham Khaleel Alarabi</span><span class="pf-l" style="color:var(--text2);font-size:.68rem;">aktham.net</span><span class="pf-l">Network &amp; Cloud Security Engineer</span></div>
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-name">Aktham<span> Alarabi</span></div>
+      <p class="footer-tagline">Network &amp; Cloud Security Engineer — building secure, scalable infrastructure one lab at a time.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Navigate</div>
+      <ul class="footer-links">
+        <li><a href="#" onclick="goto('home',null);return false;">Home</a></li>
+        <li><a href="#" onclick="goto('about',null);return false;">About</a></li>
+        <li><a href="#" onclick="goto('experience',null);return false;">Experience</a></li>
+        <li><a href="#" onclick="goto('projects',null);return false;">Projects</a></li>
+        <li><a href="#" onclick="goto('contact',null);return false;">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Credentials</div>
+      <ul class="footer-links">
+        <li><a href="#" onclick="goto('experience',null);return false;">Certifications</a></li>
+        <li><a href="https://ieeexplore.ieee.org/document/10876936/" target="_blank">IEEE Publication</a></li>
+        <li><a href="https://www.credly.com/badges/f7942c42-d4d7-4867-b42a-ca9032456cc4" target="_blank">CCNA Badge</a></li>
+        <li><a href="cv/aktham_alarabi_cv.pdf" target="_blank">Download CV</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Connect</div>
+      <div class="footer-socials">
+        <a class="footer-soc" href="https://www.linkedin.com/in/aktham-alarabi/" target="_blank" title="LinkedIn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 10v7M12 13a3 3 0 016 0v4"/></svg>
+        </a>
+        <a class="footer-soc" onclick="copyEmail(null)" style="cursor:pointer;" title="Copy Email">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+        </a>
+        <a class="footer-soc" href="https://www.youtube.com/@Jrx70611" target="_blank" title="YouTube">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a class="footer-soc" href="https://www.instagram.com/vfbb/" target="_blank" title="Instagram">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 Aktham Khaleel Alarabi · All rights reserved.</span>
+    <span class="footer-built">portfolio<span>.aktham.net</span></span>
+  </div>
+</footer>
 </div>
 
 <!-- ═══════════════════════════ PROJECTS ═══════════════════════════ -->
-<div class="page" id="pg-projects">
+<div class="page" id="pg-projects" tabindex="-1">
 <div class="wrap">
   <div class="eyebrow reveal">Work</div>
   <h2 class="sec-title reveal d1">Selected <span>Projects</span></h2>
   <p class="reveal d2" style="font-size:.87rem;color:var(--text2);max-width:560px;margin-bottom:2.5rem;font-weight:300;">GNS3, Cisco Packet Tracer, and real-world lab projects covering routing, switching, security, VPN, wireless, and more.</p>
   <div class="proj-grid reveal d3">
-    <div class="pc"><div class="pc-badge">Capstone · AI + Security</div><div class="pc-num">001</div><div class="pc-title">Conversational Firewall Management</div><div class="pc-desc">AI-driven NL interface for OPNsense NGFW. Translates natural language to REST API firewall actions. RBAC, Argon2, real-time SSE dashboards.</div><div style="display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.85rem;"><span class="chip">FastAPI</span><span class="chip">OPNsense</span><span class="chip">GNS3</span><span class="chip">Suricata</span></div><div class="pc-arrow">View topology demo →</div></div>
-    <div class="pc"><div class="pc-badge">Security · SIEM</div><div class="pc-num">002</div><div class="pc-title">Enterprise SIEM &amp; Attack Detection Lab</div><div class="pc-desc">Production Splunk SIEM with SPL rules for brute-force, DoS, Metasploit RCE, and PowerShell obfuscation. Full SOC dashboards.</div><div style="display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.85rem;"><span class="chip">Splunk</span><span class="chip">Sysmon</span><span class="chip">Metasploit</span><span class="chip">Python</span></div><div class="pc-arrow">View topology demo →</div></div>
-    <div class="pc"><div class="pc-badge">Network · Performance</div><div class="pc-num">003</div><div class="pc-title">HAProxy Load Balancing Evaluation</div><div class="pc-desc">Controlled performance analysis of Round Robin, Least Connections, and Source-IP under baseline and degraded conditions.</div><div style="display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.85rem;"><span class="chip">HAProxy</span><span class="chip">Ubuntu</span><span class="chip">GNS3</span><span class="chip">ApacheBench</span></div><div class="pc-arrow">View topology demo →</div></div>
-    <div class="pc"><div class="pc-badge">IoT · Protocol Research</div><div class="pc-num">004</div><div class="pc-title">IoT Protocol Analysis: MQTT vs CoAP</div><div class="pc-desc">Experimental comparison under constrained IoT conditions. MQTT reliable but 10× latency spike; CoAP lower latency but ~12% packet drop.</div><div style="display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.85rem;"><span class="chip">Python</span><span class="chip">MQTT</span><span class="chip">CoAP</span><span class="chip">GNS3</span><span class="chip">Azure VM</span></div><div class="pc-arrow">View topology demo →</div></div>
+    <div class="pc" onclick="openProjectModal()" style="cursor:pointer;"><div class="pc-badge">Capstone · AI + Security</div><div class="pc-num">001</div><div class="pc-title">Conversational Firewall Management</div><div class="pc-desc">LangGraph-orchestrated chatbot that translates plain-English commands into OPNsense REST API calls. 40+ integrated endpoints covering firewall rules, DHCP, IDS/IPS, diagnostics, and routing — deployed on a GNS3 multi-router OSPF topology.</div><div style="display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.85rem;"><span class="chip">LangGraph</span><span class="chip">FastAPI</span><span class="chip">OPNsense</span><span class="chip">GNS3</span></div><div class="pc-arrow" style="color:var(--acc);">View project details + topology →</div></div>
+    <div class="pc" style="cursor:default;opacity:.85;"><div class="pc-badge">Security · SIEM</div><div class="pc-num">002</div><div class="pc-title">Enterprise SIEM &amp; Attack Detection Lab</div><div class="pc-desc">Production Splunk SIEM with SPL rules for brute-force, DoS, Metasploit RCE, and PowerShell obfuscation. Full SOC dashboards.</div><div style="display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.85rem;"><span class="chip">Splunk</span><span class="chip">Sysmon</span><span class="chip">Metasploit</span><span class="chip">Python</span></div><div class="pc-soon"><div class="pc-soon-dot"></div>Coming Soon</div><div class="pc-soon-note">Full write-up, topology diagram, and demo screenshots are being prepared and will be published shortly.</div></div>
+    <div class="pc" style="cursor:default;opacity:.85;"><div class="pc-badge">Network · Performance</div><div class="pc-num">003</div><div class="pc-title">HAProxy Load Balancing Evaluation</div><div class="pc-desc">Controlled performance analysis of Round Robin, Least Connections, and Source-IP under baseline and degraded conditions.</div><div style="display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.85rem;"><span class="chip">HAProxy</span><span class="chip">Ubuntu</span><span class="chip">GNS3</span><span class="chip">ApacheBench</span></div><div class="pc-soon"><div class="pc-soon-dot"></div>Coming Soon</div><div class="pc-soon-note">GNS3 topology, benchmark results, and detailed analysis coming soon.</div></div>
+    <div class="pc" style="cursor:default;opacity:.85;"><div class="pc-badge">IoT · Protocol Research</div><div class="pc-num">004</div><div class="pc-title">IoT Protocol Analysis: MQTT vs CoAP</div><div class="pc-desc">Experimental comparison under constrained IoT conditions. MQTT reliable but 10× latency spike; CoAP lower latency but ~12% packet drop.</div><div style="display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.85rem;"><span class="chip">Python</span><span class="chip">MQTT</span><span class="chip">CoAP</span><span class="chip">GNS3</span><span class="chip">Azure VM</span></div><div class="pc-soon"><div class="pc-soon-dot"></div>Coming Soon</div><div class="pc-soon-note">Test environment setup, protocol capture analysis, and findings writeup in progress.</div></div>
   </div>
   <div style="margin-top:1.25rem;padding:1.2rem 1.4rem;background:var(--card);border:1px solid var(--border2);border-radius:9px;display:flex;align-items:center;gap:.95rem;" class="reveal">
     <div style="width:32px;height:32px;background:var(--acc-dim);border:1px solid var(--border2);border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--acc)" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></div>
     <div><div style="font-size:.82rem;font-weight:600;color:var(--text);">20+ lab projects — not all shown here, more coming soon</div><div style="font-family:var(--mono);font-size:.66rem;color:var(--text3);margin-top:.1rem;">GNS3 and Cisco Packet Tracer topologies covering routing, switching, security, VPN, wireless, and more. Detailed project pages being added progressively.</div></div>
   </div>
 </div>
-<div class="page-footer"><span class="pf-l">© 2025 Aktham Khaleel Alarabi</span><span class="pf-l" style="color:var(--text2);font-size:.68rem;">aktham.net</span><span class="pf-l">Network &amp; Cloud Security Engineer</span></div>
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-name">Aktham<span> Alarabi</span></div>
+      <p class="footer-tagline">Network &amp; Cloud Security Engineer — building secure, scalable infrastructure one lab at a time.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Navigate</div>
+      <ul class="footer-links">
+        <li><a href="#" onclick="goto('home',null);return false;">Home</a></li>
+        <li><a href="#" onclick="goto('about',null);return false;">About</a></li>
+        <li><a href="#" onclick="goto('experience',null);return false;">Experience</a></li>
+        <li><a href="#" onclick="goto('projects',null);return false;">Projects</a></li>
+        <li><a href="#" onclick="goto('contact',null);return false;">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Credentials</div>
+      <ul class="footer-links">
+        <li><a href="#" onclick="goto('experience',null);return false;">Certifications</a></li>
+        <li><a href="https://ieeexplore.ieee.org/document/10876936/" target="_blank">IEEE Publication</a></li>
+        <li><a href="https://www.credly.com/badges/f7942c42-d4d7-4867-b42a-ca9032456cc4" target="_blank">CCNA Badge</a></li>
+        <li><a href="cv/aktham_alarabi_cv.pdf" target="_blank">Download CV</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Connect</div>
+      <div class="footer-socials">
+        <a class="footer-soc" href="https://www.linkedin.com/in/aktham-alarabi/" target="_blank" title="LinkedIn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 10v7M12 13a3 3 0 016 0v4"/></svg>
+        </a>
+        <a class="footer-soc" onclick="copyEmail(null)" style="cursor:pointer;" title="Copy Email">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+        </a>
+        <a class="footer-soc" href="https://www.youtube.com/@Jrx70611" target="_blank" title="YouTube">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a class="footer-soc" href="https://www.instagram.com/vfbb/" target="_blank" title="Instagram">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 Aktham Khaleel Alarabi · All rights reserved.</span>
+    <span class="footer-built">portfolio<span>.aktham.net</span></span>
+  </div>
+</footer>
 </div>
 
 <!-- ═══════════════════════════ CONTACT ═══════════════════════════ -->
-<div class="page" id="pg-contact">
-<div class="wrap">
+<div class="page" id="pg-contact" tabindex="-1">
+<div class="wrap" style="padding-bottom:0;">
   <div class="eyebrow reveal">Connect</div>
-  <h2 class="sec-title reveal d1">Say <span>Hello</span></h2>
-  <div class="contact-stack">
-    <div class="reveal d2">
-      <div class="contact-intro">
-        <p>Open to full-time roles, freelance security and networking projects, research collaborations, and consulting across network engineering, cloud infrastructure, and ITSM.</p>
-        <p>I also post network lab walkthroughs and cryptography tutorials on YouTube — check the channel for hands-on content.</p>
+  <h2 class="sec-title reveal d1">Get in <span>Touch</span></h2>
+  <div class="contact-layout reveal d2">
+
+    <!-- LEFT: info cards + socials -->
+    <div>
+      <p class="contact-intro-text">Open to full-time roles, freelance security and networking projects, research collaborations, and consulting across network engineering, cloud infrastructure, and ITSM.</p>
+
+      <div class="contact-info-cards">
+        <!-- Email — copy button -->
+        <div class="cic" onclick="copyEmail(this)">
+          <div class="cic-ico" style="background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.22);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--acc)" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+          </div>
+          <div>
+            <div class="cic-label">Email</div>
+            <div class="cic-val"><a href="/cdn-cgi/l/email-protection#91f0fae5f9f0fcbff0fdf0e3f0f3f8d1f6fcf0f8fdbff2fefc" style="color:inherit;text-decoration:none;"><span class="__cf_email__" data-cfemail="65040e110d04084b0409041704070c250208040c094b060a08">[email&#160;protected]</span></a></div>
+          </div>
+          <span class="cic-copy" id="emailCopyBtn">Copy</span>
+        </div>
+
+        <!-- LinkedIn -->
+        <a class="cic" href="https://www.linkedin.com/in/aktham-alarabi/" target="_blank">
+          <div class="cic-ico" style="background:rgba(10,102,194,.12);border:1px solid rgba(10,102,194,.25);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0a66c2" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 10v7M12 13a3 3 0 016 0v4"/></svg>
+          </div>
+          <div>
+            <div class="cic-label">LinkedIn</div>
+            <div class="cic-val">aktham-alarabi</div>
+          </div>
+          <span class="cic-copy">Open ↗</span>
+        </a>
+        <!-- Location -->
+        <div class="cic" style="cursor:default;" onclick="">
+          <div class="cic-ico" style="background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.2);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          </div>
+          <div>
+            <div class="cic-label">Location</div>
+            <div class="cic-val">Amman, Jordan</div>
+          </div>
+        </div>
       </div>
-      <div class="sc-grid">
-        <a class="sc" href="https://www.linkedin.com/in/aktham-alarabi-0819b8346" target="_blank"><div class="sc-ico" style="background:rgba(10,102,194,.12);border:1px solid rgba(10,102,194,.25);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0a66c2" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 10v7M12 13a3 3 0 016 0v4"/></svg></div><div><div class="sc-lbl">LinkedIn</div><div class="sc-val">aktham-alarabi</div></div></a>
-        <a class="sc" href="https://wa.me/962798859514" target="_blank"><div class="sc-ico" style="background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.22);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#25d366" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></div><div><div class="sc-lbl">WhatsApp</div><div class="sc-val">+962 79 885 9514</div></div></a>
-        <a class="sc" href="mailto:aktham.alarabi@gmail.com"><div class="sc-ico" style="background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.22);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--acc)" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg></div><div><div class="sc-lbl">Email</div><div class="sc-val">aktham.alarabi@gmail</div></div></a>
-        <a class="sc" href="https://www.instagram.com/vfbb/" target="_blank"><div class="sc-ico" style="background:rgba(225,48,108,.1);border:1px solid rgba(225,48,108,.22);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#e1306c" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><circle cx="17.5" cy="6.5" r=".5" fill="#e1306c"/></svg></div><div><div class="sc-lbl">Instagram</div><div class="sc-val">@vfbb</div></div></a>
-        <a class="sc" href="https://www.facebook.com/aktham.alarabi.3/" target="_blank"><div class="sc-ico" style="background:rgba(24,119,242,.1);border:1px solid rgba(24,119,242,.22);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1877f2" stroke-width="2"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></div><div><div class="sc-lbl">Facebook</div><div class="sc-val">aktham.alarabi.3</div></div></a>
-        <a class="sc" href="https://www.youtube.com/@Jrx70611" target="_blank"><div class="sc-ico" style="background:rgba(255,0,0,.1);border:1px solid rgba(255,0,0,.18);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ff0000" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#ff0000" stroke="none"/></svg></div><div><div class="sc-lbl">YouTube</div><div class="sc-val">Networks &amp; Cryptography</div></div></a>
+
+      <!-- Social links row -->
+      <div style="font-family:var(--mono);font-size:.58rem;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.65rem;">Also find me on</div>
+      <div class="contact-socials-row">
+        <a class="cs-btn" href="https://www.youtube.com/@Jrx70611" target="_blank">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ff4444" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#ff4444" stroke="none"/></svg>
+          YouTube
+        </a>
+        <a class="cs-btn" href="https://www.instagram.com/vfbb/" target="_blank">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#e1306c" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><circle cx="17.5" cy="6.5" r=".5" fill="#e1306c"/></svg>
+          Instagram
+        </a>
       </div>
     </div>
+
+    <!-- RIGHT: message form -->
     <div class="fw reveal d3">
       <div class="fw-title">Send a Message</div>
       <div class="fw-sub">I'll get back to you within 24 hours.</div>
@@ -622,11 +1377,522 @@ h1.hname span{color:var(--acc);display:block;}
     </div>
   </div>
 </div>
-<div class="page-footer"><span class="pf-l">© 2025 Aktham Khaleel Alarabi</span><span class="pf-l" style="color:var(--text2);font-size:.68rem;">aktham.net</span><span class="pf-l">Network &amp; Cloud Security Engineer</span></div>
-</div>
+
+<!-- SITE FOOTER -->
 
 </div>
-<script>
+
+</div><!-- end #app -->
+
+<!-- ═══════════════════════════ PROJECT MODAL ═══════════════════════════ -->
+<div class="proj-modal-overlay" id="projModal" onclick="closeModal(event)">
+  <div class="proj-modal">
+    <!-- Top bar -->
+    <div class="proj-modal-topbar">
+      <button class="modal-back-btn" onclick="document.getElementById('projModal').classList.remove('open')">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 1L3 6l5 5"/></svg>
+        Back to Projects
+      </button>
+      <div class="modal-tabs">
+        <button class="modal-tab active" onclick="switchModalTab('overview',this)">Overview</button>
+        <button class="modal-tab" onclick="switchModalTab('topology',this)">Topology</button>
+        <button class="modal-tab" onclick="switchModalTab('traffic',this)">Traffic Flows</button>
+        <button class="modal-tab" onclick="switchModalTab('stack',this)">Tech Stack</button>
+        <button class="modal-tab" onclick="switchModalTab('screenshots',this)">Screenshots</button>
+      </div>
+      <button class="modal-close" onclick="document.getElementById('projModal').classList.remove('open')" title="Close">✕</button>
+    </div>
+
+    <div class="proj-modal-body">
+
+      <!-- ── OVERVIEW ── -->
+      <div class="modal-panel active" id="mp-overview">
+        <div class="mp-hero">
+          <div class="mp-badge-row">
+            <span class="mp-badge">Capstone · AI + Security</span>
+            <span class="mp-status">● Completed</span>
+            <span style="font-family:var(--mono);font-size:.58rem;color:var(--text3);">GNS3 Lab · OPNsense + FastAPI</span>
+          </div>
+          <div class="mp-title">Conversational <span>Firewall</span> Management</div>
+          <div class="mp-desc">A three-tier conversational management system for OPNsense Next-Generation Firewall, built as a university capstone by a 5-person team. A LangGraph-orchestrated AI agent interprets plain-English commands and translates them into precise REST API calls across 40+ OPNsense endpoints — covering firewall rules, DHCP, IDS/IPS, diagnostics, and static routing. The frontend (ReactJS + TypeScript) features a real-time SSE dashboard, topology viewer, and dual-panel chat UI. Deployed and validated inside a GNS3 multi-router OSPF topology with Cloudflare Dynamic DNS for stable external access.</div>
+          <div class="mp-chips">
+            <span class="chip">LangGraph</span><span class="chip">FastAPI</span><span class="chip">OPNsense</span><span class="chip">GNS3</span>
+            <span class="chip">Suricata IDS</span><span class="chip">OSPF</span><span class="chip">Python 3.11</span>
+            <span class="chip">ReactJS + TypeScript</span><span class="chip">PostgreSQL</span><span class="chip">Argon2</span><span class="chip">SSE Streaming</span>
+          </div>
+        </div>
+        <div class="mp-stats-row">
+          <div class="mp-stat"><div class="mp-stat-n">40+</div><div class="mp-stat-l">API Endpoints</div></div>
+          <div class="mp-stat"><div class="mp-stat-n">5</div><div class="mp-stat-l">Team Members</div></div>
+          <div class="mp-stat"><div class="mp-stat-n">3-Tier</div><div class="mp-stat-l">Architecture</div></div>
+          <div class="mp-stat"><div class="mp-stat-n">LangGraph</div><div class="mp-stat-l">AI Orchestration</div></div>
+        </div>
+        <div class="mp-body">
+          <div class="mp-section">
+            <div class="mp-section-title">What was built</div>
+            <div class="mp-grid-2">
+              <div class="mp-card">
+                <div class="mp-card-title"><div class="mp-card-ico"><svg viewBox="0 0 24 24"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z"/></svg></div>LangGraph AI Agent</div>
+                <ul>
+                  <li>Stateful graph: Agent Node → Conditional Router → Tool Node → Tool Logging Node</li>
+                  <li>Supports Gemini 1.5 Flash (default), GPT-4o-mini, and self-hosted vLLM endpoints</li>
+                  <li>@tool-decorated Python functions auto-bind to the LLM via .bind_tools()</li>
+                  <li>Token-aware conversation trimming to keep within LLM context window</li>
+                </ul>
+              </div>
+              <div class="mp-card">
+                <div class="mp-card-title"><div class="mp-card-ico"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>Auth & Access Control</div>
+                <ul>
+                  <li>Server-side SessionID tokens, Argon2 password hashing with per-user salt</li>
+                  <li>RBAC: Administrator (full), SOC Analyst (read + monitor), role-gated endpoints</li>
+                  <li>Token revocation via database invalidation — immediate effect, no JWT expiry wait</li>
+                  <li>Rate limiting per-user and per-endpoint against brute-force and flooding</li>
+                </ul>
+              </div>
+              <div class="mp-card">
+                <div class="mp-card-title"><div class="mp-card-ico"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>ReactJS Frontend & Dashboard</div>
+                <ul>
+                  <li>TypeScript + React SPA with collapsible sidebar, dual-panel chat + config monitor</li>
+                  <li>Real-time SSE stream for live traffic, CPU/memory/disk metrics, firewall logs</li>
+                  <li>GNS3 Web-UI embedded for live network topology visualization</li>
+                  <li>Tailwind CSS, dynamic LLM model switcher (Default / OpenAI / Gemini / vLLM)</li>
+                </ul>
+              </div>
+              <div class="mp-card">
+                <div class="mp-card-title"><div class="mp-card-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>OPNsense API Integration</div>
+                <ul>
+                  <li>40+ endpoints across: firewall rules, Kea DHCP, diagnostics, routes, IDS/IPS</li>
+                  <li>Dedicated apiclient service account with API key/secret — full audit trail</li>
+                  <li>All endpoints validated via Postman before integration into the abstraction layer</li>
+                  <li>Suricata IDS/IPS with ET Open ruleset; alert querying via /api/ids/service/query_alerts</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="mp-section">
+            <div class="mp-section-title">Key Design Decisions</div>
+            <div style="display:flex;flex-direction:column;gap:.55rem;">
+              <div class="flow-step"><span class="flow-step-num">Why LangGraph?</span><div class="flow-step-text">LangGraph's state machine paradigm was chosen to handle multi-step, cyclical reasoning: the <strong>Agent Node</strong> decides, a <strong>Conditional Router</strong> checks for tool calls, the <strong>Tool Node</strong> executes, a <strong>Tool Logging Node</strong> persists to PostgreSQL, then control loops back to the Agent to process results. This agentic loop handles complex chained commands that a simple prompt pipeline cannot.</div></div>
+              <div class="flow-step"><span class="flow-step-num">Why OSPF?</span><div class="flow-step-text">OSPF was chosen over static routing so the firewall could dynamically learn all subnets. OPNsense participates in OSPF Area 0 via the FRR plugin, advertising its LAN/WAN prefixes and receiving routes from R1–R5. This means adding a new subnet only requires a router config change — the firewall adapts automatically within seconds of LSA flood convergence.</div></div>
+              <div class="flow-step"><span class="flow-step-num">Why SSE?</span><div class="flow-step-text">WebSocket required a persistent bidirectional channel which added complexity for a read-heavy alert feed. SSE (Server-Sent Events) gave us a simple one-way push stream over plain HTTP — compatible with standard browsers, automatically reconnecting, and trivial to implement in FastAPI with <strong>EventSourceResponse</strong>. A periodic polling fallback handles SSE reconnection failures gracefully.</div></div>
+              <div class="flow-step"><span class="flow-step-num">Why PostgreSQL?</span><div class="flow-step-text">PostgreSQL was selected for its mature relational model, seamless Python integration via psycopg2, and ability to store both application state (users, tokens, messages, tool_usages) and LangGraph checkpoints (checkpoint_writes, checkpoint_blobs tables) in the same database. LangGraph's PostgreSQL checkpointer provides persistent conversation state across sessions without any external cache layer.</div></div>
+              <div class="flow-step"><span class="flow-step-num">Firewall-first</span><div class="flow-step-text">All traffic — including API calls from the management PC — passes through OPNsense before reaching any internal host. The firewall validates source IPs, applies stateful inspection, and runs Suricata signatures on every flow. Even if the API backend is compromised, no lateral movement is possible without the firewall permitting it.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── TOPOLOGY ── -->
+      <div class="modal-panel" id="mp-topology">
+        <div class="mp-topo">
+          <div class="mp-section-title">Network Topology</div>
+          <div class="topo-legend">
+            <div class="topo-leg-item"><div class="topo-leg-dot" style="background:#3b82f6;"></div>Cisco Router (OSPF)</div>
+            <div class="topo-leg-item"><div class="topo-leg-dot" style="background:#f97316;"></div>OPNsense Firewall</div>
+            <div class="topo-leg-item"><div class="topo-leg-dot" style="background:#8b5cf6;"></div>Legacy Linux Server</div>
+            <div class="topo-leg-item"><div class="topo-leg-dot" style="background:#22c55e;"></div>End Hosts / LAN</div>
+            <div class="topo-leg-item"><div class="topo-leg-dot" style="background:#ef4444;"></div>Kali Attacker</div>
+            <div class="topo-leg-item"><div class="topo-leg-dot" style="background:#fbbf24;"></div>Transit Network</div>
+          </div>
+          <div style="background:#090b0f;border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:.75rem;overflow:hidden;">
+            <img
+              src="projects/conversational-firewall/topology.png"
+              alt="GNS3 Network Topology — Conversational Firewall Management"
+              style="width:100%;height:auto;display:block;border-radius:8px;"
+              onerror="this.parentElement.innerHTML='<div style=\'padding:2rem;text-align:center;\'><div style=\'font-family:var(--mono);font-size:.75rem;color:var(--acc);margin-bottom:.5rem;\'>topology.png not found</div><div style=\'font-size:.72rem;color:var(--text3);line-height:1.8;\'>Place your topology screenshot at:<br><code style=\'color:var(--text2);\'>projects/conversational-firewall/topology.png</code><br>next to the HTML file</div></div>'"
+            />
+          </div>          </div>
+
+          <div style="margin-top:1rem;display:grid;grid-template-columns:1fr 1fr;gap:.8rem;">
+            <div class="mp-card">
+              <div class="mp-card-title"><div class="mp-card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="var(--acc)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>Subnet Map</div>
+              <ul>
+                <li><strong>10.0.0.0/24</strong> — OPNsense WAN (em2), connected to R1</li>
+                <li><strong>192.168.1.0/24</strong> — OPNsense LAN (em0, 192.168.1.250), egress/management</li>
+                <li><strong>192.168.2.0/24</strong> — OPNsense OPT1 (em1, 192.168.2.1), Kea DHCP zone</li>
+                <li><strong>192.168.3.0/24</strong> — Router-based LAN (SW2 segment, R5 gateway)</li>
+                <li><strong>10–45.0.0.0/24</strong> — Seven transit subnets across R1–R5 OSPF backbone</li>
+              </ul>
+            </div>
+            <div class="mp-card">
+              <div class="mp-card-title"><div class="mp-card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="var(--acc)" stroke-width="2"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z"/></svg></div>Security Zones</div>
+              <ul>
+                <li><strong>OPT1 Trust Zone</strong> — Internal hosts on 192.168.2.0/24, Kea DHCP pool .50–.200</li>
+                <li><strong>LAN Egress</strong> — 192.168.1.250, single NAT masquerade point for internet traffic</li>
+                <li><strong>WAN Interface</strong> — 10.0.0.69/24, OSPF adjacency with R1 (Area 0)</li>
+                <li><strong>DNS</strong> — Cloudflare (1.1.1.1) + Google (8.8.8.8); FQDN: opnsense.jrx7.com</li>
+                <li>OPNsense enforces all inter-zone policies; Suricata on WAN + OPT1</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── TRAFFIC FLOWS ── -->
+      <div class="modal-panel" id="mp-traffic">
+        <div class="mp-traffic">
+          <div class="mp-section-title">Traffic Flow Analysis</div>
+          <div class="traffic-tabs">
+            <button class="traffic-tab active" onclick="switchTrafficTab('normal',this)">Normal User Traffic</button>
+            <button class="traffic-tab" onclick="switchTrafficTab('api',this)">API Management Traffic</button>
+            <button class="traffic-tab" onclick="switchTrafficTab('ospf',this)">OSPF Routing</button>
+            <button class="traffic-tab" onclick="switchTrafficTab('block',this)">Firewall Block</button>
+          </div>
+
+          <!-- Normal traffic -->
+          <div class="traffic-panel active" id="tf-normal">
+            <div class="flow-diagram">
+              <svg viewBox="0 0 760 110" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono,monospace">
+  <defs><marker id="an" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0,7 3.5,0 7" fill="#22c55e"/></marker></defs>
+  <rect x="8" y="28" width="100" height="52" rx="6" fill="#0d1117" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="58" y="50" fill="#22c55e" font-size="9.5" text-anchor="middle" font-weight="600">PC2 / User</text>
+  <text x="58" y="63" fill="#7d8a9e" font-size="8" text-anchor="middle">192.168.2.x</text>
+  <line x1="110" y1="54" x2="156" y2="54" stroke="#22c55e" stroke-width="1.5" marker-end="url(#an)"/>
+  <text x="133" y="47" fill="#22c55e" font-size="7.5" text-anchor="middle">L2 frame</text>
+  <rect x="158" y="28" width="110" height="52" rx="6" fill="#0d1117" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="213" y="50" fill="#22c55e" font-size="9.5" text-anchor="middle" font-weight="600">SW1</text>
+  <text x="213" y="63" fill="#7d8a9e" font-size="8" text-anchor="middle">Layer 2 switch</text>
+  <line x1="270" y1="54" x2="316" y2="54" stroke="#22c55e" stroke-width="1.5" marker-end="url(#an)"/>
+  <text x="293" y="47" fill="#22c55e" font-size="7.5" text-anchor="middle">inspected</text>
+  <rect x="318" y="20" width="128" height="68" rx="6" fill="#0d1117" stroke="#f97316" stroke-width="1.8"/>
+  <text x="382" y="43" fill="#f97316" font-size="9.5" text-anchor="middle" font-weight="600">OPNsense</text>
+  <text x="382" y="56" fill="#f97316" font-size="8" text-anchor="middle">Stateful Inspect</text>
+  <text x="382" y="69" fill="#7d8a9e" font-size="7.5" text-anchor="middle">+ NAT if needed</text>
+  <line x1="448" y1="54" x2="490" y2="54" stroke="#22c55e" stroke-width="1.5" marker-end="url(#an)"/>
+  <text x="469" y="47" fill="#22c55e" font-size="7.5" text-anchor="middle">routed</text>
+  <rect x="492" y="28" width="100" height="52" rx="6" fill="#0d1117" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="542" y="50" fill="#3b82f6" font-size="9.5" text-anchor="middle" font-weight="600">R1</text>
+  <text x="542" y="63" fill="#7d8a9e" font-size="8" text-anchor="middle">OSPF route</text>
+  <line x1="594" y1="54" x2="638" y2="54" stroke="#22c55e" stroke-width="1.5" marker-end="url(#an)"/>
+  <text x="616" y="47" fill="#22c55e" font-size="7.5" text-anchor="middle">delivered</text>
+  <rect x="640" y="28" width="110" height="52" rx="6" fill="#0d1117" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="695" y="50" fill="#8b5cf6" font-size="9.5" text-anchor="middle" font-weight="600">LinuxA</text>
+  <text x="695" y="63" fill="#7d8a9e" font-size="8" text-anchor="middle">55.55.55.x</text>
+</svg>
+            </div>
+            <div class="flow-steps">
+              <div class="flow-step"><span class="flow-step-num">01</span><div class="flow-step-text"><strong>PC2 sends a packet</strong> — e.g. HTTP GET to 55.55.55.10. The frame hits SW1 which does a MAC lookup and forwards it out the uplink toward OPNsense's LAN interface (192.168.2.1).</div></div>
+              <div class="flow-step"><span class="flow-step-num">02</span><div class="flow-step-text"><strong>OPNsense stateful inspection</strong> — The firewall checks its ruleset. LAN → WAN HTTP is permitted by default policy. It creates a state table entry, applies NAT if needed, and passes the packet out the WAN interface toward R1.</div></div>
+              <div class="flow-step"><span class="flow-step-num">03</span><div class="flow-step-text"><strong>R1 OSPF lookup</strong> — R1 has an OSPF-learned route to 55.55.55.0/24 via R2 (next-hop learned during OSPF adjacency). It forwards the packet toward R2 across the 12.0.0.0/24 transit link.</div></div>
+              <div class="flow-step"><span class="flow-step-num">04</span><div class="flow-step-text"><strong>R2 delivers to LinuxA</strong> — R2 has LinuxA directly connected on 55.55.55.0/24 (e0 interface). The packet is ARP-resolved and delivered. Return traffic takes the symmetric path — R2 → R1 → OPNsense → SW1 → PC2, with OPNsense matching the existing state entry to allow the reply.</div></div>
+            </div>
+          </div>
+
+          <!-- API traffic -->
+          <div class="traffic-panel" id="tf-api">
+            <div class="flow-diagram">
+              <svg viewBox="0 0 760 140" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono,monospace">
+  <defs>
+    <marker id="ab" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0,7 3.5,0 7" fill="#3b82f6"/></marker>
+    <marker id="abr" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0,7 3.5,0 7" fill="#60a5fa"/></marker>
+  </defs>
+  <rect x="8" y="20" width="110" height="68" rx="6" fill="#0d1117" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="63" y="46" fill="#22c55e" font-size="9" text-anchor="middle" font-weight="600">Admin</text>
+  <text x="63" y="59" fill="#22c55e" font-size="9" text-anchor="middle" font-weight="600">Browser</text>
+  <text x="63" y="74" fill="#7d8a9e" font-size="7.5" text-anchor="middle">192.168.2.x</text>
+  <line x1="120" y1="54" x2="158" y2="54" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#ab)"/>
+  <text x="139" y="46" fill="#3b82f6" font-size="7" text-anchor="middle">HTTPS</text>
+  <rect x="160" y="14" width="128" height="80" rx="6" fill="#0d1117" stroke="#f97316" stroke-width="1.8"/>
+  <text x="224" y="38" fill="#f97316" font-size="9" text-anchor="middle" font-weight="600">OPNsense</text>
+  <text x="224" y="51" fill="#f97316" font-size="8" text-anchor="middle">Allow :8000</text>
+  <text x="224" y="64" fill="#7d8a9e" font-size="7.5" text-anchor="middle">from LAN only</text>
+  <text x="224" y="77" fill="#354050" font-size="7" text-anchor="middle">rule check</text>
+  <line x1="290" y1="54" x2="328" y2="54" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#ab)"/>
+  <text x="309" y="46" fill="#3b82f6" font-size="7" text-anchor="middle">allowed</text>
+  <rect x="330" y="14" width="118" height="80" rx="6" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+  <text x="389" y="38" fill="#3b82f6" font-size="9" text-anchor="middle" font-weight="600">FastAPI</text>
+  <text x="389" y="51" fill="#3b82f6" font-size="8" text-anchor="middle">:8000 / RBAC</text>
+  <text x="389" y="64" fill="#7d8a9e" font-size="7.5" text-anchor="middle">JWT validated</text>
+  <text x="389" y="77" fill="#354050" font-size="7" text-anchor="middle">role checked</text>
+  <line x1="450" y1="54" x2="488" y2="54" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#ab)"/>
+  <text x="469" y="46" fill="#3b82f6" font-size="7" text-anchor="middle">API call</text>
+  <rect x="490" y="14" width="128" height="80" rx="6" fill="#0d1117" stroke="#f97316" stroke-width="1.8"/>
+  <text x="554" y="38" fill="#f97316" font-size="9" text-anchor="middle" font-weight="600">OPNsense</text>
+  <text x="554" y="51" fill="#f97316" font-size="8" text-anchor="middle">REST API :443</text>
+  <text x="554" y="64" fill="#7d8a9e" font-size="7.5" text-anchor="middle">localhost only</text>
+  <text x="554" y="77" fill="#354050" font-size="7" text-anchor="middle">rule applied</text>
+  <line x1="620" y1="54" x2="654" y2="54" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#ab)"/>
+  <text x="637" y="46" fill="#3b82f6" font-size="7" text-anchor="middle">applied</text>
+  <rect x="656" y="20" width="98" height="68" rx="6" fill="#0d1117" stroke="#fbbf24" stroke-width="1.5"/>
+  <text x="705" y="46" fill="#fbbf24" font-size="9" text-anchor="middle" font-weight="600">Firewall</text>
+  <text x="705" y="59" fill="#fbbf24" font-size="8" text-anchor="middle">Rule saved</text>
+  <text x="705" y="72" fill="#7d8a9e" font-size="7.5" text-anchor="middle">+ Audit log</text>
+  <line x1="654" y1="106" x2="120" y2="106" stroke="#60a5fa" stroke-width="1.2" stroke-dasharray="4,2" marker-end="url(#abr)"/>
+  <text x="387" y="122" fill="#60a5fa" font-size="8" text-anchor="middle">← SSE stream: live alerts + rule confirmation pushed to browser</text>
+</svg>
+            </div>
+            <div class="flow-steps">
+              <div class="flow-step"><span class="flow-step-num">01</span><div class="flow-step-text"><strong>Admin opens the dashboard</strong> from PC on the LAN (192.168.2.x). The browser sends an HTTPS request to the FastAPI backend on port 8000. OPNsense has an explicit allow rule: source 192.168.2.0/24, destination FastAPI host, port 8000.</div></div>
+              <div class="flow-step"><span class="flow-step-num">02</span><div class="flow-step-text"><strong>FastAPI validates JWT</strong> — The server checks the Bearer token, extracts the role claim, and determines whether the requested action is within the user's RBAC permissions. An Operator cannot write rules; an Admin can.</div></div>
+              <div class="flow-step"><span class="flow-step-num">03</span><div class="flow-step-text"><strong>FastAPI calls OPNsense REST API</strong> — The backend makes a server-side HTTPS call to OPNsense's management API (127.0.0.1:443 from OPNsense's perspective, or internal LAN IP). The API accepts only pre-authorized API keys. The translated firewall rule is submitted as a JSON payload.</div></div>
+              <div class="flow-step"><span class="flow-step-num">04</span><div class="flow-step-text"><strong>Rule applied + SSE streamed back</strong> — OPNsense applies the rule and returns a 200. FastAPI writes the action to the audit log, then pushes a confirmation event over the SSE channel. The admin's browser receives it in real time — no polling required.</div></div>
+            </div>
+          </div>
+
+          <!-- OSPF -->
+          <div class="traffic-panel" id="tf-ospf">
+            <div class="flow-diagram">
+              <svg viewBox="0 0 760 110" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono,monospace">
+  <defs><marker id="ao" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0,7 3.5,0 7" fill="#fbbf24"/></marker>
+  <marker id="aol" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0,7 3.5,0 7" fill="#fbbf24"/></marker></defs>
+  <rect x="8" y="22" width="110" height="66" rx="6" fill="#0d1117" stroke="#f97316" stroke-width="1.8"/>
+  <text x="63" y="48" fill="#f97316" font-size="9" text-anchor="middle" font-weight="600">OPNsense</text>
+  <text x="63" y="61" fill="#7d8a9e" font-size="8" text-anchor="middle">FRR OSPF</text>
+  <text x="63" y="74" fill="#354050" font-size="7.5" text-anchor="middle">Area 0 member</text>
+  <line x1="120" y1="48" x2="158" y2="48" stroke="#fbbf24" stroke-width="1.4" marker-end="url(#ao)"/>
+  <line x1="158" y1="62" x2="120" y2="62" stroke="#fbbf24" stroke-width="1.4" marker-end="url(#ao)"/>
+  <rect x="160" y="22" width="98" height="66" rx="6" fill="#0d1117" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="209" y="48" fill="#3b82f6" font-size="9.5" text-anchor="middle" font-weight="600">R1</text>
+  <text x="209" y="61" fill="#7d8a9e" font-size="8" text-anchor="middle">OSPF Area 0</text>
+  <line x1="260" y1="48" x2="298" y2="48" stroke="#fbbf24" stroke-width="1.4" marker-end="url(#ao)"/>
+  <line x1="298" y1="62" x2="260" y2="62" stroke="#fbbf24" stroke-width="1.4" marker-end="url(#ao)"/>
+  <rect x="300" y="22" width="98" height="66" rx="6" fill="#0d1117" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="349" y="48" fill="#3b82f6" font-size="9.5" text-anchor="middle" font-weight="600">R2</text>
+  <text x="349" y="61" fill="#7d8a9e" font-size="8" text-anchor="middle">OSPF Area 0</text>
+  <line x1="400" y1="48" x2="438" y2="48" stroke="#fbbf24" stroke-width="1.4" marker-end="url(#ao)"/>
+  <line x1="438" y1="62" x2="400" y2="62" stroke="#fbbf24" stroke-width="1.4" marker-end="url(#ao)"/>
+  <rect x="440" y="22" width="98" height="66" rx="6" fill="#0d1117" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="489" y="48" fill="#3b82f6" font-size="9.5" text-anchor="middle" font-weight="600">R3–R4</text>
+  <text x="489" y="61" fill="#7d8a9e" font-size="8" text-anchor="middle">OSPF Area 0</text>
+  <line x1="540" y1="48" x2="578" y2="48" stroke="#fbbf24" stroke-width="1.4" marker-end="url(#ao)"/>
+  <line x1="578" y1="62" x2="540" y2="62" stroke="#fbbf24" stroke-width="1.4" marker-end="url(#ao)"/>
+  <rect x="580" y="22" width="98" height="66" rx="6" fill="#0d1117" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="629" y="48" fill="#3b82f6" font-size="9.5" text-anchor="middle" font-weight="600">R5</text>
+  <text x="629" y="61" fill="#7d8a9e" font-size="8" text-anchor="middle">OSPF Area 0</text>
+  <line x1="680" y1="48" x2="718" y2="48" stroke="#fbbf24" stroke-width="1.4" marker-end="url(#ao)"/>
+  <line x1="718" y1="62" x2="680" y2="62" stroke="#fbbf24" stroke-width="1.4" marker-end="url(#ao)"/>
+  <rect x="720" y="30" width="34" height="50" rx="4" fill="#0d1117" stroke="#22c55e" stroke-width="1.2"/>
+  <text x="737" y="57" fill="#22c55e" font-size="7.5" text-anchor="middle">SW2</text>
+  <text x="380" y="100" fill="#fbbf24" font-size="8" text-anchor="middle">Hello · DBD · LSR · LSU · LSAck — bidirectional adjacency formation</text>
+</svg>
+            </div>
+            <div class="flow-steps">
+              <div class="flow-step"><span class="flow-step-num">Hello</span><div class="flow-step-text"><strong>OPNsense joins OSPF Area 0</strong> — The firewall is configured with <code>router ospf</code> and advertises its LAN (192.168.2.0/24) and WAN (192.168.1.0/24) subnets. It sends multicast Hello packets (224.0.0.5) every 10 seconds to R1 across the 10.0.0.0/24 link.</div></div>
+              <div class="flow-step"><span class="flow-step-num">DBD</span><div class="flow-step-text"><strong>Database exchange</strong> — After neighbors form a 2-Way adjacency, they exchange Database Description (DBD) packets listing their LSDB contents. OPNsense and R1 compare DBDs and request any missing LSAs.</div></div>
+              <div class="flow-step"><span class="flow-step-num">LSA flood</span><div class="flow-step-text"><strong>LSA propagation</strong> — Each router floods its Router LSA to all neighbors. Within seconds, every router in Area 0 (R1–R5 and OPNsense) has an identical LSDB and runs SPF to compute the shortest path to every subnet — including OPNsense's LAN and all transit links.</div></div>
+              <div class="flow-step"><span class="flow-step-num">Result</span><div class="flow-step-text"><strong>Full reachability</strong> — Any host behind SW1 can reach any host behind SW2 via dynamically computed OSPF paths. OPNsense enforces policies on all inter-zone flows. No static routes required anywhere — adding a new subnet auto-propagates to all routers within seconds.</div></div>
+            </div>
+          </div>
+
+          <!-- Firewall block -->
+          <div class="traffic-panel" id="tf-block">
+            <div class="flow-diagram">
+              <svg viewBox="0 0 760 110" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono,monospace">
+  <defs>
+    <marker id="ar" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0,7 3.5,0 7" fill="#ef4444"/></marker>
+    <marker id="ard" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0,7 3.5,0 7" fill="#354050"/></marker>
+  </defs>
+  <rect x="8" y="20" width="120" height="68" rx="6" fill="#0d1117" stroke="#ef4444" stroke-width="1.8"/>
+  <text x="68" y="46" fill="#ef4444" font-size="11" text-anchor="middle">☠</text>
+  <text x="68" y="60" fill="#ef4444" font-size="9" text-anchor="middle" font-weight="600">Kali</text>
+  <text x="68" y="73" fill="#7d8a9e" font-size="7.5" text-anchor="middle">192.168.3.x</text>
+  <line x1="130" y1="54" x2="168" y2="54" stroke="#ef4444" stroke-width="1.5" marker-end="url(#ar)"/>
+  <text x="149" y="46" fill="#ef4444" font-size="7.5" text-anchor="middle">SSH :22</text>
+  <rect x="170" y="22" width="128" height="64" rx="6" fill="#0d1117" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="234" y="46" fill="#3b82f6" font-size="9" text-anchor="middle" font-weight="600">R5 → R4</text>
+  <text x="234" y="59" fill="#7d8a9e" font-size="8" text-anchor="middle">routed to WAN</text>
+  <text x="234" y="72" fill="#354050" font-size="7.5" text-anchor="middle">routing works fine</text>
+  <line x1="300" y1="54" x2="338" y2="54" stroke="#ef4444" stroke-width="1.5" marker-end="url(#ar)"/>
+  <text x="319" y="46" fill="#ef4444" font-size="7.5" text-anchor="middle">attempt</text>
+  <rect x="340" y="14" width="148" height="80" rx="6" fill="#0d1117" stroke="#f97316" stroke-width="2"/>
+  <text x="414" y="38" fill="#f97316" font-size="9" text-anchor="middle" font-weight="600">OPNsense</text>
+  <text x="414" y="51" fill="#ef4444" font-size="8.5" text-anchor="middle" font-weight="600">DENY + LOG</text>
+  <text x="414" y="64" fill="#7d8a9e" font-size="8" text-anchor="middle">Suricata alert</text>
+  <text x="414" y="77" fill="#354050" font-size="7.5" text-anchor="middle">RST sent to Kali</text>
+  <line x1="490" y1="54" x2="530" y2="54" stroke="#354050" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#ard)"/>
+  <text x="510" y="46" fill="#354050" font-size="7.5" text-anchor="middle">blocked</text>
+  <text x="510" y="72" fill="#ef4444" font-size="16" text-anchor="middle">✕</text>
+  <rect x="534" y="22" width="130" height="64" rx="6" fill="#0d1117" stroke="#354050" stroke-width="1.2"/>
+  <text x="599" y="46" fill="#354050" font-size="9" text-anchor="middle" font-weight="600">R1 / LAN</text>
+  <text x="599" y="59" fill="#354050" font-size="8" text-anchor="middle">never reached</text>
+  <text x="599" y="72" fill="#354050" font-size="7.5" text-anchor="middle">fully shielded</text>
+  <rect x="668" y="30" width="84" height="46" rx="5" fill="#ef444410" stroke="#ef444430"/>
+  <text x="710" y="50" fill="#ef4444" font-size="7.5" text-anchor="middle">SSE alert →</text>
+  <text x="710" y="63" fill="#ef4444" font-size="7.5" text-anchor="middle">dashboard</text>
+</svg>
+            </div>
+            <div class="flow-steps">
+              <div class="flow-step"><span class="flow-step-num">Attempt</span><div class="flow-step-text"><strong>Kali (192.168.3.x) tries to SSH into R1 or a LAN host.</strong> The packet is routed normally by R5 → R4 and arrives at OPNsense's WAN interface. This is expected — routing works fine.</div></div>
+              <div class="flow-step"><span class="flow-step-num">Rule check</span><div class="flow-step-text"><strong>OPNsense evaluates its ruleset top-down.</strong> The WAN interface has a default-deny policy. There is no rule permitting SSH (port 22) from 192.168.3.0/24 to any LAN host. The packet matches the implicit deny-all rule at the bottom.</div></div>
+              <div class="flow-step"><span class="flow-step-num">Suricata</span><div class="flow-step-text"><strong>Suricata IDS fires a signature match</strong> — repeated TCP SYN to port 22 from an external source triggers the <em>ET SCAN SSH BruteForce</em> rule family. An alert is generated and queued to the SSE stream so the admin dashboard lights up in real time.</div></div>
+              <div class="flow-step"><span class="flow-step-num">Block + RST</span><div class="flow-step-text"><strong>OPNsense drops the packet and sends a TCP RST to Kali.</strong> The internal LAN hosts are completely shielded — they never see the connection attempt. The FastAPI audit log records the block event with source IP, destination, port, timestamp, and the matching rule name.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── TECH STACK ── -->
+      <div class="modal-panel" id="mp-stack">
+        <div class="mp-stack">
+          <div class="mp-section-title">Full Technology Stack</div>
+
+          <div class="stack-section">
+            <div style="font-family:var(--mono);font-size:.62rem;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.65rem;">Network Infrastructure</div>
+            <div class="stack-items">
+              <div class="stack-item"><div class="stack-item-name">GNS3</div><div class="stack-item-role">Network emulation platform. Runs Cisco IOS images and Linux VMs in a single unified topology.</div></div>
+              <div class="stack-item"><div class="stack-item-name">OPNsense</div><div class="stack-item-role">FreeBSD-based NGFW. Stateful packet filtering, Hybrid Outbound NAT, OSPF via FRR plugin, REST API management (apiclient account).</div><span class="stack-tag">Core</span></div>
+              <div class="stack-item"><div class="stack-item-name">Suricata IDS/IPS</div><div class="stack-item-role">Inline IDS engine on OPNsense. ET Open community ruleset; alert querying, policy toggling, and ruleset updates all chatbot-accessible.</div></div>
+              <div class="stack-item"><div class="stack-item-name">Cisco IOS (R1–R5)</div><div class="stack-item-role">5 routers running OSPF Area 0. Seven /24 transit subnets; provide full reachability between all segments including OPNsense zones.</div></div>
+              <div class="stack-item"><div class="stack-item-name">OSPF (FRR plugin)</div><div class="stack-item-role">OPNsense participates via FRRouting daemon. LAN/OPT1 passive interfaces; NVRAM persistence; adjacency with R1 verified via show ip ospf.</div></div>
+              <div class="stack-item"><div class="stack-item-name">GNS3</div><div class="stack-item-role">Network emulator running actual Cisco IOS and OPNsense FreeBSD VMs — far more accurate than purely simulated platforms. Web-UI embedded in frontend.</div></div>
+            </div>
+          </div>
+
+          <div class="stack-section">
+            <div style="font-family:var(--mono);font-size:.62rem;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.65rem;">Backend & AI Orchestration</div>
+            <div class="stack-items">
+              <div class="stack-item"><div class="stack-item-name">LangGraph</div><div class="stack-item-role">Stateful agent graph: Agent Node → Conditional Router → Tool Node → Tool Logging Node → loop. Manages multi-step reasoning and tool execution cycles.</div><span class="stack-tag">Core</span></div>
+              <div class="stack-item"><div class="stack-item-name">FastAPI</div><div class="stack-item-role">Python async web framework. Hosts REST endpoints, SSE streams, user auth, and the LangGraph invocation API.</div><span class="stack-tag">Core</span></div>
+              <div class="stack-item"><div class="stack-item-name">Python 3.11</div><div class="stack-item-role">Primary backend language. Async/await throughout; httpx for OPNsense API calls; @tool decorator for LLM function binding.</div></div>
+              <div class="stack-item"><div class="stack-item-name">Gemini 1.5 Flash</div><div class="stack-item-role">Default LLM for low-latency responses. GPT-4o-mini and self-hosted vLLM endpoints also supported; switched per API route.</div></div>
+              <div class="stack-item"><div class="stack-item-name">PostgreSQL</div><div class="stack-item-role">Stores users, tokens, messages, tool_usages. Also used as LangGraph's checkpoint backend (checkpoint_writes, checkpoint_blobs tables).</div></div>
+              <div class="stack-item"><div class="stack-item-name">Argon2</div><div class="stack-item-role">Password hashing with unique per-user salt. Memory-hard KDF resistant to GPU brute-force and rainbow table attacks.</div><span class="stack-tag">Security</span></div>
+              <div class="stack-item"><div class="stack-item-name">SSE (EventSource)</div><div class="stack-item-role">Server-Sent Events for real-time alert and metrics push. One-way stream with auto-reconnect; exponential backoff fallback.</div></div>
+              <div class="stack-item"><div class="stack-item-name">OPNsense REST API</div><div class="stack-item-role">HTTPS management API with 40+ endpoints. Backend calls it server-side via apiclient API key/secret over HTTPS.</div></div>
+            </div>
+          </div>
+
+          <div class="stack-section">
+            <div style="font-family:var(--mono);font-size:.62rem;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.65rem;">Frontend</div>
+            <div class="stack-items">
+              <div class="stack-item"><div class="stack-item-name">ReactJS + TypeScript</div><div class="stack-item-role">Single-page application. useState/useEffect hooks for state, axios for API calls, deep-linking for pre-loading chat commands.</div><span class="stack-tag">Core</span></div>
+              <div class="stack-item"><div class="stack-item-name">Tailwind CSS</div><div class="stack-item-role">Utility-first styling. Responsive grid layout, CSS transitions for expand/collapse animations throughout the UI.</div></div>
+              <div class="stack-item"><div class="stack-item-name">GNS3 Web-UI Embed</div><div class="stack-item-role">Live network topology viewer embedded via iframe. Shows OPNsense, routers, switches, and hosts in real time.</div></div>
+              <div class="stack-item"><div class="stack-item-name">SVG Line Charts</div><div class="stack-item-role">Custom SVG-based charts for inbound/outbound traffic. Color-coded progress bars for CPU, memory, disk utilization.</div></div>
+            </div>
+          </div>
+
+          <div class="stack-section">
+            <div style="font-family:var(--mono);font-size:.62rem;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.65rem;">Security & Auth</div>
+            <div class="stack-items">
+              <div class="stack-item"><div class="stack-item-name">Server-side Sessions</div><div class="stack-item-role">Cryptographically random SessionID stored in DB. Revocable instantly — no JWT expiry lag. Short-lived with inactivity expiry.</div><span class="stack-tag">Security</span></div>
+              <div class="stack-item"><div class="stack-item-name">RBAC</div><div class="stack-item-role">Role-Based Access Control: Administrator / SOC Analyst. Enforced at endpoint level; sensitive actions (rule delete, reboot) restricted to Admins.</div></div>
+              <div class="stack-item"><div class="stack-item-name">Rate Limiting</div><div class="stack-item-role">Per-user and per-endpoint request throttling. Blocks automated credential stuffing and API flooding attacks.</div></div>
+              <div class="stack-item"><div class="stack-item-name">Audit Log (tool_usages)</div><div class="stack-item-role">Every tool invocation logged with user_id, tool_name, input params, and full output. Immutable append-only record.</div></div>
+            </div>
+          </div>
+
+          <div class="stack-section">
+            <div style="font-family:var(--mono);font-size:.62rem;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.65rem;">Network & Infrastructure</div>
+            <div class="stack-items">
+              <div class="stack-item"><div class="stack-item-name">Firewall Zones</div><div class="stack-item-role">LAN (192.168.2.0/24), WAN (10.0.0.0/24), OPT1 — separate security zones enforced by OPNsense interface rules.</div></div>
+              <div class="stack-item"><div class="stack-item-name">Cloudflare DDNS</div><div class="stack-item-role">Custom Python script + NSSM Windows service keeps jrx7.com A record updated. ui.jrx7.com points to the React UI server.</div></div>
+              <div class="stack-item"><div class="stack-item-name">Destination NAT</div><div class="stack-item-role">Port forwarding on edge device tunnels HTTPS (TCP/443) inbound traffic to OPNsense LAN interface for external API access.</div></div>
+              <div class="stack-item"><div class="stack-item-name">Kea DHCP</div><div class="stack-item-role">OPNsense Kea DHCPv4 service on OPT1 (192.168.2.50–200). Pool, reservations, and subnets all manageable via chatbot.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ── SCREENSHOTS ── -->
+      <div class="modal-panel" id="mp-screenshots">
+        <div class="mp-gallery">
+          <div class="mp-section-title">Project Screenshots <span style="font-weight:300;color:var(--text3);font-size:.6rem;letter-spacing:.05em;">— click any image to enlarge</span></div>
+          <div class="gallery-grid">
+              <div class="gallery-item" onclick="openLightbox(0)">
+                <div class="gallery-item-img">
+                  <img src="projects/conversational-firewall/ss-chatbot-home.png" alt="Warden Chatbot Home"
+                    onerror="this.parentElement.style.background='#131720';this.style.display='none'"/>
+                </div>
+                <div class="gallery-item-cap">
+                  <strong>Warden Chatbot Home</strong>
+                </div>
+              </div>
+              <div class="gallery-item" onclick="openLightbox(1)">
+                <div class="gallery-item-img">
+                  <img src="projects/conversational-firewall/ss-chat-session.png" alt="Live Chat Session"
+                    onerror="this.parentElement.style.background='#131720';this.style.display='none'"/>
+                </div>
+                <div class="gallery-item-cap">
+                  <strong>Live Chat Session</strong>
+                </div>
+              </div>
+              <div class="gallery-item" onclick="openLightbox(2)">
+                <div class="gallery-item-img">
+                  <img src="projects/conversational-firewall/arch-overview.png" alt="High-Level Architecture"
+                    onerror="this.parentElement.style.background='#131720';this.style.display='none'"/>
+                </div>
+                <div class="gallery-item-cap">
+                  <strong>High-Level Architecture</strong>
+                </div>
+              </div>
+              <div class="gallery-item" onclick="openLightbox(3)">
+                <div class="gallery-item-img">
+                  <img src="projects/conversational-firewall/arch-detailed.png" alt="Detailed Data Flow"
+                    onerror="this.parentElement.style.background='#131720';this.style.display='none'"/>
+                </div>
+                <div class="gallery-item-cap">
+                  <strong>Detailed Data Flow</strong>
+                </div>
+              </div>
+              <div class="gallery-item" onclick="openLightbox(4)">
+                <div class="gallery-item-img">
+                  <img src="projects/conversational-firewall/flow-agent.png" alt="LangGraph Agent Flow"
+                    onerror="this.parentElement.style.background='#131720';this.style.display='none'"/>
+                </div>
+                <div class="gallery-item-cap">
+                  <strong>LangGraph Agent Flow</strong>
+                </div>
+              </div>
+              <div class="gallery-item" onclick="openLightbox(5)">
+                <div class="gallery-item-img">
+                  <img src="projects/conversational-firewall/flow-llm.png" alt="LLM Model Selection"
+                    onerror="this.parentElement.style.background='#131720';this.style.display='none'"/>
+                </div>
+                <div class="gallery-item-cap">
+                  <strong>LLM Model Selection</strong>
+                </div>
+              </div>
+              <div class="gallery-item" onclick="openLightbox(6)">
+                <div class="gallery-item-img">
+                  <img src="projects/conversational-firewall/ss-opnsense-routes.png" alt="OPNsense Static Routes"
+                    onerror="this.parentElement.style.background='#131720';this.style.display='none'"/>
+                </div>
+                <div class="gallery-item-cap">
+                  <strong>OPNsense Static Routes</strong>
+                </div>
+              </div>
+              <div class="gallery-item" onclick="openLightbox(7)">
+                <div class="gallery-item-img">
+                  <img src="projects/conversational-firewall/ss-vscode-backend.png" alt="FastAPI Backend"
+                    onerror="this.parentElement.style.background='#131720';this.style.display='none'"/>
+                </div>
+                <div class="gallery-item-cap">
+                  <strong>FastAPI Backend</strong>
+                </div>
+              </div>
+          </div>
+
+          <div style="margin-top:1rem;padding:.85rem 1rem;background:var(--card);border:1px solid var(--border2);border-radius:8px;">
+            <div style="font-family:var(--mono);font-size:.6rem;color:var(--acc);margin-bottom:.35rem;">📁 projects/conversational-firewall/</div>
+            <div style="font-family:var(--mono);font-size:.6rem;color:var(--text3);line-height:1.9;columns:2;gap:2rem;">
+              topology.png &nbsp;·&nbsp; ss-chatbot-home.png &nbsp;·&nbsp; ss-chat-session.png &nbsp;·&nbsp; arch-overview.png<br>
+              arch-detailed.png &nbsp;·&nbsp; flow-agent.png &nbsp;·&nbsp; flow-llm.png &nbsp;·&nbsp; ss-opnsense-routes.png &nbsp;·&nbsp; ss-vscode-backend.png
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end modal-body -->
+  </div><!-- end proj-modal -->
+</div><!-- end overlay -->
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+function toggleTheme(){
+  const isLight=document.body.classList.toggle('light');
+  document.getElementById('iconMoon').style.display=isLight?'none':'block';
+  document.getElementById('iconSun').style.display=isLight?'block':'none';
+  localStorage.setItem('theme',isLight?'light':'dark');
+}
+// Restore saved theme on load
+(function(){
+  if(localStorage.getItem('theme')==='light'){
+    document.body.classList.add('light');
+    document.getElementById('iconMoon').style.display='none';
+    document.getElementById('iconSun').style.display='block';
+  }
+})();
+
 function goto(id,el){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('pg-'+id).classList.add('active');
@@ -644,70 +1910,141 @@ function observePage(id){
 function animSkills(){document.querySelectorAll('#skillBars .sk-fill').forEach(el=>{el.style.width=el.dataset.w+'%';});}
 
 /* TERMINAL — very slow, like a real person typing */
+/* Each entry: [mode, command] where mode drives the prompt shown */
 const cfgLines=[
-  'enable','configure terminal','',
-  'hostname R1','no ip domain-lookup','ip domain-name lab.local',
-  'service password-encryption','service timestamps log datetime msec','',
-  '! AAA with TACACS+','aaa new-model','',
-  'tacacs server TAC1','  address ipv4 192.168.20.50','  key TacacsKey123','',
-  'aaa group server tacacs+ TACACS-GRP','  server name TAC1','',
-  'aaa authentication login default group TACACS-GRP local',
-  'aaa authorization exec default group TACACS-GRP local','',
-  'enable secret Str0ngEnableP@ss!',
-  'username admin privilege 15 secret L0calFallbackP@ss!','',
-  '! SSH v2','crypto key generate rsa modulus 2048',
-  'ip ssh version 2','ip ssh time-out 60','ip ssh authentication-retries 3','',
-  '! Syslog to Splunk SIEM',
-  'logging host 192.168.20.60 transport udp port 514',
-  'logging trap informational','',
-  '! DHCP pools',
-  'ip dhcp excluded-address 192.168.10.1 192.168.10.20',
-  'ip dhcp pool VLAN10_USERS',
-  '  network 192.168.10.0 255.255.255.0',
-  '  default-router 192.168.10.1','  dns-server 8.8.8.8','',
-  '! HSRP subinterfaces',
-  'interface GigabitEthernet0/0.10',
-  '  encapsulation dot1Q 10',
-  '  ip address 192.168.10.2 255.255.255.0',
-  '  standby 10 ip 192.168.10.1',
-  '  standby 10 priority 110','  standby 10 preempt','',
-  '! EIGRP 100','router eigrp 100','  eigrp router-id 1.1.1.1',
-  '  passive-interface default',
-  '  no passive-interface GigabitEthernet0/1',
-  '  network 192.168.10.0 0.0.0.255',
-  '  network 203.0.113.0 0.0.0.3','  no auto-summary','',
-  '! NAT/PAT overload',
-  'ip nat inside source list NAT_INSIDE interface GigabitEthernet0/1 overload','',
-  '! WAN ACL','ip access-list extended WAN-IN',
-  '  permit udp any host 203.0.113.2 eq 500',
-  '  permit tcp 10.10.10.0 0.0.0.255 host 203.0.113.2 eq 22',
-  '  deny ip any any log','',
-  '! Site-to-site VPN','crypto isakmp policy 10',
-  '  encr aes 256','  hash sha256','  group 14',
-  'crypto isakmp key MySharedKey123 address 203.0.113.6','',
-  'banner motd ^C','Authorized access only.','^C','',
-  'end','write memory'
+  {m:'user',  c:'enable'},
+  {m:'priv',  c:'configure terminal'},
+  {m:'conf',  c:''},
+  {m:'conf',  c:'hostname R1'},
+  {m:'conf',  c:'no ip domain-lookup'},
+  {m:'conf',  c:'ip domain-name lab.local'},
+  {m:'conf',  c:'service password-encryption'},
+  {m:'conf',  c:'service timestamps log datetime msec'},
+  {m:'conf',  c:''},
+  {m:'conf',  c:'! AAA with TACACS+'},
+  {m:'conf',  c:'aaa new-model'},
+  {m:'conf',  c:''},
+  {m:'conf',  c:'tacacs server TAC1'},
+  {m:'tacacs',c:'  address ipv4 192.168.20.50'},
+  {m:'tacacs',c:'  key TacacsKey123'},
+  {m:'conf',  c:''},
+  {m:'conf',  c:'aaa group server tacacs+ TACACS-GRP'},
+  {m:'conf',  c:'  server name TAC1'},
+  {m:'conf',  c:''},
+  {m:'conf',  c:'aaa authentication login default group TACACS-GRP local'},
+  {m:'conf',  c:'aaa authorization exec default group TACACS-GRP local'},
+  {m:'conf',  c:''},
+  {m:'conf',  c:'enable secret Str0ngEnableP@ss!'},
+  {m:'conf',  c:'username admin privilege 15 secret L0calFallbackP@ss!'},
+  {m:'conf',  c:''},
+  {m:'conf',  c:'! SSH v2'},
+  {m:'conf',  c:'crypto key generate rsa modulus 2048'},
+  {m:'conf',  c:'ip ssh version 2'},
+  {m:'conf',  c:'ip ssh time-out 60'},
+  {m:'conf',  c:'ip ssh authentication-retries 3'},
+  {m:'conf',  c:''},
+  {m:'conf',  c:'! Syslog to Splunk SIEM'},
+  {m:'conf',  c:'logging host 192.168.20.60 transport udp port 514'},
+  {m:'conf',  c:'logging trap informational'},
+  {m:'conf',  c:''},
+  {m:'conf',  c:'! DHCP pools'},
+  {m:'conf',  c:'ip dhcp excluded-address 192.168.10.1 192.168.10.20'},
+  {m:'conf',  c:'ip dhcp pool VLAN10_USERS'},
+  {m:'dhcp',  c:'  network 192.168.10.0 255.255.255.0'},
+  {m:'dhcp',  c:'  default-router 192.168.10.1'},
+  {m:'dhcp',  c:'  dns-server 8.8.8.8'},
+  {m:'conf',  c:''},
+  {m:'conf',  c:'! HSRP subinterfaces'},
+  {m:'conf',  c:'interface GigabitEthernet0/0.10'},
+  {m:'if',    c:'  encapsulation dot1Q 10'},
+  {m:'if',    c:'  ip address 192.168.10.2 255.255.255.0'},
+  {m:'if',    c:'  standby 10 ip 192.168.10.1'},
+  {m:'if',    c:'  standby 10 priority 110'},
+  {m:'if',    c:'  standby 10 preempt'},
+  {m:'conf',  c:''},
+  {m:'conf',  c:'! EIGRP 100'},
+  {m:'conf',  c:'router eigrp 100'},
+  {m:'router',c:'  eigrp router-id 1.1.1.1'},
+  {m:'router',c:'  passive-interface default'},
+  {m:'router',c:'  no passive-interface GigabitEthernet0/1'},
+  {m:'router',c:'  network 192.168.10.0 0.0.0.255'},
+  {m:'router',c:'  network 203.0.113.0 0.0.0.3'},
+  {m:'router',c:'  no auto-summary'},
+  {m:'conf',  c:''},
+  {m:'conf',  c:'! NAT/PAT overload'},
+  {m:'conf',  c:'ip nat inside source list NAT_INSIDE interface GigabitEthernet0/1 overload'},
+  {m:'conf',  c:''},
+  {m:'conf',  c:'! WAN ACL'},
+  {m:'conf',  c:'ip access-list extended WAN-IN'},
+  {m:'nacl',  c:'  permit udp any host 203.0.113.2 eq 500'},
+  {m:'nacl',  c:'  permit tcp 10.10.10.0 0.0.0.255 host 203.0.113.2 eq 22'},
+  {m:'nacl',  c:'  deny ip any any log'},
+  {m:'conf',  c:''},
+  {m:'conf',  c:'! Site-to-site VPN'},
+  {m:'conf',  c:'crypto isakmp policy 10'},
+  {m:'isakmp',c:'  encr aes 256'},
+  {m:'isakmp',c:'  hash sha256'},
+  {m:'isakmp',c:'  group 14'},
+  {m:'conf',  c:'crypto isakmp key MySharedKey123 address 203.0.113.6'},
+  {m:'conf',  c:''},
+  {m:'conf',  c:'banner motd ^C'},
+  {m:'conf',  c:'Authorized access only.'},
+  {m:'conf',  c:'^C'},
+  {m:'conf',  c:''},
+  {m:'conf',  c:'end'},
+  {m:'priv',  c:'write memory'}
 ];
-/* ── TERMINAL TYPEWRITER ── */
-/* Determines CSS class for a fully-typed line */
-function lineClass(line){
-  const tr=line.trim();
-  if(!tr) return 'plain';
-  if(tr.startsWith('!')) return 'comment';
-  const kw=/^(enable|configure terminal|end|exit|write memory|hostname|no |ip |interface |router |crypto |aaa |logging|username|enable secret|banner|service|line |tacacs|standby|encapsulation|network|passive|permit|deny)/;
-  return kw.test(tr)?'keyword':'plain';
-}
 
-/* Build final coloured HTML for a complete line */
+const modePrompts={
+  user:   '<span class="l-prompt-user">R1&gt;</span>',
+  priv:   '<span class="l-prompt-priv">R1#</span>',
+  conf:   '<span class="l-prompt-conf">R1(config)#</span>',
+  if:     '<span class="l-prompt-conf">R1(config-if)#</span>',
+  router: '<span class="l-prompt-conf">R1(config-router)#</span>',
+  line:   '<span class="l-prompt-conf">R1(config-line)#</span>',
+  isakmp: '<span class="l-prompt-conf">R1(config-isakmp)#</span>',
+  dhcp:   '<span class="l-prompt-conf">R1(dhcp-config)#</span>',
+  nacl:   '<span class="l-prompt-conf">R1(config-ext-nacl)#</span>',
+  tacacs: '<span class="l-prompt-conf">R1(cfg-tacacs)#</span>',
+};
+/* ── TERMINAL TYPEWRITER (mode-aware) ── */
 function colorLine(line){
   if(!line.trim()) return '';
   if(line.trim().startsWith('!')) return `<span class="l-cmt">${line}</span>`;
-  const kw=/^(enable|configure terminal|end|exit|write memory|hostname|no |ip |interface |router |crypto |aaa |logging|username|enable secret|banner|service|line |tacacs|standby|encapsulation|network|passive|permit|deny)/;
-  if(kw.test(line.trim())){
-    const m=line.match(/^(\s*)([\w][\w -]*)(.*)$/);
-    if(m) return `${m[1]}<span class="l-kw">${m[2]}</span><span class="l-val">${m[3]}</span>`;
+
+  // Keywords: fixed known command words at the start of a line (letters/spaces only, explicit list)
+  const keywords=[
+    'aaa authentication login','aaa authorization exec','aaa group server tacacs+','aaa new-model',
+    'address ipv4','banner motd','configure terminal','crypto isakmp key','crypto isakmp policy',
+    'crypto key generate rsa modulus','default-router','deny ip','deny','dns-server',
+    'enable secret','enable','encapsulation dot1Q','end','exit',
+    'hash','hostname','interface','ip access-list extended','ip dhcp excluded-address',
+    'ip dhcp pool','ip domain-name','ip nat inside source list','ip route',
+    'ip ssh authentication-retries','ip ssh time-out','ip ssh version','ip address',
+    'key','line','logging host','logging trap','network','no auto-summary',
+    'no ip domain-lookup','no passive-interface','passive-interface default',
+    'permit tcp','permit udp','permit',
+    'router eigrp','router ospf','router',
+    'server name','service password-encryption','service timestamps log datetime msec',
+    'standby','tacacs server','username','write memory','encr','group',
+    'eigrp router-id','no '
+  ].sort((a,b)=>b.length-a.length); // longest first so we match most specific
+
+  const trimmed=line.trimStart();
+  const indent=line.slice(0,line.length-trimmed.length);
+
+  for(const kw of keywords){
+    if(trimmed.toLowerCase().startsWith(kw.toLowerCase())){
+      const rest=trimmed.slice(kw.length);
+      return `${indent}<span class="l-kw">${trimmed.slice(0,kw.length)}</span><span class="l-val">${rest}</span>`;
+    }
   }
   return `<span class="l-cmd">${line}</span>`;
+}
+
+function getPromptSpan(mode){
+  const p=modePrompts[mode]||modePrompts.conf;
+  return p+'&nbsp;';
 }
 
 function runMoba(){
@@ -715,96 +2052,74 @@ function runMoba(){
   if(!body) return;
 
   let lineIdx=0;
-  let promptEl=null;
-  let typingDiv=null; // the div currently being typed into
 
-  /* Add/refresh the prompt line at the bottom */
-  function addPrompt(){
-    if(promptEl) promptEl.remove();
-    promptEl=document.createElement('div');
-    promptEl.innerHTML='<span class="l-prompt">R1(config)#</span>&nbsp;<span class="l-cursor"></span>';
-    body.appendChild(promptEl);
-    body.scrollTop=body.scrollHeight;
-  }
+  /* Each terminal line = one div: [prompt][command text] all in one row */
+  function typeLine(entry, done){
+    const line=entry.c;
+    const mode=entry.m;
 
-  /* After a line finishes typing, apply full syntax colouring */
-  function applyColor(div,line){
-    div.innerHTML=colorLine(line);
-  }
-
-  /* Type a single line character by character, then call done() */
-  function typeLine(line, done){
-    /* Empty / blank line — skip typing, just add a spacer */
+    /* Blank spacer line — no prompt, just vertical gap */
     if(!line.trim()){
       const div=document.createElement('div');
-      div.innerHTML='&nbsp;';
+      div.style.height='.3em';
       body.appendChild(div);
       body.scrollTop=body.scrollHeight;
-      setTimeout(done, 160);
+      setTimeout(done,40);
       return;
     }
 
-    /* Comment lines — type a bit faster, no prompt needed before */
     const isComment=line.trim().startsWith('!');
+    const lineDiv=document.createElement('div');
+    body.appendChild(lineDiv);
 
-    /* Create a working div that shows plain text while typing */
-    typingDiv=document.createElement('div');
-    /* Apply dim colour while typing in progress */
-    if(isComment) typingDiv.className='l-cmt';
-    else typingDiv.className='l-cmd';
-    body.appendChild(typingDiv);
+    /* Comments: no prompt, italic dim */
+    if(isComment){
+      let charIdx=0;
+      function typeComment(){
+        if(charIdx<=line.length){
+          lineDiv.innerHTML=`<span class="l-cmt">${line.slice(0,charIdx)}</span><span class="l-cursor"></span>`;
+          body.scrollTop=body.scrollHeight;
+          charIdx++;
+          setTimeout(typeComment,10);
+        } else {
+          lineDiv.innerHTML=`<span class="l-cmt">${line}</span>`;
+          setTimeout(done,60);
+        }
+      }
+      typeComment();
+      return;
+    }
 
+    /* Normal command: prompt + typed text on same line */
+    const promptHtml=getPromptSpan(mode);
     let charIdx=0;
-    /* Speed: comments 28ms/char, normal 32ms/char */
-    const charDelay=isComment?28:32;
+    const charDelay=14;
 
     function typeChar(){
       if(charIdx<=line.length){
-        /* Show typed chars + blinking cursor */
         const typed=line.slice(0,charIdx);
-        typingDiv.innerHTML=(isComment
-          ? `<span class="l-cmt">${typed}</span>`
-          : `<span class="l-cmd">${typed}</span>`)
-          +'<span class="l-cursor"></span>';
+        lineDiv.innerHTML=promptHtml+`<span class="l-cmd">${typed}</span><span class="l-cursor"></span>`;
         body.scrollTop=body.scrollHeight;
         charIdx++;
-        setTimeout(typeChar, charDelay);
+        setTimeout(typeChar,charDelay);
       } else {
-        /* Finished typing — remove cursor, apply syntax colour */
-        applyColor(typingDiv, line);
-        typingDiv=null;
-        /* Pause after line before next: comments shorter, normal longer */
-        const pauseAfter=isComment?180:320;
-        setTimeout(done, pauseAfter);
+        /* Done typing — apply syntax coloring but KEEP the prompt */
+        lineDiv.innerHTML=promptHtml+colorLine(line);
+        setTimeout(done,90);
       }
     }
     typeChar();
   }
 
-  /* Main loop — processes one line at a time */
   function nextLine(){
-    if(lineIdx>=cfgLines.length){
-      /* All done — leave final prompt */
-      addPrompt();
-      return;
-    }
-    const line=cfgLines[lineIdx++];
-
-    /* Remove prompt while typing */
-    if(promptEl){ promptEl.remove(); promptEl=null; }
-
-    typeLine(line, ()=>{
-      /* Re-add prompt, then move to next line after a short gap */
-      addPrompt();
-      setTimeout(nextLine, line.trim()===''?120:200);
-    });
+    if(lineIdx>=cfgLines.length) return;
+    const entry=cfgLines[lineIdx++];
+    typeLine(entry,()=>setTimeout(nextLine,entry.c.trim()===''?30:60));
   }
 
-  /* Initial prompt then start */
-  addPrompt();
-  setTimeout(nextLine, 900);
+  setTimeout(nextLine,300);
 }
-setTimeout(runMoba, 800);
+setTimeout(runMoba,400);
 
 function toggleCC(card,id){
   const el=document.getElementById(id);const was=el.classList.contains('open');
@@ -820,11 +2135,183 @@ function toggleOC(row,id){
 }
 function sendMsg(){
   const fn=document.getElementById('fn').value.trim();
+  const ln=document.getElementById('ln').value.trim();
   const em=document.getElementById('em').value.trim();
+  const sub=document.getElementById('sub').value.trim();
   const msg=document.getElementById('msg').value.trim();
   if(!fn||!em||!msg){alert('Please fill in your name, email, and message.');return;}
-  alert('Message sent! Thanks '+fn+' — I\'ll get back to you soon.');
+
+  const btn=document.querySelector('[onclick="sendMsg()"]');
+  btn.textContent='Sending…';
+  btn.disabled=true;
+
+  fetch('https://formspree.io/f/mnjgwnwv',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify({
+      name: fn+(ln?' '+ln:''),
+      email: em,
+      subject: sub||'Portfolio Inquiry',
+      message: msg
+    })
+  })
+  .then(r=>r.json())
+  .then(data=>{
+    if(data.ok){
+      btn.textContent='Message Sent ✓';
+      btn.style.background='var(--ok)';
+      document.getElementById('fn').value='';
+      document.getElementById('ln').value='';
+      document.getElementById('em').value='';
+      document.getElementById('sub').value='';
+      document.getElementById('msg').value='';
+      setTimeout(()=>{btn.textContent='Send Message →';btn.style.background='';btn.disabled=false;},4000);
+    } else {
+      btn.textContent='Send Message →';
+      btn.disabled=false;
+      alert('Something went wrong. Please try emailing me directly at aktham.alarabi@gmail.com');
+    }
+  })
+  .catch(()=>{
+    btn.textContent='Send Message →';
+    btn.disabled=false;
+    alert('Network error. Please try emailing me directly at aktham.alarabi@gmail.com');
+  });
+}
+
+
+/* ── MODAL FUNCTIONS ── */
+function openProjectModal(){
+  const m=document.getElementById('projModal');
+  m.classList.add('open');
+  switchModalTab('overview', document.querySelector('.modal-tab'));
+}
+function closeModal(e){
+  if(e.target===document.getElementById('projModal')){
+    document.getElementById('projModal').classList.remove('open');
+  }
+}
+function switchModalTab(name,btn){
+  document.querySelectorAll('.modal-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.modal-tab').forEach(t=>t.classList.remove('active'));
+  const panel=document.getElementById('mp-'+name);
+  const mb=document.querySelector('.proj-modal-body');
+  if(panel && mb){
+    mb.insertBefore(panel, mb.firstChild);
+    panel.classList.add('active');
+  }
+  if(btn) btn.classList.add('active');
+  if(mb) mb.scrollTop=0;
+}
+function switchTrafficTab(name,btn){
+  document.querySelectorAll('.traffic-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.traffic-tab').forEach(t=>t.classList.remove('active'));
+  const panel=document.getElementById('tf-'+name);
+  if(panel) panel.classList.add('active');
+  if(btn) btn.classList.add('active');
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){
+    document.getElementById('projModal').classList.remove('open');
+  }
+});
+
+/* ── LIGHTBOX ── */
+const galleryImgs=[
+  {src:'projects/conversational-firewall/ss-chatbot-home.png',    title:'Warden Chatbot — Home',      desc:'AI chatbot interface with capability overview: DHCP, Firewall, Interface, Logs, IPS'},
+  {src:'projects/conversational-firewall/ss-chat-session.png',    title:'Live Chat Session',           desc:'Chatbot configuring a static route for 55.55.55.55/32 via WAN_GATEWAY with real-time audit log'},
+  {src:'projects/conversational-firewall/arch-overview.png',      title:'High-Level Architecture',    desc:'Three-layer design: React + LLM frontend → FastAPI backend → OPNsense firewall'},
+  {src:'projects/conversational-firewall/arch-detailed.png',      title:'Detailed Data Flow',          desc:'Full system diagram: Users → React → API → Chatbot (LLM + Tool Calling) → OPNsense loop'},
+  {src:'projects/conversational-firewall/flow-agent.png',         title:'LangGraph Agent Flow',        desc:'Agent Node → Conditional Tool Checking → Tool Node + Tool Logging → END phase'},
+  {src:'projects/conversational-firewall/flow-llm.png',           title:'LLM Model Selection',         desc:'Dynamic model routing: OpenAI, Google Gemini, or local vLLM instance with tool binding'},
+  {src:'projects/conversational-firewall/ss-opnsense-routes.png', title:'OPNsense — Static Routes',   desc:'Route 55.55.55.55/32 via WAN_GATEWAY (10.0.0.1) configured live by the chatbot'},
+  {src:'projects/conversational-firewall/ss-vscode-backend.png',  title:'FastAPI Backend — VS Code',  desc:'SQLAlchemy models (Message, ToolUsage), PostgreSQL, feature-based folder structure'},
+];
+let lbIdx=0;
+function openLightbox(i){
+  lbIdx=i;
+  const lb=document.getElementById('lightbox');
+  const g=galleryImgs[i];
+  document.getElementById('lightboxImg').src=g.src;
+  document.getElementById('lightboxImg').alt=g.title;
+  document.getElementById('lightboxTitle').textContent=g.title;
+  document.getElementById('lightboxDesc').textContent=g.desc;
+  lb.classList.add('open');
+}
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('open');
+  const activePage = document.querySelector('.page.active');
+  if(activePage) requestAnimationFrame(()=>activePage.focus({preventScroll:true}));
+}
+function closeLightboxOutside(e){ if(e.target===document.getElementById('lightbox')) closeLightbox(); }
+function lightboxNav(dir){
+  lbIdx=(lbIdx+dir+galleryImgs.length)%galleryImgs.length;
+  openLightbox(lbIdx);
+}
+document.addEventListener('keydown',e=>{
+  const lb=document.getElementById('lightbox');
+  if(!lb||!lb.classList.contains('open')) return;
+  if(e.key==='Escape') closeLightbox();
+  if(e.key==='ArrowLeft') lightboxNav(-1);
+  if(e.key==='ArrowRight') lightboxNav(1);
+});
+
+function openCertPdf(path, title){
+  document.getElementById('certPdfTitle').textContent = title;
+  document.getElementById('certPdfFrame').src = path;
+  document.getElementById('certPdfDownload').href = path;
+  document.getElementById('certPdfOverlay').classList.add('open');
+}
+function closeCertPdf(){
+  document.getElementById('certPdfOverlay').classList.remove('open');
+  document.getElementById('certPdfFrame').src = '';
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape') closeCertPdf();
+});
+
+function copyEmail(el){
+  navigator.clipboard.writeText('aktham.alarabi@gmail.com').then(()=>{
+    const btn=document.getElementById('emailCopyBtn');
+    if(btn){btn.textContent='Copied!';btn.classList.add('copied');
+      setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied');},2000);}
+  }).catch(()=>{
+    // fallback
+    const ta=document.createElement('textarea');
+    ta.value='aktham.alarabi@gmail.com';
+    document.body.appendChild(ta);ta.select();
+    document.execCommand('copy');document.body.removeChild(ta);
+    const btn=document.getElementById('emailCopyBtn');
+    if(btn){btn.textContent='Copied!';btn.classList.add('copied');
+      setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied');},2000);}
+  });
 }
 </script>
-</body>
-</html>
+
+<!-- CERT PDF VIEWER -->
+<div class="cert-pdf-overlay" id="certPdfOverlay">
+  <div class="cert-pdf-bar">
+    <span class="cert-pdf-title" id="certPdfTitle">Certificate</span>
+    <div class="cert-pdf-actions">
+      <a id="certPdfDownload" href="#" target="_blank" download
+         style="font-family:var(--mono);font-size:.68rem;color:var(--text2);background:var(--card);
+         border:1px solid var(--border);padding:.35rem .85rem;border-radius:6px;text-decoration:none;
+         transition:all .18s;display:flex;align-items:center;gap:.4rem;"
+         onmouseover="this.style.color='var(--text)';this.style.borderColor='var(--border2)'"
+         onmouseout="this.style.color='var(--text2)';this.style.borderColor='var(--border)'">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+        Download PDF
+      </a>
+      <button class="cert-pdf-close" onclick="closeCertPdf()">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 1l8 8M9 1L1 9"/></svg>
+        Close
+      </button>
+    </div>
+  </div>
+  <iframe class="cert-pdf-frame" id="certPdfFrame" src="" title="Certificate PDF"></iframe>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightboxOutside(event)">
+  <button class="lightbox-close" onclick="closeLightbox()">
+    <svg width="10" heig
