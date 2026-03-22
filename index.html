@@ -46,7 +46,11 @@ body.light::before{opacity:0;}
 .hero-photo{width:140px;height:140px;border-radius:50%;object-fit:cover;object-position:center top;
   border:2px solid var(--border3);flex-shrink:0;
   box-shadow:0 0 0 5px rgba(59,130,246,.1),0 0 28px rgba(59,130,246,.22);
-  display:block;}
+  display:block;animation:photoBreath 4s ease-in-out infinite;}
+@keyframes photoBreath{
+  0%,100%{box-shadow:0 0 0 5px rgba(59,130,246,.10),0 0 28px rgba(59,130,246,.22);}
+  50%{box-shadow:0 0 0 8px rgba(59,130,246,.18),0 0 40px rgba(59,130,246,.38);}
+}
 
 /* THEME TOGGLE */
 .theme-toggle{width:36px;height:36px;border-radius:8px;border:1px solid var(--border2);
@@ -56,26 +60,49 @@ body.light::before{opacity:0;}
 .theme-toggle svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;transition:opacity .2s;}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;height:60px;
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:66px;
   display:flex;align-items:center;justify-content:space-between;
   padding:0 5rem;background:rgba(9,11,15,.92);backdrop-filter:blur(20px);
   border-bottom:1px solid var(--border);transition:background .3s,border-color .3s;}
 body.light nav{background:rgba(240,244,248,.92);border-bottom:1px solid var(--border);}
 .nav-logo{display:flex;align-items:center;gap:0;text-decoration:none;user-select:none;}
-.nav-logo-wordmark{font-family:var(--mono);font-size:.88rem;font-weight:600;color:var(--text);letter-spacing:.01em;line-height:1;}
-.nav-logo-wordmark .nl-first{color:var(--text2);}
+.nav-logo-wordmark{font-family:var(--display);font-size:.95rem;font-weight:700;color:var(--text);letter-spacing:-.01em;line-height:1;}
+.nav-logo-wordmark .nl-first{color:var(--text2);font-weight:400;}
 .nav-logo-wordmark .nl-last{color:var(--text);}
-.nav-logo-wordmark .nl-dot{color:var(--acc);margin:0 .05em;}
-.nav-logo-wordmark .nl-domain{color:var(--text3);font-size:.72rem;font-weight:400;}
-.nav-links{display:flex;list-style:none;}
-.nav-links a{font-family:var(--mono);font-size:.72rem;color:var(--text2);text-decoration:none;
-  padding:.35rem 1rem;transition:color .18s;position:relative;letter-spacing:.03em;}
+.nav-logo-wordmark .nl-dot{color:var(--acc);margin:0 .08em;}
+.nav-logo-wordmark .nl-domain{color:var(--text3);font-size:.74rem;font-weight:300;letter-spacing:.01em;}
+.nav-links{display:flex;list-style:none;gap:.25rem;}
+.nav-links a{font-family:var(--display);font-size:.78rem;font-weight:500;color:var(--text2);text-decoration:none;
+  padding:.4rem 1.1rem;transition:color .18s;position:relative;letter-spacing:.01em;}
 .nav-links a:hover{color:var(--text);}
-.nav-links a.active{color:var(--text);}
-.nav-links a.active::after{content:'';position:absolute;bottom:-1px;left:1rem;right:1rem;height:1px;background:var(--acc);}
+.nav-links a.active{color:var(--text);background:rgba(59,130,246,.08);border-radius:6px;}
+.nav-links a.active::after{content:'';position:absolute;bottom:-1px;left:1.1rem;right:1.1rem;height:2px;
+  background:var(--acc);border-radius:2px;box-shadow:0 0 8px rgba(59,130,246,.7),0 0 16px rgba(59,130,246,.3);}
+.nav-psst{color:var(--acc)!important;opacity:.5;letter-spacing:.06em;font-size:.68rem!important;
+  border:1px solid var(--border2);padding:.2rem .6rem!important;border-radius:4px;transition:opacity .2s!important;}
+.nav-psst:hover{opacity:1!important;}
+
+/* ── CUSTOM SCROLLBARS ── */
+/* Global — all scrollable elements */
+*::-webkit-scrollbar{width:5px;height:5px;}
+*::-webkit-scrollbar-track{background:transparent;}
+*::-webkit-scrollbar-thumb{background:var(--text3);border-radius:10px;}
+*::-webkit-scrollbar-thumb:hover{background:var(--acc);}
+*::-webkit-scrollbar-corner{background:transparent;}
+/* Firefox */
+*{scrollbar-width:thin;scrollbar-color:var(--text3) transparent;}
+/* Light mode — slightly darker thumb so it's visible on light bg */
+body.light *::-webkit-scrollbar-thumb{background:var(--text3);}
+body.light *{scrollbar-color:var(--text3) transparent;}
+
+/* SCROLL PROGRESS BAR */
+#scroll-progress{position:fixed;top:66px;left:0;width:0%;height:2px;z-index:199;
+  background:linear-gradient(90deg,var(--acc3),var(--acc),var(--acc2));
+  pointer-events:none;will-change:width;
+  box-shadow:0 0 8px rgba(59,130,246,.5);}
 
 /* PAGES */
-#app{position:fixed;top:60px;left:0;right:0;bottom:0;overflow:hidden;}
+#app{position:fixed;top:66px;left:0;right:0;bottom:0;overflow:hidden;}
 .page{position:absolute;inset:0;overflow-y:auto;opacity:0;pointer-events:none;
   transform:translateY(14px);transition:opacity .3s ease,transform .3s ease;outline:none;}
 .page.active{opacity:1;pointer-events:all;transform:none;}
@@ -91,12 +118,18 @@ body.light nav{background:rgba(240,244,248,.92);border-bottom:1px solid var(--bo
 /* SHARED */
 .wrap{max-width:1360px;margin:0 auto;padding:4.5rem 5rem;}
 .eyebrow{font-family:var(--mono);font-size:.67rem;font-weight:500;color:var(--acc);
-  letter-spacing:.18em;text-transform:uppercase;margin-bottom:.6rem;}
+  letter-spacing:.18em;text-transform:uppercase;margin-bottom:.6rem;
+  display:flex;align-items:center;gap:.55rem;}
+.eyebrow::before{content:'';display:inline-block;width:3px;height:12px;
+  background:linear-gradient(to bottom,var(--acc),var(--acc3));
+  border-radius:2px;flex-shrink:0;opacity:.85;}
 .sec-title{font-size:clamp(1.7rem,2.8vw,2.4rem);font-weight:800;color:var(--text);
   letter-spacing:-.025em;line-height:1.1;margin-bottom:.9rem;}
 .sec-title span{color:var(--acc);}
 .chip{display:inline-block;font-family:var(--mono);font-size:.64rem;color:var(--text2);
-  background:var(--card);border:1px solid var(--border2);padding:.2rem .6rem;border-radius:4px;letter-spacing:.02em;}
+  background:var(--card);border:1px solid var(--border2);padding:.2rem .6rem;border-radius:4px;letter-spacing:.02em;
+  transition:transform .15s,border-color .15s,color .15s;}
+.chip:hover{transform:translateY(-1px);border-color:var(--border3);color:var(--acc);}
 .page-footer{padding:2rem 5rem;border-top:1px solid var(--border);
   display:flex;justify-content:space-between;align-items:center;}
 .pf-l{font-family:var(--mono);font-size:.65rem;color:var(--text3);}
@@ -114,7 +147,12 @@ body.light nav{background:rgba(240,244,248,.92);border-bottom:1px solid var(--bo
   min-height:calc(100vh - 60px);display:flex;flex-direction:column;}
 .avail{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.69rem;
   color:var(--acc2);border:1px solid var(--border2);background:rgba(59,130,246,.06);
-  padding:.3rem .85rem;border-radius:100px;margin-bottom:2rem;letter-spacing:.04em;align-self:flex-start;}
+  padding:.3rem .85rem;border-radius:100px;margin-bottom:2rem;letter-spacing:.04em;align-self:flex-start;
+  animation:availGlow 3.5s ease-in-out infinite;}
+@keyframes availGlow{
+  0%,100%{border-color:var(--border2);box-shadow:none;}
+  50%{border-color:rgba(59,130,246,.45);box-shadow:0 0 10px rgba(59,130,246,.15),0 0 20px rgba(59,130,246,.07);}
+}
 .avail-dot{width:5px;height:5px;border-radius:50%;background:var(--acc);animation:pulse 2s infinite;}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(59,130,246,.4)}50%{box-shadow:0 0 0 5px rgba(59,130,246,0)}}
 .hero-row{display:grid;grid-template-columns:1fr minmax(0,560px);gap:2.5rem;align-items:start;flex:1;}
@@ -134,23 +172,38 @@ h1.hname span{color:var(--acc);display:block;}
 .hstat-l{font-family:var(--mono);font-size:.57rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-top:.2rem;}
 
 /* MobaXterm */
-.moba{border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,.09);width:100%;}
-.moba-bar{background:#1a1d26;padding:.5rem .85rem;display:flex;align-items:center;border-bottom:1px solid rgba(255,255,255,.07);}
+.moba{border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,.09);width:100%;transition:border-color .3s;}
+body.light .moba{border-color:rgba(0,0,0,.12);}
+.moba-bar{background:#1a1d26;padding:.5rem .85rem;display:flex;align-items:center;border-bottom:1px solid rgba(255,255,255,.07);transition:background .3s,border-color .3s;}
+body.light .moba-bar{background:#dde5f0;border-bottom-color:rgba(0,0,0,.1);}
 .moba-tabs{display:flex;}
-.moba-tab{font-family:var(--mono);font-size:.62rem;padding:.22rem .8rem;cursor:default;letter-spacing:.03em;}
+.moba-tab{font-family:var(--mono);font-size:.62rem;padding:.22rem .8rem;cursor:default;letter-spacing:.03em;transition:background .3s,color .3s;}
 .moba-tab.act{background:#0f1219;color:var(--acc2);border-bottom:1px solid var(--acc);}
+body.light .moba-tab.act{background:#c8d4e8;color:var(--acc3);}
 .moba-tab.ina{background:#141720;color:var(--text3);}
+body.light .moba-tab.ina{background:#cdd8ea;color:var(--text3);}
 .moba-tr{margin-left:auto;font-family:var(--mono);font-size:.6rem;color:var(--text3);}
 .moba-body{background:#0b0d12;padding:.85rem 1rem 1rem;font-family:var(--mono);font-size:.7rem;
-  line-height:1.8;height:360px;overflow-y:auto;}
+  line-height:1.8;height:360px;overflow-y:auto;transition:background .3s;}
+body.light .moba-body{background:#e8eef8;}
 .moba-body::-webkit-scrollbar{width:3px;}
 .moba-body::-webkit-scrollbar-thumb{background:var(--text3);border-radius:2px;}
-.l-prompt-user{color:#facc15;font-weight:600;}   /* R1> yellow  */
-.l-prompt-priv{color:#4ade80;font-weight:600;}   /* R1# green   */
-.l-prompt-conf{color:#60a5fa;font-weight:600;}   /* R1(config)# blue */
-.l-cmd{color:var(--text);}.l-cmt{color:#374151;font-style:italic;}
-.l-kw{color:var(--acc2);}.l-val{color:#fcd34d;}
-.l-prompt{color:#4ade80;}
+/* Dark-mode terminal text */
+.l-prompt-user{color:#d97706;font-weight:600;}   /* R1> amber   */
+.l-prompt-priv{color:#16a34a;font-weight:600;}   /* R1# green   */
+.l-prompt-conf{color:#2563eb;font-weight:600;}   /* R1(config)# blue */
+.l-cmd{color:#1e293b;}.l-cmt{color:#94a3b8;font-style:italic;}
+.l-kw{color:#2563eb;}.l-val{color:#b45309;}
+.l-prompt{color:#16a34a;}
+/* Dark overrides */
+body:not(.light) .l-prompt-user{color:#facc15;}
+body:not(.light) .l-prompt-priv{color:#4ade80;}
+body:not(.light) .l-prompt-conf{color:#60a5fa;}
+body:not(.light) .l-cmd{color:#eef1f8;}
+body:not(.light) .l-cmt{color:#374151;}
+body:not(.light) .l-kw{color:#60a5fa;}
+body:not(.light) .l-val{color:#fcd34d;}
+body:not(.light) .l-prompt{color:#4ade80;}
 .l-cursor{display:inline-block;width:7px;height:.85em;background:var(--acc);vertical-align:middle;animation:blink 1s step-end infinite;}
 @keyframes blink{50%{opacity:0}}
 
@@ -161,11 +214,19 @@ h1.hname span{color:var(--acc);display:block;}
   padding:1.2rem 1.4rem;display:flex;align-items:flex-start;gap:.9rem;
   transition:border-color .18s,background .18s,transform .15s;cursor:pointer;}
 .hn-card:hover{border-color:var(--border2);background:var(--bg3);transform:translateY(-2px);}
+.hn-card:focus-visible{outline:2px solid var(--acc);outline-offset:2px;border-color:var(--border2);}
 .hn-ico{width:32px;height:32px;background:var(--acc-dim);border:1px solid var(--border2);
   border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .hn-ico svg{width:14px;height:14px;fill:none;stroke:var(--acc);stroke-width:2;}
 .hn-title{font-size:.85rem;font-weight:700;color:var(--text);margin-bottom:.2rem;}
 .hn-desc{font-size:.74rem;color:var(--text3);line-height:1.5;}
+
+/* SECTION DIVIDER */
+.sec-divider{display:flex;align-items:center;gap:1rem;margin:3rem 0 2.5rem;opacity:.5;}
+.sec-divider::before,.sec-divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--border));}
+.sec-divider::after{background:linear-gradient(270deg,transparent,var(--border));}
+.sec-divider-dot{width:6px;height:6px;background:var(--acc);border-radius:50%;
+  box-shadow:0 0 8px rgba(59,130,246,.6);flex-shrink:0;}
 
 /* ABOUT */
 .about-cols{display:grid;grid-template-columns:1.1fr 1fr;gap:3.5rem;align-items:start;margin-bottom:4.5rem;}
@@ -200,7 +261,8 @@ h1.hname span{color:var(--acc);display:block;}
 .tl-item:last-child{margin-bottom:0;}
 .tl-ico{position:absolute;left:-3.2rem;top:0;width:32px;height:32px;
   border:1px solid var(--border2);border-radius:7px;display:flex;align-items:center;justify-content:center;z-index:1;}
-.tl-ico.curr{background:var(--bg2);border-color:var(--border3);}
+.tl-ico.curr{background:var(--bg2);border-color:var(--border3);
+  box-shadow:0 0 0 4px rgba(59,130,246,.1),0 0 16px rgba(59,130,246,.25);}
 .tl-ico.past{background:var(--bg2);border-color:var(--border);}
 .tl-ico.curr svg{fill:none;stroke:var(--acc);stroke-width:1.8;width:13px;height:13px;}
 .tl-ico.past svg{fill:none;stroke:var(--text3);stroke-width:1.8;width:13px;height:13px;}
@@ -211,14 +273,23 @@ h1.hname span{color:var(--acc);display:block;}
 .tl-role.past{color:var(--text2);}
 .tl-co{font-family:var(--mono);font-size:.7rem;color:var(--acc);letter-spacing:.03em;margin-bottom:.7rem;}
 .tl-co.past{color:var(--text3);}
+.tl-co-link{text-decoration:none;transition:color .18s;}
+.tl-co-link.curr{color:var(--acc);}
+.tl-co-link.curr:hover{color:var(--acc2);}
+.tl-co-link.past{color:var(--text3);}
+.tl-co-link.past:hover{color:var(--acc);}
 .tl-ul{list-style:none;display:flex;flex-direction:column;gap:.3rem;}
 .tl-ul li{font-size:.82rem;color:var(--text2);padding-left:1rem;position:relative;line-height:1.65;font-weight:300;}
 .tl-ul li::before{content:'–';position:absolute;left:0;color:var(--text3);}
 
 /* VOLUNTEERING */
 .vol-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:1.2rem;}
-.vol-card{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:1.15rem 1.35rem;transition:border-color .18s;}
+.vol-card{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:1.15rem 1.35rem;
+  transition:border-color .18s,box-shadow .18s;position:relative;overflow:hidden;}
+.vol-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;
+  background:var(--acc);transform:scaleY(0);transform-origin:bottom;transition:transform .25s ease;border-radius:2px 0 0 2px;}
 .vol-card:hover{border-color:var(--border2);}
+.vol-card:hover::before{transform:scaleY(1);}
 .vol-badge{font-family:var(--mono);font-size:.59rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
   color:var(--acc);background:var(--acc-dim);border:1px solid var(--border2);
   padding:.16rem .48rem;border-radius:3px;display:inline-block;margin-bottom:.6rem;}
@@ -232,9 +303,13 @@ h1.hname span{color:var(--acc);display:block;}
 
 /* CERTS - shared accordion rows */
 .oc-list{display:flex;flex-direction:column;border:1px solid var(--border);border-radius:9px;overflow:hidden;}
-.oc{display:flex;align-items:center;gap:.95rem;padding:.75rem 1.1rem;border-bottom:1px solid var(--border);cursor:pointer;transition:background .18s;}
+.oc{display:flex;align-items:center;gap:.95rem;padding:.75rem 1.1rem;border-bottom:1px solid var(--border);
+  cursor:pointer;transition:background .18s;position:relative;overflow:hidden;}
+.oc::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;
+  background:var(--acc);transform:scaleY(0);transform-origin:bottom;transition:transform .22s ease;}
 .oc:last-child{border-bottom:none;}
 .oc:hover,.oc.open{background:var(--card);}
+.oc:hover::before,.oc.open::before{transform:scaleY(1);}
 .oc-pill{font-family:var(--mono);font-size:.56rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;padding:.18rem .52rem;border-radius:4px;flex-shrink:0;min-width:56px;text-align:center;}
 .oc-pill.done{background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.22);color:var(--acc2);}
 .oc-pill.prog{background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.2);color:var(--warn);}
@@ -276,6 +351,10 @@ h1.hname span{color:var(--acc);display:block;}
   transition:all .18s;display:flex;align-items:center;gap:.4rem;}
 .cert-pdf-close:hover{color:var(--text);border-color:var(--border2);}
 .cert-pdf-frame{flex:1;border:none;background:var(--bg2);}
+.cert-pdf-download-btn{font-family:var(--mono);font-size:.68rem;color:var(--text2);background:var(--card);
+  border:1px solid var(--border);padding:.35rem .85rem;border-radius:6px;text-decoration:none;
+  transition:all .18s;display:flex;align-items:center;gap:.4rem;}
+.cert-pdf-download-btn:hover{color:var(--text);border-color:var(--border2);}
 .cert-view-btn{font-family:var(--mono);font-size:.58rem;color:var(--acc);background:var(--acc-dim);
   border:1px solid var(--border2);padding:.15rem .5rem;border-radius:3px;cursor:pointer;
   transition:all .18s;white-space:nowrap;margin-right:.5rem;}
@@ -300,6 +379,10 @@ h1.hname span{color:var(--acc);display:block;}
 .pc{background:var(--card);padding:1.55rem;transition:background .18s;cursor:pointer;position:relative;overflow:hidden;}
 .pc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
   background:linear-gradient(90deg,var(--acc),transparent);transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+.pc::before{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;
+  background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.06) 50%,transparent 60%);
+  transition:left .55s ease;pointer-events:none;z-index:1;}
+.pc:hover::before{left:160%;}
 .pc:hover{background:var(--bg3);}
 .pc:hover::after{transform:scaleX(1);}
 .pc-badge{font-family:var(--mono);font-size:.57rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
@@ -320,7 +403,7 @@ h1.hname span{color:var(--acc);display:block;}
 
 /* CONTACT */
 .contact-layout{display:grid;grid-template-columns:1fr 1.5fr;gap:3rem;align-items:start;}
-.contact-intro-text{font-size:.87rem;color:var(--text2);margin-bottom:1.5rem;line-height:1.85;font-weight:300;}
+.contact-intro-text{font-size:.87rem;color:var(--text2);margin-bottom:1.2rem;line-height:1.85;font-weight:300;margin-top:0;}
 .contact-info-cards{display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.5rem;}
 .cic{display:flex;align-items:center;gap:.85rem;padding:.85rem 1rem;border:1px solid var(--border);
   border-radius:10px;background:var(--card);transition:border-color .18s,background .18s,transform .15s;
@@ -348,18 +431,21 @@ h1.hname span{color:var(--acc);display:block;}
 .fi,.ft{width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);
   font-family:var(--display);font-size:.84rem;padding:.66rem .88rem;border-radius:6px;
   outline:none;transition:border-color .18s;font-weight:300;}
-.fi:focus,.ft:focus{border-color:rgba(59,130,246,.35);}
+.fi:focus,.ft:focus{border-color:rgba(59,130,246,.5);box-shadow:0 0 0 3px rgba(59,130,246,.12),0 0 12px rgba(59,130,246,.08);}
 .ft{resize:vertical;min-height:100px;}
 .fi::placeholder,.ft::placeholder{color:var(--text3);}
 .fgrow{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;}
 
 /* FOOTER */
 .site-footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 5rem 1.2rem;
-  max-width:100%;}
+  max-width:100%;position:relative;}
+.site-footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent 0%,var(--acc) 30%,var(--acc2) 60%,transparent 100%);
+  opacity:.6;}
 .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:2.5rem;max-width:1360px;margin:0 auto 2rem;}
-.footer-brand-name{font-family:var(--mono);font-size:.9rem;font-weight:600;color:var(--text);
-  margin-bottom:.6rem;letter-spacing:.04em;}
-.footer-brand-name span{color:var(--acc);}
+.footer-brand-name{font-family:var(--display);font-size:1.05rem;font-weight:700;color:var(--text);
+  margin-bottom:.6rem;letter-spacing:-.01em;}
+.footer-brand-name span{color:var(--acc);font-weight:400;}
 .footer-tagline{font-size:.8rem;color:var(--text3);line-height:1.7;max-width:240px;font-weight:300;}
 .footer-col-title{font-family:var(--mono);font-size:.6rem;font-weight:600;color:var(--text2);
   text-transform:uppercase;letter-spacing:.12em;margin-bottom:.85rem;}
@@ -528,7 +614,7 @@ h1.hname span{color:var(--acc);display:block;}
   justify-content:center;flex-shrink:0;transition:all .18s;}
 .nav-hamburger:hover{color:var(--text);border-color:var(--border3);background:var(--bg3);}
 .nav-hamburger svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;}
-.nav-mobile-drawer{display:none;position:fixed;top:60px;left:0;right:0;z-index:199;
+.nav-mobile-drawer{display:none;position:fixed;top:66px;left:0;right:0;z-index:199;
   background:rgba(9,11,15,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);
   padding:1rem 1.5rem 1.5rem;flex-direction:column;gap:.25rem;}
 body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
@@ -604,13 +690,33 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
   .stack-items{grid-template-columns:1fr;}
   .modal-tabs{flex-wrap:wrap;}
 }
+
+/* ── GAME MOBILE ── */
+@media(max-width:768px){
+  #gameOverlay{padding:12px 8px;}
+  #gameOverlay>button{top:.6rem;right:.75rem;font-size:.65rem;padding:.3rem .7rem;}
+  #gameUI{width:100%!important;}
+  #gArena{height:min(340px,52vh)!important;width:100%!important;border-radius:8px;}
+  #gScore{font-size:.85rem!important;}
+  #gBest{font-size:.6rem!important;}
+  #gWave{font-size:.72rem!important;}
+  #gCombo{font-size:.65rem!important;min-width:56px!important;}
+  #gHpBar{width:90px!important;}
+  #gHpTxt{font-size:.6rem!important;min-width:32px!important;}
+}
+@media(max-width:420px){
+  #gArena{height:min(260px,46vh)!important;}
+  #gHpBar{width:60px!important;}
+  #gCombo{display:none;}
+}
 </style>
 </head>
 <body>
 
+<div id="scroll-progress"></div>
 <nav>
   <a class="nav-logo" href="#" onclick="goto('home',null);return false;">
-    <div class="nav-logo-wordmark"><span class="nl-first">aktham</span><span class="nl-dot">.</span><span class="nl-last">alarabi</span><span class="nl-domain">&nbsp;/ portfolio</span>
+    <div class="nav-logo-wordmark"><span class="nl-first">portfolio</span><span class="nl-dot">.</span><span class="nl-last">aktham</span><span class="nl-domain">.net</span>
     </div>
   </a>
   <ul class="nav-links">
@@ -619,12 +725,12 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
     <li><a href="#" data-page="experience" onclick="goto('experience',this);return false;">Experience</a></li>
     <li><a href="#" data-page="projects"   onclick="goto('projects',this);return false;">Projects</a></li>
     <li><a href="#" data-page="contact"    onclick="goto('contact',this);return false;">Contact</a></li>
-    <li><a href="#" onclick="openGame();return false;" style="color:var(--acc);opacity:.5;letter-spacing:.06em;font-size:.68rem;border:1px solid var(--border2);padding:.2rem .6rem;border-radius:4px;transition:opacity .2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='.5'" title="...">psst.</a></li>
+    <li><a href="#" onclick="openGame();return false;" class="nav-psst" title="...">psst.</a></li>
   </ul>
   <button class="nav-hamburger" id="navHamburger" onclick="toggleMobileNav()" aria-label="Toggle menu">
     <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
   </button>
-  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle light/dark mode">
+  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle light/dark mode" aria-label="Toggle light/dark mode">
     <svg id="iconMoon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
     <svg id="iconSun"  viewBox="0 0 24 24" style="display:none;"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
   </button>
@@ -637,25 +743,26 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
   <a href="#" data-page="experience" onclick="goto('experience',this);closeMobileNav();return false;">Experience</a>
   <a href="#" data-page="projects"   onclick="goto('projects',this);closeMobileNav();return false;">Projects</a>
   <a href="#" data-page="contact"    onclick="goto('contact',this);closeMobileNav();return false;">Contact</a>
+  <a href="#" onclick="openGame();closeMobileNav();return false;" style="color:var(--acc);opacity:.7;font-size:.8rem;border-top:1px solid var(--border);margin-top:.25rem;padding-top:.9rem;">🛡️ Firewall Defender <span style="font-size:.65rem;opacity:.7;font-family:var(--mono);">— mini game</span></a>
 </div>
 
 <!-- ═══════════════════════════ GAME OVERLAY ═══════════════════════════ -->
-<div id="gameOverlay" style="display:none;position:fixed;inset:0;z-index:2000;background:#05070b;flex-direction:column;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;padding:24px;overflow:auto;">
-  <button onclick="closeGame()" style="position:absolute;top:1.2rem;right:1.5rem;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#7d8a9e;background:#171b24;border:1px solid #ffffff0d;padding:.4rem 1rem;border-radius:6px;cursor:pointer;z-index:10;">✕ Close</button>
-  <div id="gameUI" style="width:min(1040px,96vw);transform:scale(1.08);transform-origin:center center;">
+<div id="gameOverlay" style="display:none;position:fixed;inset:0;z-index:2000;background:var(--bg);flex-direction:column;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;padding:24px;overflow:auto;">
+  <button onclick="closeGame()" style="position:absolute;top:1.2rem;right:1.5rem;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text2);background:var(--card);border:1px solid var(--border);padding:.4rem 1rem;border-radius:6px;cursor:pointer;z-index:10;">✕ Close</button>
+  <div id="gameUI" style="width:min(1040px,96vw);">
     <!-- HUD -->
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding:0 4px;">
       <div>
-        <span id="gScore" style="font-size:1.1rem;font-weight:700;color:#eef1f8;">SCORE: 0</span>
-        <span id="gBest" style="font-size:.7rem;color:#7d8a9e;margin-left:12px;">BEST: 0</span>
+        <span id="gScore" style="font-size:1.1rem;font-weight:700;color:var(--text);">SCORE: 0</span>
+        <span id="gBest" style="font-size:.7rem;color:var(--text2);margin-left:12px;">BEST: 0</span>
       </div>
       <div id="gWave" style="font-size:.85rem;color:#60a5fa;font-weight:600;">WAVE 1</div>
       <div style="display:flex;align-items:center;gap:8px;">
         <div id="gCombo" style="font-size:.75rem;color:#fbbf24;font-weight:700;min-width:80px;text-align:right;"></div>
-        <div style="background:#0d1117;border:1px solid #3b82f630;border-radius:6px;overflow:hidden;width:140px;height:14px;">
+        <div style="background:var(--bg2);border:1px solid #3b82f630;border-radius:6px;overflow:hidden;width:140px;height:14px;">
           <div id="gHpBar" style="height:100%;width:100%;background:#34d399;transition:width .2s,background .3s;border-radius:6px;"></div>
         </div>
-        <div id="gHpTxt" style="font-size:.7rem;color:#eef1f8;min-width:42px;">HP 100%</div>
+        <div id="gHpTxt" style="font-size:.7rem;color:var(--text);min-width:42px;">HP 100%</div>
       </div>
     </div>
     <!-- Arena -->
@@ -689,7 +796,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
         <div style="font-size:.8rem;color:#3b82f6;border:1px solid #3b82f640;padding:.5rem 1.4rem;border-radius:6px;">[ CLICK TO START ]</div>
       </div>
     </div>
-    <div style="font-size:.65rem;color:#2d3f55;margin-top:8px;text-align:center;">Click red attack packets before they reach the firewall · Green = legitimate traffic, don't block!</div>
+    <div style="font-size:.65rem;color:var(--text3);margin-top:8px;text-align:center;">Click red attack packets before they reach the firewall · Green = legitimate traffic, don't block!</div>
   </div>
 </div>
 
@@ -768,32 +875,48 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
     },jitter);
   }
 
+  var isMobile=('ontouchstart' in window)||navigator.maxTouchPoints>0;
+
   function spawnPacket(){
     var bad=Math.random()<(0.4+wave*0.04);
     var lbl=bad?BAD[Math.floor(Math.random()*BAD.length)]:GOOD[Math.floor(Math.random()*GOOD.length)];
-    var spd=80+wave*18+Math.random()*30; // px/sec
+    // Slower on mobile — smaller arena means less travel distance
+    var spdBase=isMobile?55:80;
+    var spd=spdBase+wave*(isMobile?12:18)+Math.random()*20;
     var arena=document.getElementById('gArena');
     var aH=arena.offsetHeight;
-    var y=40+Math.random()*(aH-80);
+    var margin=isMobile?30:40;
+    var y=margin+Math.random()*(aH-margin*2);
     var el=document.createElement('div');
     var hue=bad?(Math.random()*18):(130+Math.random()*20);
     var col='hsl('+hue+',85%,55%)';
-    el.style.cssText='position:absolute;left:-120px;top:'+y+'px;transform:translateY(-50%);'+
-      'background:'+col+';color:#fff;font-family:\'JetBrains Mono\',monospace;font-size:7px;font-weight:700;'+
-      'padding:5px 10px;border-radius:4px;cursor:pointer;user-select:none;white-space:nowrap;'+
+    // Bigger tap targets on mobile
+    var fs=isMobile?'10px':'7px';
+    var pad=isMobile?'8px 14px':'5px 10px';
+    el.style.cssText='position:absolute;left:-140px;top:'+y+'px;transform:translateY(-50%);'+
+      'background:'+col+';color:#fff;font-family:\'JetBrains Mono\',monospace;font-size:'+fs+';font-weight:700;'+
+      'padding:'+pad+';border-radius:4px;cursor:pointer;user-select:none;white-space:nowrap;'+
       'box-shadow:0 0 12px '+col+'88;border:1px solid rgba(255,255,255,0.15);'+
-      'transition:transform .08s;z-index:5;';
-    el.textContent=lbl;
-    // arrow
+      'transition:transform .08s;z-index:5;touch-action:manipulation;';
     el.innerHTML=lbl+'<span style="margin-left:6px;opacity:.7;">▶</span>';
     el.onclick=function(e){
       e.stopPropagation();
       clickPacket(p);
     };
-    el.onmouseenter=function(){el.style.transform='translateY(-50%) scale(1.08)';};
-    el.onmouseleave=function(){el.style.transform='translateY(-50%) scale(1)';};
+    // Touch: instant feedback, no hover effect interference
+    el.ontouchstart=function(e){
+      e.stopPropagation();
+      e.preventDefault();
+      el.style.transform='translateY(-50%) scale(0.93)';
+      setTimeout(function(){clickPacket(p);},60);
+    };
+    // Mouse hover only on non-touch devices
+    if(!isMobile){
+      el.onmouseenter=function(){el.style.transform='translateY(-50%) scale(1.08)';};
+      el.onmouseleave=function(){el.style.transform='translateY(-50%) scale(1)';};
+    }
     arena.appendChild(el);
-    var p={el:el,bad:bad,lbl:lbl,x:-110,y:y,spd:spd,col:col,alive:true};
+    var p={el:el,bad:bad,lbl:lbl,x:-130,y:y,spd:spd,col:col,alive:true};
     pkts.push(p);
   }
 
@@ -896,8 +1019,9 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
   function showWaveBanner(){
     var arena=document.getElementById('gArena');
     var b=document.createElement('div');
+    var bannerFs=('ontouchstart' in window)||navigator.maxTouchPoints>0?'1.8rem':'2.8rem';
     b.style.cssText='position:absolute;inset:0;display:flex;align-items:center;justify-content:center;'+
-      'font-family:\'Sora\',sans-serif;font-size:2.8rem;font-weight:800;color:#3b82f6;'+
+      'font-family:\'Sora\',sans-serif;font-size:'+bannerFs+';font-weight:800;color:#3b82f6;'+
       'pointer-events:none;z-index:25;transition:opacity .8s;';
     b.textContent='WAVE '+wave;
     arena.appendChild(b);
@@ -951,10 +1075,10 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg></a>
       </div>
       <div class="hstats reveal d6">
-        <div class="hstat"><div class="hstat-n">20+</div><div class="hstat-l">Lab Projects</div></div>
-        <div class="hstat"><div class="hstat-n">7+</div><div class="hstat-l">Certifications</div></div>
-        <div class="hstat"><div class="hstat-n">2</div><div class="hstat-l">IEEE Papers</div></div>
-        <div class="hstat"><div class="hstat-n">3</div><div class="hstat-l">Roles Held</div></div>
+        <div class="hstat"><div class="hstat-n" data-count="20" data-suffix="+">20+</div><div class="hstat-l">Lab Projects</div></div>
+        <div class="hstat"><div class="hstat-n" data-count="7"  data-suffix="+">7+</div><div class="hstat-l">Certifications</div></div>
+        <div class="hstat"><div class="hstat-n" data-count="2"  data-suffix="">2</div><div class="hstat-l">IEEE Papers</div></div>
+        <div class="hstat"><div class="hstat-n" data-count="3"  data-suffix="">3</div><div class="hstat-l">Roles Held</div></div>
       </div>
     </div>
     <div class="reveal-right d2" style="align-self:start;padding-top:.5rem;">
@@ -975,12 +1099,12 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
   <div class="eyebrow reveal">Explore</div>
   <h2 class="sec-title reveal d1">Portfolio <span>Sections</span></h2>
   <div class="hn-grid reveal d2">
-    <div class="hn-card" onclick="goto('about',null)"><div class="hn-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><div><div class="hn-title">About</div><div class="hn-desc">Background, skills, and a quick overview of my focus areas.</div></div></div>
-    <div class="hn-card" onclick="goto('experience',null)"><div class="hn-ico"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg></div><div><div class="hn-title">Experience</div><div class="hn-desc">Internships, certifications, volunteering, and training.</div></div></div>
-    <div class="hn-card" onclick="goto('projects',null)"><div class="hn-ico"><svg viewBox="0 0 24 24"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"/></svg></div><div><div class="hn-title">Projects</div><div class="hn-desc">GNS3, Packet Tracer, and real-world security lab projects.</div></div></div>
-    <div class="hn-card" onclick="goto('contact',null)"><div class="hn-ico"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg></div><div><div class="hn-title">Contact</div><div class="hn-desc">Reach out via email or connect on platforms I use most.</div></div></div>
-    <div class="hn-card" onclick="goto('experience',null)"><div class="hn-ico"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><div><div class="hn-title">Certifications</div><div class="hn-desc">CCNA, Azure, Security+, BTL-1 with topics breakdown.</div></div></div>
-    <div class="hn-card" onclick="goto('about',null)"><div class="hn-ico"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div><div><div class="hn-title">Skills &amp; Tools</div><div class="hn-desc">Technical skill bars and full tools &amp; technologies arsenal.</div></div></div>
+    <div class="hn-card" role="button" tabindex="0" onclick="goto('about',null)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goto('about',null)}"><div class="hn-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><div><div class="hn-title">About</div><div class="hn-desc">Background, skills, and a quick overview of my focus areas.</div></div></div>
+    <div class="hn-card" role="button" tabindex="0" onclick="goto('experience',null)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goto('experience',null)}"><div class="hn-ico"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg></div><div><div class="hn-title">Experience</div><div class="hn-desc">Internships, certifications, volunteering, and training.</div></div></div>
+    <div class="hn-card" role="button" tabindex="0" onclick="goto('projects',null)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goto('projects',null)}"><div class="hn-ico"><svg viewBox="0 0 24 24"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"/></svg></div><div><div class="hn-title">Projects</div><div class="hn-desc">GNS3, Packet Tracer, and real-world security lab projects.</div></div></div>
+    <div class="hn-card" role="button" tabindex="0" onclick="goto('contact',null)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goto('contact',null)}"><div class="hn-ico"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg></div><div><div class="hn-title">Contact</div><div class="hn-desc">Reach out via email or connect on platforms I use most.</div></div></div>
+    <div class="hn-card" role="button" tabindex="0" onclick="goto('experience',null)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goto('experience',null)}"><div class="hn-ico"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><div><div class="hn-title">Certifications</div><div class="hn-desc">CCNA, Azure, Security+, BTL-1 with topics breakdown.</div></div></div>
+    <div class="hn-card" role="button" tabindex="0" onclick="goto('about',null)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goto('about',null)}"><div class="hn-ico"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div><div><div class="hn-title">Skills &amp; Tools</div><div class="hn-desc">Technical skill bars and full tools &amp; technologies arsenal.</div></div></div>
   </div>
 </div>
 <footer class="site-footer">
@@ -1050,12 +1174,13 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
       </div>
     </div>
     <div class="about-cards reveal-right d2">
-      <div class="ac"><div class="ac-ico"><svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2v-4M9 21H5a2 2 0 01-2-2v-4m0 0h18"/></svg></div><div class="ac-t">Network Engineering</div><div class="ac-d">Routing, switching, VLANs, OSPF, EIGRP, HSRP</div></div>
+      <div class="ac"><div class="ac-ico"><svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2v-4M9 21H5a2 2 0 01-2-2v-4m0 0h18"/></svg></div><div class="ac-t">Network Engineering</div><div class="ac-d">Policy-based routing, LAN/WAN design, redundancy and failover across enterprise-scale topologies</div></div>
       <div class="ac"><div class="ac-ico"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div><div class="ac-t">Cloud Infrastructure</div><div class="ac-d">Azure AZ-104/500, IAM, virtual networks</div></div>
-      <div class="ac"><div class="ac-ico"><svg viewBox="0 0 24 24"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z"/></svg></div><div class="ac-t">Network Security</div><div class="ac-d">Firewalls, IDS/IPS, VPN, AAA, ACLs, Syslog</div></div>
+      <div class="ac"><div class="ac-ico"><svg viewBox="0 0 24 24"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z"/></svg></div><div class="ac-t">Network Security</div><div class="ac-d">Threat detection, perimeter hardening, zero-trust access controls, and defence-in-depth across hybrid environments</div></div>
       <div class="ac"><div class="ac-ico"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div class="ac-t">ITSM Services</div><div class="ac-d">OpenText SMAX, IT Service Manager, ITIL</div></div>
     </div>
   </div>
+  <div class="sec-divider reveal"><div class="sec-divider-dot"></div></div>
   <div class="eyebrow reveal">Expertise</div>
   <h2 class="sec-title reveal d1">Technical <span>Skills</span></h2>
   <div class="skill-grid reveal d2" id="skillBars">
@@ -1068,11 +1193,12 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
     <div class="sk"><div class="sk-head"><span class="sk-name">Penetration Testing</span><span class="sk-pct">48%</span></div><div class="sk-track"><div class="sk-fill" data-w="48"></div></div></div>
     <div class="sk"><div class="sk-head"><span class="sk-name">Python &amp; API</span><span class="sk-pct">42%</span></div><div class="sk-track"><div class="sk-fill" data-w="42"></div></div></div>
   </div>
-  <div class="eyebrow reveal" style="margin-top:3.5rem;">Arsenal</div>
+  <div class="sec-divider reveal"><div class="sec-divider-dot"></div></div>
+  <div class="eyebrow reveal">Arsenal</div>
   <h2 class="sec-title reveal d1">Tools &amp; <span>Technologies</span></h2>
   <div class="tools-grid reveal d2">
     <div class="tc"><div class="tc-hd"><div class="tc-dot"></div><span class="tc-cat">Network Security</span></div><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="chip">OPNsense</span><span class="chip">FortiGate</span><span class="chip">Cisco IOS</span><span class="chip">Suricata IDS/IPS</span><span class="chip">Wireshark</span><span class="chip">IPSec VPN</span><span class="chip">AAA / TACACS+</span><span class="chip">ACLs</span></div></div>
-    <div class="tc"><div class="tc-hd"><div class="tc-dot"></div><span class="tc-cat">Routing &amp; Switching</span></div><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="chip">OSPF</span><span class="chip">EIGRP</span><span class="chip">RIP</span><span class="chip">HSRP</span><span class="chip">VLAN / VTP</span><span class="chip">STP / EtherChannel</span><span class="chip">NAT / PAT</span><span class="chip">DHCP</span><span class="chip">SSH v2</span></div></div>
+    <div class="tc"><div class="tc-hd"><div class="tc-dot"></div><span class="tc-cat">Routing &amp; Switching</span></div><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="chip">OSPF</span><span class="chip">EIGRP</span><span class="chip">RIP</span><span class="chip">HSRP</span><span class="chip">VLANs &amp; Trunking</span><span class="chip">VTP / DTP</span><span class="chip">STP / EtherChannel</span><span class="chip">NAT / PAT</span><span class="chip">DHCP</span><span class="chip">SSH v2</span></div></div>
     <div class="tc"><div class="tc-hd"><div class="tc-dot"></div><span class="tc-cat">Network Emulation &amp; Simulation</span></div><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="chip">GNS3</span><span class="chip">Cisco Packet Tracer</span><span class="chip">EVE-NG</span></div></div>
     <div class="tc"><div class="tc-hd"><div class="tc-dot"></div><span class="tc-cat">Cloud Engineering (Azure)</span></div><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="chip">Azure Virtual Networks</span><span class="chip">Entra ID / IAM</span><span class="chip">Azure Security Center</span><span class="chip">NSG / Firewall</span><span class="chip">VMs &amp; Scale Sets</span><span class="chip">Containerization</span><span class="chip">VMware</span><span class="chip">VirtualBox</span></div></div>
     <div class="tc"><div class="tc-hd"><div class="tc-dot"></div><span class="tc-cat">SIEM &amp; Monitoring</span></div><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="chip">Splunk Enterprise</span><span class="chip">Sysmon</span><span class="chip">SPL Detection Rules</span><span class="chip">Tenable Nessus</span><span class="chip">Tcpdump</span><span class="chip">Tshark</span></div></div>
@@ -1142,7 +1268,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
       <div class="tl-ico curr"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg></div>
       <div class="tl-meta"><span class="tl-date">Feb 2026 – Present</span><span class="tl-curr">Current</span></div>
       <div class="tl-role">ITSM Consultant</div>
-      <div class="tl-co"><a href="https://dima.solutions/" target="_blank" style="color:var(--acc);text-decoration:none;transition:color .18s;" onmouseover="this.style.color='var(--acc2)'" onmouseout="this.style.color='var(--acc)'">DIMA Solutions Ltd, Co.</a> — Amman, Jordan</div>
+      <div class="tl-co"><a href="https://dima.solutions/" target="_blank" class="tl-co-link curr">DIMA Solutions Ltd, Co.</a> — Amman, Jordan</div>
       <ul class="tl-ul">
         <li>Implementing and configuring enterprise ITSM platforms (OpenText SMAX) aligned with ITIL service management practices.</li>
         <li>Managing and optimizing SMAX and IT Service Manager environments to improve operations and incident resolution.</li>
@@ -1153,7 +1279,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
       <div class="tl-ico past"><svg viewBox="0 0 24 24"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z"/></svg></div>
       <div class="tl-meta"><span class="tl-date">Nov 2025 – Jan 2026</span></div>
       <div class="tl-role past">Security Operations Center Analyst — Intern</div>
-      <div class="tl-co past"><a href="https://www.stsarabia.com/Default/EN" target="_blank" style="color:var(--text3);text-decoration:none;transition:color .18s;" onmouseover="this.style.color='var(--acc)'" onmouseout="this.style.color='var(--text3)'">Specialized Technical Services (STS)</a> · <a href="https://zaintech.com/en" target="_blank" style="color:var(--text3);text-decoration:none;transition:color .18s;" onmouseover="this.style.color='var(--acc)'" onmouseout="this.style.color='var(--text3)'">ZainTECH Company</a> — Amman, Jordan · On-site</div>
+      <div class="tl-co past"><a href="https://www.stsarabia.com/Default/EN" target="_blank" class="tl-co-link past">Specialized Technical Services (STS)</a> · <a href="https://zaintech.com/en" target="_blank" class="tl-co-link past">ZainTECH Company</a> — Amman, Jordan · On-site</div>
       <ul class="tl-ul">
         <li>Engineered a defensive SIEM infrastructure using Splunk Enterprise and Sysmon to detect advanced threats and C2 traffic, with custom SPL detection rules.</li>
         <li>Conducted authorized Black Box penetration tests — breached targets via VPN hash cracking (IKEv1) and privilege escalation.</li>
@@ -1165,7 +1291,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
       <div class="tl-ico past"><svg viewBox="0 0 24 24"><path d="M12 15a3 3 0 100-6 3 3 0 000 6z"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></div>
       <div class="tl-meta"><span class="tl-date">Oct 2025 – Jan 2026</span></div>
       <div class="tl-role past">Technical Engineer — Intern</div>
-      <div class="tl-co past"><a href="https://www.gce.com.jo/" target="_blank" style="color:var(--text3);text-decoration:none;transition:color .18s;" onmouseover="this.style.color='var(--acc)'" onmouseout="this.style.color='var(--text3)'">General Computers and Electronics Co. (GCE)</a> — Amman, Jordan · On-site · Part-Time</div>
+      <div class="tl-co past"><a href="https://www.gce.com.jo/" target="_blank" class="tl-co-link past">General Computers and Electronics Co. (GCE)</a> — Amman, Jordan · On-site · Part-Time</div>
       <ul class="tl-ul">
         <li>Provided technical support and infrastructure management for large-scale government projects, including the Ministry of Education and the Public Security Directorate.</li>
         <li>Executed enterprise-wide Windows OS imaging and deployments using Ventoy and Hiren's BootCD to ensure standardized software configurations across workstations.</li>
@@ -1175,6 +1301,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
   </div>
 
   <!-- VOLUNTEERING -->
+  <div class="sec-divider reveal"><div class="sec-divider-dot"></div></div>
   <div class="reveal" style="margin-bottom:3rem;">
     <div class="eyebrow">Community</div>
     <h2 class="sec-title" style="margin-bottom:1.1rem;">Volunteering — <span>IEEE Computer Society</span></h2>
@@ -1193,6 +1320,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
   </div>
 
   <!-- CERTIFICATIONS -->
+  <div class="sec-divider reveal"><div class="sec-divider-dot"></div></div>
   <div class="reveal">
     <div class="eyebrow">Career Path</div>
     <h2 class="sec-title" style="margin-bottom:1.4rem;">Certifications &amp; <span>Training</span></h2>
@@ -1230,7 +1358,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
             <div class="cc-top"><div class="cc-ico"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><span class="cc-num">02</span></div>
             <div class="cc-t">Switching, Routing &amp; Wireless Essentials (SRWE)</div>
             <div class="cc-d">VLANs, STP, inter-VLAN routing, OSPF, wireless LAN.</div>
-            <div class="cc-topics" id="ccna2"><div class="topics-lbl">Topics Covered</div><div><span class="topic-chip">VLANs &amp; VTP</span><span class="topic-chip">STP / RSTP</span><span class="topic-chip">EtherChannel</span><span class="topic-chip">OSPF</span><span class="topic-chip">EIGRP</span><span class="topic-chip">Wireless LAN</span><span class="topic-chip">Wi-Fi 6</span></div></div>
+            <div class="cc-topics" id="ccna2"><div class="topics-lbl">Topics Covered</div><div><span class="topic-chip">VLANs &amp; Trunking</span><span class="topic-chip">VTP / DTP</span><span class="topic-chip">STP / RSTP</span><span class="topic-chip">EtherChannel</span><span class="topic-chip">OSPF</span><span class="topic-chip">EIGRP</span><span class="topic-chip">Wireless LAN</span><span class="topic-chip">Wi-Fi 6</span></div></div>
             <a class="cc-link" href="https://www.credly.com/badges/f7942c42-d4d7-4867-b42a-ca9032456cc4" target="_blank" onclick="event.stopPropagation()">Credly Badge <svg viewBox="0 0 10 10"><path d="M1 1h8v8M9 1L1 9" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </div>
           <div class="cc" onclick="toggleCC(this,'ccna3')">
@@ -1246,7 +1374,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
 
     <!-- Other certs -->
     <div class="oc-list">
-      <div class="oc" onclick="toggleOC(this,'btl1x')"><div class="oc-pill done">BTL-1</div><div class="oc-info"><div class="oc-nm">Blue Team Level 1</div><div class="oc-org">Blue Team Labs — Training Completed</div></div><button class="cert-view-btn" onclick="event.stopPropagation();openCertPdf('certs/btl1.pdf','Blue Team Level 1 (BTL-1)')">View Cert ↗</button><div class="oc-yr">Completed</div></div>
+      <div class="oc" onclick="toggleOC(this,'btl1x')"><div class="oc-pill done">BTL-1</div><div class="oc-info"><div class="oc-nm">Blue Team Level 1</div><div class="oc-org">Security Blue Team (SBT) — Training Completed</div></div><button class="cert-view-btn" onclick="event.stopPropagation();openCertPdf('certs/btl1.pdf','Blue Team Level 1 (BTL-1)')">View Cert ↗</button><div class="oc-yr">Completed</div></div>
       <div class="oc-expand" id="btl1x"><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="topic-chip">Phishing Analysis</span><span class="topic-chip">Security Fundamentals</span><span class="topic-chip">Threat Intelligence</span><span class="topic-chip">SIEM</span><span class="topic-chip">Incident Response</span><span class="topic-chip">Digital Forensics</span></div></div>
       <div class="oc" onclick="toggleOC(this,'secx')"><div class="oc-pill done">SEC+</div><div class="oc-info"><div class="oc-nm">CompTIA Security+</div><div class="oc-org">CompTIA — Training Completed</div></div><button class="cert-view-btn" onclick="event.stopPropagation();openCertPdf('certs/security-plus.pdf','CompTIA Security+')">View Cert ↗</button><div class="oc-yr">Completed</div></div>
       <div class="oc-expand" id="secx"><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="topic-chip">Threats &amp; Vulnerabilities</span><span class="topic-chip">Architecture &amp; Design</span><span class="topic-chip">Cryptography &amp; PKI</span><span class="topic-chip">Identity &amp; Access</span><span class="topic-chip">Risk Management</span></div></div>
@@ -1262,7 +1390,8 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
   </div>
 
   <!-- PUBLICATIONS -->
-  <div style="margin-top:3rem;" class="reveal">
+  <div class="sec-divider reveal"><div class="sec-divider-dot"></div></div>
+  <div class="reveal">
     <div class="eyebrow">Research</div>
     <h2 class="sec-title" style="margin-bottom:1.2rem;">IEEE <span>Publications</span></h2>
     <div class="pub-wrap">
@@ -1400,12 +1529,12 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
 <!-- ═══════════════════════════ CONTACT ═══════════════════════════ -->
 <div class="page" id="pg-contact" tabindex="-1">
 <div class="wrap" style="padding-bottom:0;">
-  <div class="eyebrow reveal">Connect</div>
-  <h2 class="sec-title reveal d1">Reach <span>Out</span></h2>
-  <div class="contact-layout reveal d2">
+  <div class="contact-layout reveal">
 
-    <!-- LEFT: info cards + socials -->
+    <!-- LEFT: eyebrow + title + info cards + socials -->
     <div>
+      <div class="eyebrow">Connect</div>
+      <h2 class="sec-title d1">Reach <span>Out</span></h2>
       <p class="contact-intro-text">Open to full-time roles, freelance security and networking projects, research collaborations, and consulting across network engineering, cloud infrastructure, and ITSM.</p>
 
       <div class="contact-info-cards">
@@ -1459,7 +1588,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
     </div>
 
     <!-- RIGHT: message form -->
-    <div class="fw reveal d3">
+    <div class="fw">
       <div class="fw-title">Send a Message</div>
       <div class="fw-sub">I'll get back to you within 24 hours.</div>
       <div class="fgrow">
@@ -1469,7 +1598,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
       <div class="fg"><label class="fl">Email</label><input class="fi" id="em" type="email" placeholder="your@email.com"/></div>
       <div class="fg"><label class="fl">Subject</label><input class="fi" id="sub" type="text" placeholder="Project inquiry, job opportunity..."/></div>
       <div class="fg"><label class="fl">Message</label><textarea class="ft" id="msg" placeholder="Tell me about your project or opportunity..."></textarea></div>
-      <button class="btn-fill" onclick="sendMsg()" style="width:100%;justify-content:center;">Send Message →</button>
+      <button id="sendMsgBtn" class="btn-fill" onclick="sendMsg()" style="width:100%;justify-content:center;">Send Message →</button>
     </div>
   </div>
 </div>
@@ -1481,7 +1610,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
 </div><!-- end #app -->
 
 <!-- ═══════════════════════════ PROJECT MODAL ═══════════════════════════ -->
-<div class="proj-modal-overlay" id="projModal" onclick="closeModal(event)">
+<div class="proj-modal-overlay" id="projModal" onclick="closeModal(event)" role="dialog" aria-modal="true" aria-label="Project details">
   <div class="proj-modal">
     <!-- Top bar -->
     <div class="proj-modal-topbar">
@@ -2017,7 +2146,25 @@ function observePage(id){
   pg.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>io.observe(el));
 }
 ['home','about','experience','projects','contact'].forEach(observePage);
-function animSkills(){document.querySelectorAll('#skillBars .sk-fill').forEach(el=>{el.style.width=el.dataset.w+'%';});}
+function animSkills(){
+  document.querySelectorAll('#skillBars .sk-fill').forEach(el=>{
+    el.style.width=el.dataset.w+'%';
+  });
+  // Animate percentage counters from 0 up
+  document.querySelectorAll('#skillBars .sk-pct').forEach(el=>{
+    const target=parseInt(el.textContent);
+    const duration=1300;
+    const start=performance.now();
+    function tick(now){
+      const progress=Math.min((now-start)/duration,1);
+      // ease-out cubic
+      const eased=1-Math.pow(1-progress,3);
+      el.textContent=Math.round(eased*target)+'%';
+      if(progress<1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  });
+}
 
 /* TERMINAL — very slow, like a real person typing */
 /* Each entry: [mode, command] where mode drives the prompt shown */
@@ -2251,7 +2398,7 @@ function sendMsg(){
   const msg=document.getElementById('msg').value.trim();
   if(!fn||!em||!msg){alert('Please fill in your name, email, and message.');return;}
 
-  const btn=document.querySelector('[onclick="sendMsg()"]');
+  const btn=document.getElementById('sendMsgBtn');
   btn.textContent='Sending…';
   btn.disabled=true;
 
@@ -2320,12 +2467,6 @@ function switchTrafficTab(name,btn){
   if(panel) panel.classList.add('active');
   if(btn) btn.classList.add('active');
 }
-document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){
-    document.getElementById('projModal').classList.remove('open');
-  }
-});
-
 /* ── LIGHTBOX ── */
 const galleryImgs=[
   {src:'projects/conversational-firewall/ss-chatbot-home.png',    title:'Warden Chatbot — Home',      desc:'AI chatbot interface with capability overview: DHCP, Firewall, Interface, Logs, IPS'},
@@ -2359,11 +2500,23 @@ function lightboxNav(dir){
   openLightbox(lbIdx);
 }
 document.addEventListener('keydown',e=>{
+  // Lightbox navigation
   const lb=document.getElementById('lightbox');
-  if(!lb||!lb.classList.contains('open')) return;
-  if(e.key==='Escape') closeLightbox();
-  if(e.key==='ArrowLeft') lightboxNav(-1);
-  if(e.key==='ArrowRight') lightboxNav(1);
+  if(lb && lb.classList.contains('open')){
+    if(e.key==='Escape') { closeLightbox(); return; }
+    if(e.key==='ArrowLeft')  { lightboxNav(-1); return; }
+    if(e.key==='ArrowRight') { lightboxNav(1);  return; }
+  }
+  // Cert PDF overlay
+  const certOverlay=document.getElementById('certPdfOverlay');
+  if(certOverlay && certOverlay.classList.contains('open')){
+    if(e.key==='Escape') { closeCertPdf(); return; }
+  }
+  // Project modal
+  const projModal=document.getElementById('projModal');
+  if(projModal && projModal.classList.contains('open')){
+    if(e.key==='Escape') { projModal.classList.remove('open'); return; }
+  }
 });
 
 function openCertPdf(path, title){
@@ -2376,39 +2529,133 @@ function closeCertPdf(){
   document.getElementById('certPdfOverlay').classList.remove('open');
   document.getElementById('certPdfFrame').src = '';
 }
-document.addEventListener('keydown',e=>{
-  if(e.key==='Escape') closeCertPdf();
-});
+/* ── SCROLL PROGRESS BAR ── */
+(function(){
+  const bar=document.getElementById('scroll-progress');
+  if(!bar)return;
+
+  let target=0;   // where it should end up (0-100)
+  let current=0;  // where it is right now
+  let rafId=null;
+  let resetting=false;
+
+  function getProgress(){
+    const pg=document.querySelector('.page.active');
+    if(!pg)return 0;
+    const sh=pg.scrollHeight-pg.clientHeight;
+    return sh>0?Math.min(pg.scrollTop/sh*100,100):0;
+  }
+
+  function lerp(a,b,t){return a+(b-a)*t;}
+
+  function loop(){
+    // Snap to 0 instantly on page switch, then lerp normally
+    if(resetting){current=0;resetting=false;}
+
+    const diff=Math.abs(target-current);
+    // If close enough, snap and stop
+    if(diff<0.05){
+      current=target;
+      bar.style.width=current+'%';
+      rafId=null;
+      return;
+    }
+    // Lerp factor — 0.12 gives a ~150ms ease-out feel
+    current=lerp(current,target,0.12);
+    bar.style.width=current+'%';
+    rafId=requestAnimationFrame(loop);
+  }
+
+  function scheduleLoop(){
+    target=getProgress();
+    if(!rafId) rafId=requestAnimationFrame(loop);
+  }
+
+  // Listen on all pages
+  document.querySelectorAll('.page').forEach(pg=>{
+    pg.addEventListener('scroll',scheduleLoop,{passive:true});
+  });
+
+  // Reset instantly on page switch
+  const mo=new MutationObserver(()=>{
+    target=0;
+    resetting=true;
+    if(!rafId) rafId=requestAnimationFrame(loop);
+    // Re-read after a tick in case new page already has scroll pos
+    setTimeout(scheduleLoop,50);
+  });
+  document.querySelectorAll('.page').forEach(pg=>{
+    mo.observe(pg,{attributes:true,attributeFilter:['class']});
+  });
+})()
+
+/* ── NAV SCROLL SHRINK ── */
+(function(){
+  const nav=document.querySelector('nav');
+  if(!nav)return;
+  function onScroll(){
+    const pg=document.querySelector('.page.active');
+    const scrolled=pg&&pg.scrollTop>40;
+    nav.style.height=scrolled?'54px':'66px';
+    nav.style.backdropFilter=scrolled?'blur(28px)':'blur(20px)';
+    nav.style.transition='height .25s ease,backdrop-filter .25s ease,background .3s,border-color .3s';
+  }
+  document.querySelectorAll('.page').forEach(pg=>{
+    pg.addEventListener('scroll',onScroll,{passive:true});
+  });
+  document.querySelectorAll('.page').forEach(pg=>{
+    new MutationObserver(onScroll).observe(pg,{attributes:true,attributeFilter:['class']});
+  });
+})();
+
+/* ── HERO STAT COUNT-UP ── */
+function animStats(){
+  document.querySelectorAll('.hstat-n[data-count]').forEach(el=>{
+    const target=parseInt(el.dataset.count);
+    const suffix=el.dataset.suffix||'';
+    const duration=1100;
+    const start=performance.now();
+    function tick(now){
+      const progress=Math.min((now-start)/duration,1);
+      const eased=1-Math.pow(1-progress,3);
+      el.textContent=Math.round(eased*target)+suffix;
+      if(progress<1)requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  });
+}
+// Run on home load (home is active by default on first load)
+setTimeout(animStats,500);
 
 function copyEmail(el){
-  navigator.clipboard.writeText('aktham.alarabi@gmail.com').then(()=>{
+  const EMAIL='aktham.alarabi@gmail.com';
+  function flashCopied(){
     const btn=document.getElementById('emailCopyBtn');
     if(btn){btn.textContent='Copied!';btn.classList.add('copied');
       setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied');},2000);}
-  }).catch(()=>{
-    // fallback
-    const ta=document.createElement('textarea');
-    ta.value='aktham.alarabi@gmail.com';
-    document.body.appendChild(ta);ta.select();
-    document.execCommand('copy');document.body.removeChild(ta);
-    const btn=document.getElementById('emailCopyBtn');
-    if(btn){btn.textContent='Copied!';btn.classList.add('copied');
-      setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied');},2000);}
-  });
+  }
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(EMAIL).then(flashCopied).catch(()=>{});
+  } else {
+    // Legacy fallback for very old browsers
+    try{
+      const ta=document.createElement('textarea');
+      ta.value=EMAIL;ta.style.position='fixed';ta.style.opacity='0';
+      document.body.appendChild(ta);ta.focus();ta.select();
+      const ok=document.execCommand('copy');
+      document.body.removeChild(ta);
+      if(ok) flashCopied();
+    }catch(e){}
+  }
 }
 </script>
 
 <!-- CERT PDF VIEWER -->
-<div class="cert-pdf-overlay" id="certPdfOverlay">
+<div class="cert-pdf-overlay" id="certPdfOverlay" role="dialog" aria-modal="true" aria-label="Certificate PDF viewer">
   <div class="cert-pdf-bar">
     <span class="cert-pdf-title" id="certPdfTitle">Certificate</span>
     <div class="cert-pdf-actions">
-      <a id="certPdfDownload" href="#" target="_blank" download
-         style="font-family:var(--mono);font-size:.68rem;color:var(--text2);background:var(--card);
-         border:1px solid var(--border);padding:.35rem .85rem;border-radius:6px;text-decoration:none;
-         transition:all .18s;display:flex;align-items:center;gap:.4rem;"
-         onmouseover="this.style.color='var(--text)';this.style.borderColor='var(--border2)'"
-         onmouseout="this.style.color='var(--text2)';this.style.borderColor='var(--border)'">
+      <a id="certPdfDownload" href="#" target="_blank" download class="cert-pdf-download-btn">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
         Download PDF
       </a>
@@ -2422,8 +2669,8 @@ function copyEmail(el){
 </div>
 
 <!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox" onclick="closeLightboxOutside(event)">
-  <button class="lightbox-close" onclick="closeLightbox()">
+<div class="lightbox" id="lightbox" onclick="closeLightboxOutside(event)" role="dialog" aria-modal="true" aria-label="Image lightbox">
+  <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close lightbox">
     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 1l8 8M9 1L1 9"/></svg>
     Close
   </button>
@@ -2433,7 +2680,7 @@ function copyEmail(el){
     <span id="lightboxDesc"></span>
   </div>
   <div class="lightbox-nav">
-    <button onclick="lightboxNav(-1)">← Prev</button>
-    <button onclick="lightboxNav(1)">Next →</button>
+    <button onclick="lightboxNav(-1)" aria-label="Previous image">← Prev</button>
+    <button onclick="lightboxNav(1)" aria-label="Next image">Next →</button>
   </div>
 </div>
