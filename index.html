@@ -42,15 +42,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     radial-gradient(1px 1px at 52% 72%,rgba(255,255,255,.12) 0,transparent 100%);}
 
 body.light::before{opacity:0;}
-.hero-name-row{display:flex;align-items:center;gap:1.8rem;margin-bottom:.5rem;}
-.hero-photo{width:140px;height:140px;border-radius:50%;object-fit:cover;object-position:center top;
-  border:2px solid var(--border3);flex-shrink:0;
-  box-shadow:0 0 0 5px rgba(59,130,246,.1),0 0 28px rgba(59,130,246,.22);
-  display:block;animation:photoBreath 4s ease-in-out infinite;}
-@keyframes photoBreath{
-  0%,100%{box-shadow:0 0 0 5px rgba(59,130,246,.10),0 0 28px rgba(59,130,246,.22);}
-  50%{box-shadow:0 0 0 8px rgba(59,130,246,.18),0 0 40px rgba(59,130,246,.38);}
-}
+.hero-name-row{display:flex;align-items:flex-start;margin-bottom:.5rem;}
+.hero-photo{display:none;}/* photo removed */
 
 /* THEME TOGGLE */
 .theme-toggle{width:36px;height:36px;border-radius:8px;border:1px solid var(--border2);
@@ -78,9 +71,10 @@ body.light nav{background:rgba(240,244,248,.92);border-bottom:1px solid var(--bo
 .nav-links a.active{color:var(--text);background:rgba(59,130,246,.08);border-radius:6px;}
 .nav-links a.active::after{content:'';position:absolute;bottom:-1px;left:1.1rem;right:1.1rem;height:2px;
   background:var(--acc);border-radius:2px;box-shadow:0 0 8px rgba(59,130,246,.7),0 0 16px rgba(59,130,246,.3);}
-.nav-psst{color:var(--acc)!important;opacity:.5;letter-spacing:.06em;font-size:.68rem!important;
-  border:1px solid var(--border2);padding:.2rem .6rem!important;border-radius:4px;transition:opacity .2s!important;}
-.nav-psst:hover{opacity:1!important;}
+.nav-psst{color:var(--acc);opacity:.5;letter-spacing:.06em;font-size:.68rem;
+  border:1px solid var(--border2);padding:.2rem .6rem;border-radius:4px;transition:opacity .2s;
+  background:transparent;cursor:pointer;font-family:var(--mono);flex-shrink:0;}
+.nav-psst:hover{opacity:1;}
 
 /* ── CUSTOM SCROLLBARS ── */
 /* Global — all scrollable elements */
@@ -137,6 +131,12 @@ body.light *{scrollbar-color:var(--text3) transparent;}
   border:none;padding:.65rem 1.5rem;border-radius:6px;cursor:pointer;text-decoration:none;
   display:inline-flex;align-items:center;gap:.45rem;transition:background .18s,transform .15s;letter-spacing:.03em;}
 .btn-fill:hover{background:var(--acc2);transform:translateY(-1px);}
+/* Send button spinner */
+@keyframes spin{to{transform:rotate(360deg);}}
+.btn-spinner{width:12px;height:12px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;
+  border-radius:50%;animation:spin .6s linear infinite;display:none;flex-shrink:0;}
+.btn-fill.sending .btn-spinner{display:block;}
+.btn-fill.sending .btn-arrow{display:none;}
 .btn-ghost{font-family:var(--mono);font-size:.75rem;font-weight:500;color:var(--text2);background:transparent;
   border:1px solid var(--border2);padding:.65rem 1.5rem;border-radius:6px;cursor:pointer;text-decoration:none;
   display:inline-flex;align-items:center;gap:.45rem;transition:all .18s;letter-spacing:.03em;}
@@ -188,22 +188,23 @@ body.light .moba-tab.ina{background:#cdd8ea;color:var(--text3);}
 body.light .moba-body{background:#e8eef8;}
 .moba-body::-webkit-scrollbar{width:3px;}
 .moba-body::-webkit-scrollbar-thumb{background:var(--text3);border-radius:2px;}
-/* Dark-mode terminal text */
-.l-prompt-user{color:#d97706;font-weight:600;}   /* R1> amber   */
-.l-prompt-priv{color:#16a34a;font-weight:600;}   /* R1# green   */
-.l-prompt-conf{color:#2563eb;font-weight:600;}   /* R1(config)# blue */
-.l-cmd{color:#1e293b;}.l-cmt{color:#94a3b8;font-style:italic;}
-.l-kw{color:#2563eb;}.l-val{color:#b45309;}
-.l-prompt{color:#16a34a;}
-/* Dark overrides */
+/* Terminal syntax — light-mode base (matches the light .moba-body background) */
+.l-prompt-user{color:#d97706;font-weight:600;transition:color .3s;}
+.l-prompt-priv{color:#16a34a;font-weight:600;transition:color .3s;}
+.l-prompt-conf{color:#2563eb;font-weight:600;transition:color .3s;}
+.l-cmd{color:#1e293b;transition:color .3s;}
+.l-cmt{color:#94a3b8;font-style:italic;transition:color .3s;}
+.l-kw{color:#2563eb;transition:color .3s;}
+.l-val{color:#b45309;transition:color .3s;}
+.l-prompt{color:#16a34a;transition:color .3s;}
+/* Terminal syntax — dark-mode overrides (everything that differs) */
 body:not(.light) .l-prompt-user{color:#facc15;}
-body:not(.light) .l-prompt-priv{color:#4ade80;}
+body:not(.light) .l-prompt-priv,body:not(.light) .l-prompt{color:#4ade80;}
 body:not(.light) .l-prompt-conf{color:#60a5fa;}
+body:not(.light) .l-kw{color:#60a5fa;}
 body:not(.light) .l-cmd{color:#eef1f8;}
 body:not(.light) .l-cmt{color:#374151;}
-body:not(.light) .l-kw{color:#60a5fa;}
 body:not(.light) .l-val{color:#fcd34d;}
-body:not(.light) .l-prompt{color:#4ade80;}
 .l-cursor{display:inline-block;width:7px;height:.85em;background:var(--acc);vertical-align:middle;animation:blink 1s step-end infinite;}
 @keyframes blink{50%{opacity:0}}
 
@@ -215,6 +216,19 @@ body:not(.light) .l-prompt{color:#4ade80;}
   transition:border-color .18s,background .18s,transform .15s;cursor:pointer;}
 .hn-card:hover{border-color:var(--border2);background:var(--bg3);transform:translateY(-2px);}
 .hn-card:focus-visible{outline:2px solid var(--acc);outline-offset:2px;border-color:var(--border2);}
+.hn-card:hover{border-color:var(--border2);background:var(--bg3);transform:translateY(-2px);
+  box-shadow:0 6px 24px rgba(59,130,246,.12),0 0 0 1px var(--border3);}
+
+/* SECTION DIVIDER — animated entrance */
+.sec-divider{opacity:0;transform:scaleX(.4);transition:opacity .5s ease,transform .6s cubic-bezier(.2,0,.1,1);}
+.sec-divider.visible{opacity:.5;transform:scaleX(1);}
+/* dot pulse on entrance */
+.sec-divider.visible .sec-divider-dot{animation:divPulse .6s .3s ease forwards;}
+@keyframes divPulse{
+  0%{transform:scale(0);box-shadow:none;}
+  60%{transform:scale(1.4);box-shadow:0 0 14px rgba(59,130,246,.8);}
+  100%{transform:scale(1);box-shadow:0 0 8px rgba(59,130,246,.6);}
+}
 .hn-ico{width:32px;height:32px;background:var(--acc-dim);border:1px solid var(--border2);
   border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .hn-ico svg{width:14px;height:14px;fill:none;stroke:var(--acc);stroke-width:2;}
@@ -243,19 +257,32 @@ body:not(.light) .l-prompt{color:#4ade80;}
 .sk-head{display:flex;justify-content:space-between;margin-bottom:.42rem;}
 .sk-name{font-size:.82rem;color:var(--text);}
 .sk-pct{font-family:var(--mono);font-size:.67rem;color:var(--acc);}
-.sk-track{height:3px;background:var(--card);border-radius:2px;overflow:hidden;}
-.sk-fill{height:100%;background:linear-gradient(90deg,var(--acc3),var(--acc));border-radius:2px;width:0;transition:width 1.3s cubic-bezier(.4,0,.2,1);}
+.sk-track{height:5px;background:var(--bg3);border-radius:3px;overflow:hidden;border:1px solid var(--border);}
+.sk-fill{height:100%;background:linear-gradient(90deg,var(--acc3),var(--acc));border-radius:3px;width:0;transition:width 1.3s cubic-bezier(.4,0,.2,1);box-shadow:0 0 8px rgba(59,130,246,.35);}
 .tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;}
 .tc{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:1.15rem 1.35rem;transition:border-color .18s;}
 .tc:hover{border-color:var(--border2);}
 .tc-hd{display:flex;align-items:center;gap:.55rem;margin-bottom:.8rem;}
-.tc-dot{width:6px;height:6px;border-radius:50%;background:var(--acc);flex-shrink:0;}
+.tc-dot{width:6px;height:6px;border-radius:50%;background:var(--tc-color,var(--acc));flex-shrink:0;box-shadow:0 0 6px var(--tc-color,var(--acc));}
 .tc-cat{font-size:.79rem;font-weight:600;color:var(--text);}
+/* Per-category chip hover tints */
+.tc[data-cat="security"] .chip:hover{color:var(--warn);border-color:rgba(251,191,36,.4);}
+.tc[data-cat="security"] .tc-dot{--tc-color:#fbbf24;}
+.tc[data-cat="cloud"] .chip:hover{color:#38bdf8;border-color:rgba(56,189,248,.4);}
+.tc[data-cat="cloud"] .tc-dot{--tc-color:#38bdf8;}
+.tc[data-cat="pentest"] .chip:hover{color:#f87171;border-color:rgba(248,113,113,.4);}
+.tc[data-cat="pentest"] .tc-dot{--tc-color:#f87171;}
+.tc[data-cat="siem"] .chip:hover{color:#a78bfa;border-color:rgba(167,139,250,.4);}
+.tc[data-cat="siem"] .tc-dot{--tc-color:#a78bfa;}
+.tc[data-cat="itsm"] .chip:hover{color:#34d399;border-color:rgba(52,211,153,.4);}
+.tc[data-cat="itsm"] .tc-dot{--tc-color:#34d399;}
+.tc[data-cat="api"] .chip:hover{color:#fb923c;border-color:rgba(251,146,60,.4);}
+.tc[data-cat="api"] .tc-dot{--tc-color:#fb923c;}
 
 /* EXPERIENCE TIMELINE */
 .tl{position:relative;padding-left:3.2rem;margin-bottom:3rem;}
 .tl::before{content:'';position:absolute;left:15px;top:16px;bottom:16px;width:1px;
-  background:linear-gradient(to bottom,rgba(59,130,246,.8) 0%,rgba(59,130,246,.3) 40%,rgba(59,130,246,.08) 75%,transparent 100%);
+  background:linear-gradient(to bottom,transparent 0%,rgba(59,130,246,.7) 6%,rgba(59,130,246,.3) 40%,rgba(59,130,246,.08) 75%,transparent 100%);
   z-index:0;}
 .tl-item{position:relative;margin-bottom:2.5rem;}
 .tl-item:last-child{margin-bottom:0;}
@@ -265,6 +292,15 @@ body:not(.light) .l-prompt{color:#4ade80;}
   box-shadow:0 0 0 4px rgba(59,130,246,.1),0 0 16px rgba(59,130,246,.25);}
 .tl-ico.past{background:var(--bg2);border-color:var(--border);}
 .tl-ico.curr svg{fill:none;stroke:var(--acc);stroke-width:1.8;width:13px;height:13px;}
+/* Timeline icon entrance — scale in from small when revealed */
+.tl-item .tl-ico{transform:scale(.6);opacity:0;transition:transform .4s cubic-bezier(.2,0,.1,1),opacity .4s ease;}
+.tl-item.visible .tl-ico{transform:scale(1);opacity:1;}
+
+/* Footer top gradient — animate width in on first view */
+.site-footer::before{
+  background:linear-gradient(90deg,transparent 0%,var(--acc) 30%,var(--acc2) 60%,transparent 100%);
+  opacity:0;width:0%;transition:width .9s cubic-bezier(.2,0,.1,1) .1s,opacity .4s ease .1s;}
+.site-footer.footer-visible::before{opacity:.6;width:100%;}
 .tl-ico.past svg{fill:none;stroke:var(--text3);stroke-width:1.8;width:13px;height:13px;}
 .tl-meta{display:flex;align-items:center;gap:.65rem;margin-bottom:.22rem;flex-wrap:wrap;}
 .tl-date{font-family:var(--mono);font-size:.66rem;color:var(--text3);letter-spacing:.05em;}
@@ -287,9 +323,10 @@ body:not(.light) .l-prompt{color:#4ade80;}
 .vol-card{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:1.15rem 1.35rem;
   transition:border-color .18s,box-shadow .18s;position:relative;overflow:hidden;}
 .vol-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;
-  background:var(--acc);transform:scaleY(0);transform-origin:bottom;transition:transform .25s ease;border-radius:2px 0 0 2px;}
+  background:var(--acc);transform:scaleY(.25);opacity:.2;transform-origin:bottom;
+  transition:transform .25s ease,opacity .25s ease;border-radius:2px 0 0 2px;}
 .vol-card:hover{border-color:var(--border2);}
-.vol-card:hover::before{transform:scaleY(1);}
+.vol-card:hover::before{transform:scaleY(1);opacity:1;}
 .vol-badge{font-family:var(--mono);font-size:.59rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
   color:var(--acc);background:var(--acc-dim);border:1px solid var(--border2);
   padding:.16rem .48rem;border-radius:3px;display:inline-block;margin-bottom:.6rem;}
@@ -317,6 +354,9 @@ body:not(.light) .l-prompt{color:#4ade80;}
 .oc-nm{font-size:.83rem;font-weight:500;color:var(--text);}
 .oc-org{font-family:var(--mono);font-size:.64rem;color:var(--text3);margin-top:.08rem;}
 .oc-yr{font-family:var(--mono);font-size:.63rem;color:var(--text3);flex-shrink:0;}
+.oc-chevron{font-size:.7rem;color:var(--text3);flex-shrink:0;transition:transform .28s ease,color .18s;margin-left:.25rem;line-height:1;}
+.oc.open .oc-chevron{transform:rotate(90deg);color:var(--acc);}
+.oc:hover .oc-chevron{color:var(--text2);}
 .oc-expand{overflow:hidden;max-height:0;transition:max-height .35s ease;background:var(--bg2);padding:0 1.1rem;}
 .oc-expand.open{max-height:600px;padding:.85rem 1.1rem;}
 .topic-chip{display:inline-block;font-family:var(--mono);font-size:.6rem;color:var(--acc2);background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.18);padding:.13rem .48rem;border-radius:3px;margin:.12rem .12rem 0 0;}
@@ -360,13 +400,46 @@ body:not(.light) .l-prompt{color:#4ade80;}
   transition:all .18s;white-space:nowrap;margin-right:.5rem;}
 .cert-view-btn:hover{background:rgba(59,130,246,.15);border-color:var(--acc);}
 
+/* TEAM MEMBERS */
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.75rem;margin-top:.8rem;}
+.team-card{background:var(--card);border:1px solid var(--border);border-radius:10px;
+  padding:1.2rem 1.3rem;transition:border-color .18s,transform .15s,box-shadow .18s;position:relative;overflow:hidden;}
+.team-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:2px 0 0 2px;
+  background:var(--tc-col,var(--acc));opacity:.7;transition:opacity .2s;}
+.team-card:hover{border-color:var(--border3);transform:translateY(-2px);
+  box-shadow:0 6px 20px rgba(59,130,246,.1);}
+.team-card:hover::before{opacity:1;}
+.team-name{font-size:.88rem;font-weight:700;color:var(--text);margin-bottom:.18rem;}
+.team-role-tag{font-family:var(--mono);font-size:.57rem;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--tc-col,var(--acc));background:rgba(59,130,246,.07);
+  border:1px solid rgba(59,130,246,.18);padding:.14rem .48rem;border-radius:3px;
+  display:inline-block;margin-bottom:.55rem;}
+.team-desc{font-size:.74rem;color:var(--text3);line-height:1.55;margin-bottom:.75rem;}
+.team-linkedin{display:inline-flex;align-items:center;gap:.35rem;font-family:var(--mono);
+  font-size:.62rem;color:var(--acc);text-decoration:none;transition:color .18s;}
+.team-linkedin:hover{color:var(--acc2);}
+.team-linkedin svg{width:11px;height:11px;flex-shrink:0;}
+/* Colour variants per role */
+.team-card.role-backend{--tc-col:#a78bfa;}
+.team-card.role-frontend{--tc-col:#38bdf8;}
+.team-card.role-network{--tc-col:#34d399;}
+
 /* PUBS */
 .pub-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden;}
-.pub{background:var(--card);padding:1.35rem 1.5rem;border-bottom:1px solid var(--border);}
+.pub{background:var(--card);padding:1.35rem 1.5rem;border-bottom:1px solid var(--border);
+  position:relative;overflow:hidden;transition:background .18s;}
 .pub:last-child{border-bottom:none;}
+.pub:hover{background:var(--bg3);}
+/* Left accent line — full height on published, subtle on prep */
+.pub::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:2px 0 0 2px;}
+.pub.pub-published::before{background:linear-gradient(to bottom,var(--acc),var(--acc3));opacity:.9;}
+.pub.pub-prep::before{background:var(--border3);opacity:.5;}
 .pub-badge{font-family:var(--mono);font-size:.57rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.16rem .52rem;border-radius:3px;display:inline-block;margin-bottom:.62rem;}
 .pub-badge.published{color:var(--acc);background:var(--acc-dim);border:1px solid var(--border2);}
 .pub-badge.prep{color:var(--warn);background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.18);}
+/* Published paper: bolder title; prep paper: slightly muted */
+.pub.pub-published .pub-title{font-size:.9rem;font-weight:600;color:var(--text);}
+.pub.pub-prep .pub-title{font-size:.86rem;font-weight:400;color:var(--text2);}
 .pub-title{font-size:.86rem;font-weight:500;color:var(--text);margin-bottom:.42rem;line-height:1.5;}
 .pub-meta{font-family:var(--mono);font-size:.65rem;color:var(--text3);line-height:1.6;}
 .pub-link{display:inline-flex;align-items:center;gap:.28rem;font-family:var(--mono);font-size:.63rem;color:var(--acc);margin-top:.52rem;text-decoration:none;}
@@ -383,6 +456,8 @@ body:not(.light) .l-prompt{color:#4ade80;}
   background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.06) 50%,transparent 60%);
   transition:left .55s ease;pointer-events:none;z-index:1;}
 .pc:hover::before{left:160%;}
+/* Light mode shimmer — uses darker tint to be visible on light card bg */
+body.light .pc::before{background:linear-gradient(105deg,transparent 40%,rgba(0,0,0,.04) 50%,transparent 60%);}
 .pc:hover{background:var(--bg3);}
 .pc:hover::after{transform:scaleX(1);}
 .pc-badge{font-family:var(--mono);font-size:.57rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
@@ -546,17 +621,40 @@ body:not(.light) .l-prompt{color:#4ade80;}
   border:1px solid var(--border);color:var(--text3);cursor:pointer;transition:all .18s;background:transparent;}
 .traffic-tab.active{border-color:var(--acc);color:var(--acc);background:var(--acc-dim);}
 .traffic-tab:hover:not(.active){color:var(--text);border-color:var(--border2);}
-.traffic-panel{display:none;}
-.traffic-panel.active{display:block;}
-.flow-diagram{background:var(--bg);border:1px solid var(--border);border-radius:10px;
-  padding:.75rem 1rem;margin-bottom:1rem;overflow:hidden;}
+/* Traffic panels — cross-fade transition */
+.traffic-panel{
+  display:none;
+  opacity:0;
+  transition:opacity .28s ease;
+}
+.traffic-panel.active{
+  display:block;
+  animation:tfFadeIn .28s ease forwards;
+}
+@keyframes tfFadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+
+/* Diagram wrapper — fixed height so all panels are the same size */
+.flow-diagram{
+  background:var(--bg);border:1px solid var(--border);border-radius:10px;
+  padding:.6rem 1rem;margin-bottom:1rem;overflow:visible;
+}
 .flow-diagram svg{width:100%;height:auto;display:block;}
-.flow-steps{display:flex;flex-direction:column;gap:.6rem;}
-.flow-step{display:flex;gap:.85rem;align-items:flex-start;}
-.flow-step-num{font-family:var(--mono);font-size:.62rem;color:var(--acc);
+
+/* Steps — label left, text box right, all right-aligned */
+.flow-steps{display:flex;flex-direction:column;gap:.55rem;}
+.flow-step{display:grid;grid-template-columns:6.5rem 1fr;gap:.75rem;align-items:start;}
+.flow-step-num{
+  font-family:var(--mono);font-size:.62rem;color:var(--acc);
   background:var(--acc-dim);border:1px solid var(--border2);border-radius:4px;
-  padding:.18rem .52rem;flex-shrink:0;margin-top:.08rem;}
-.flow-step-text{font-size:.8rem;color:var(--text2);line-height:1.65;font-weight:300;}
+  padding:.22rem .55rem;text-align:center;line-height:1.4;
+  /* fixed width column ensures all text boxes start at exactly the same x */
+  width:100%;box-sizing:border-box;
+}
+.flow-step-text{
+  font-size:.8rem;color:var(--text2);line-height:1.65;font-weight:300;
+  background:var(--card);border:1px solid var(--border);border-radius:6px;
+  padding:.45rem .7rem;
+}
 .flow-step-text strong{color:var(--text);font-weight:600;}
 
 /* Stack panel */
@@ -614,16 +712,36 @@ body:not(.light) .l-prompt{color:#4ade80;}
   justify-content:center;flex-shrink:0;transition:all .18s;}
 .nav-hamburger:hover{color:var(--text);border-color:var(--border3);background:var(--bg3);}
 .nav-hamburger svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;}
-.nav-mobile-drawer{display:none;position:fixed;top:66px;left:0;right:0;z-index:199;
+.nav-mobile-drawer{display:flex;position:fixed;top:66px;left:0;right:0;z-index:199;
   background:rgba(9,11,15,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);
-  padding:1rem 1.5rem 1.5rem;flex-direction:column;gap:.25rem;}
+  padding:1rem 1.5rem 1.5rem;flex-direction:column;gap:.25rem;
+  transform:translateY(-110%);opacity:0;pointer-events:none;
+  transition:transform .28s cubic-bezier(.2,0,.1,1),opacity .22s ease;}
 body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
-.nav-mobile-drawer.open{display:flex;}
+.nav-mobile-drawer.open{transform:translateY(0);opacity:1;pointer-events:all;}
 .nav-mobile-drawer a{font-family:var(--mono);font-size:.8rem;color:var(--text2);text-decoration:none;
   padding:.65rem .75rem;border-radius:7px;transition:all .18s;letter-spacing:.03em;
   display:flex;align-items:center;justify-content:space-between;}
 .nav-mobile-drawer a:hover,.nav-mobile-drawer a.active{color:var(--text);background:var(--card);}
 .nav-mobile-drawer a.active{border-left:2px solid var(--acc);padding-left:.6rem;}
+
+/* ── TABLET BREAKPOINT (769px – 1024px) ── */
+@media(min-width:769px) and (max-width:1024px){
+  nav{padding:0 2rem;}
+  .wrap{padding:3rem 2rem;}
+  #pg-home .home-inner{padding:3rem 2rem 0;}
+  .home-nav-section{padding:2rem 2rem;}
+  .hero-row{grid-template-columns:1fr;gap:2rem;}
+  .about-cols{grid-template-columns:1fr;gap:2rem;margin-bottom:3rem;}
+  .contact-layout{grid-template-columns:1fr;gap:2rem;}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:1.5rem;}
+  .site-footer{padding:2rem 2rem 1.2rem;}
+  .page-footer{padding:1.5rem 2rem;}
+  .hn-grid{grid-template-columns:repeat(2,1fr);}
+  .mp-stats-row{grid-template-columns:repeat(2,1fr);}
+  .mp-grid-2{grid-template-columns:1fr;}
+  .gallery-grid{grid-template-columns:repeat(2,1fr);}
+}
 
 /* ── MOBILE BREAKPOINT ── */
 @media(max-width:768px){
@@ -635,7 +753,6 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
   #pg-home .home-inner{padding:2rem 1.2rem 0;}
   .hero-row{grid-template-columns:1fr;gap:1.5rem;}
   .hero-name-row{flex-direction:column;align-items:flex-start;gap:1rem;}
-  .hero-photo{width:90px;height:90px;}
   h1.hname{font-size:clamp(2rem,9vw,3rem);}
   .hdesc{max-width:100%;}
   .hbtns{flex-direction:column;gap:.6rem;}
@@ -672,6 +789,9 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
   .gallery-item-img{height:100px;}
   .mp-topo{padding:.5rem 1rem 1.5rem;}
   .mp-traffic{padding:.5rem 1rem 1.5rem;}
+  .flow-diagram{height:auto;min-height:100px;}
+  .flow-step{grid-template-columns:5rem 1fr;}
+  .team-grid{grid-template-columns:1fr;}
   .mp-stack{padding:.5rem 1rem 1.5rem;}
   .stack-items{grid-template-columns:1fr 1fr;}
   .cert-pdf-bar{padding:.6rem 1rem;flex-wrap:wrap;gap:.5rem;}
@@ -691,6 +811,11 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
   .modal-tabs{flex-wrap:wrap;}
 }
 
+/* Ensure nav links don't overflow on mid-size screens */
+@media(min-width:769px) and (max-width:900px){
+  .nav-links a{padding:.4rem .65rem;font-size:.72rem;}
+  .wrap{max-width:100%;}
+}
 /* ── GAME MOBILE ── */
 @media(max-width:768px){
   #gameOverlay{padding:12px 8px;}
@@ -719,21 +844,23 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
     <div class="nav-logo-wordmark"><span class="nl-first">portfolio</span><span class="nl-dot">.</span><span class="nl-last">aktham</span><span class="nl-domain">.net</span>
     </div>
   </a>
-  <ul class="nav-links">
-    <li><a href="#" class="active" data-page="home"       onclick="goto('home',this);return false;">Home</a></li>
+  <ul class="nav-links" role="list">
+    <li><a href="#" class="active" data-page="home"       aria-current="page" onclick="goto('home',this);return false;">Home</a></li>
     <li><a href="#" data-page="about"      onclick="goto('about',this);return false;">About</a></li>
     <li><a href="#" data-page="experience" onclick="goto('experience',this);return false;">Experience</a></li>
     <li><a href="#" data-page="projects"   onclick="goto('projects',this);return false;">Projects</a></li>
     <li><a href="#" data-page="contact"    onclick="goto('contact',this);return false;">Contact</a></li>
-    <li><a href="#" onclick="openGame();return false;" class="nav-psst" title="...">psst.</a></li>
   </ul>
+  <div style="display:flex;align-items:center;gap:.5rem;">
   <button class="nav-hamburger" id="navHamburger" onclick="toggleMobileNav()" aria-label="Toggle menu">
     <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
   </button>
+  <button class="nav-psst" onclick="openGame()" title="Open Firewall Defender game" aria-label="Open Firewall Defender game">psst.</button>
   <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle light/dark mode" aria-label="Toggle light/dark mode">
     <svg id="iconMoon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
     <svg id="iconSun"  viewBox="0 0 24 24" style="display:none;"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
   </button>
+  </div>
 </nav>
 
 <!-- MOBILE NAV DRAWER -->
@@ -748,7 +875,13 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
 
 <!-- ═══════════════════════════ GAME OVERLAY ═══════════════════════════ -->
 <div id="gameOverlay" style="display:none;position:fixed;inset:0;z-index:2000;background:var(--bg);flex-direction:column;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;padding:24px;overflow:auto;">
-  <button onclick="closeGame()" style="position:absolute;top:1.2rem;right:1.5rem;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text2);background:var(--card);border:1px solid var(--border);padding:.4rem 1rem;border-radius:6px;cursor:pointer;z-index:10;">✕ Close</button>
+  <div style="position:absolute;top:1.2rem;right:1.5rem;display:flex;align-items:center;gap:.5rem;z-index:10;">
+    <button id="gameThemeToggle" onclick="toggleTheme()" title="Toggle light/dark mode" aria-label="Toggle light/dark mode" style="width:36px;height:36px;border-radius:8px;border:1px solid var(--border2);background:var(--card);color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .18s;flex-shrink:0;">
+      <svg id="gameIconMoon" viewBox="0 0 24 24" style="width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      <svg id="gameIconSun"  viewBox="0 0 24 24" style="width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;display:none;"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+    <button onclick="closeGame()" style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text2);background:var(--card);border:1px solid var(--border);padding:.4rem 1rem;border-radius:6px;cursor:pointer;">✕ Close</button>
+  </div>
   <div id="gameUI" style="width:min(1040px,96vw);">
     <!-- HUD -->
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding:0 4px;">
@@ -898,23 +1031,23 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
       'padding:'+pad+';border-radius:4px;cursor:pointer;user-select:none;white-space:nowrap;'+
       'box-shadow:0 0 12px '+col+'88;border:1px solid rgba(255,255,255,0.15);'+
       'transition:transform .08s;z-index:5;touch-action:manipulation;';
-    el.innerHTML=lbl+'<span style="margin-left:6px;opacity:.7;">▶</span>';
-    el.onclick=function(e){
-      e.stopPropagation();
-      clickPacket(p);
-    };
-    // Touch: instant feedback, no hover effect interference
-    el.ontouchstart=function(e){
+    el.innerHTML=lbl+'<span style="margin-left:6px;opacity:.7;pointer-events:none;">▶</span>';
+    // Use pointerdown for instant response on both mouse and touch — no 300ms delay,
+    // no missed clicks from the element moving between mousedown and mouseup.
+    el.addEventListener('pointerdown',function(e){
       e.stopPropagation();
       e.preventDefault();
-      el.style.transform='translateY(-50%) scale(0.93)';
-      setTimeout(function(){clickPacket(p);},60);
-    };
-    // Mouse hover only on non-touch devices
-    if(!isMobile){
-      el.onmouseenter=function(){el.style.transform='translateY(-50%) scale(1.08)';};
-      el.onmouseleave=function(){el.style.transform='translateY(-50%) scale(1)';};
-    }
+      if(!p.alive||over) return;
+      el.style.transform='translateY(-50%) scale(0.88)';
+      clickPacket(p);
+    },{passive:false});
+    // Hover feedback on pointer devices only
+    el.addEventListener('pointerenter',function(){
+      if(p.alive) el.style.transform='translateY(-50%) scale(1.1)';
+    });
+    el.addEventListener('pointerleave',function(){
+      if(p.alive) el.style.transform='translateY(-50%) scale(1)';
+    });
     arena.appendChild(el);
     var p={el:el,bad:bad,lbl:lbl,x:-130,y:y,spd:spd,col:col,alive:true};
     pkts.push(p);
@@ -1052,7 +1185,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
   <div class="hero-row">
     <div>
       <div class="hero-name-row reveal d1">
-        <img class="hero-photo" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBAUEBAYFBQUGBgYHCQ4JCQgICRINDQoOFRIWFhUSFBQXGiEcFxgfGRQUHScdHyIjJSUlFhwpLCgkKyEkJST/2wBDAQYGBgkICREJCREkGBQYJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCT/wAARCAHgAeADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD6Eooor1TzAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAorB17x34a8MkpqmsWsEw/5Yht8n/fK5P51xF9+0Z4Ut5GW2tNSu0X+MKqA/TJzWcq0I7s0jSnLZHqtFfOXir9pHWbwtBoNnBpcfeaUiaX8P4R+Rrgb74s+KbucJL4o1SJyBjFwUBP4YwD+VYSxkE9Fc3jg5vfQ+y80V8iad8bfGumqoOu3UzAcJPtkz7/MORXUaZ+01rsADX9lp11GMAnaYyffKn+lCxkHugeDmtj6Torx/Sf2lfD93P5Go6Zd2Lj7xWRZNvfocZH0rvNF+I3hXXyFstatvMxny5j5Tfk2P0raNeEtmYyozjujpKKM5APryKK1MgooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACioL29ttNtJby8uI7e3hUvJLI21UA7k187fFT46jXM6T4dubi0surXCMY5Lg9hn+Ffbqayq1Y01qa06Tm7I9k8Z/E3w94Iif7fcNPdLj/AEW3w0nPTd2UfWvC/HP7QGuasTbadM+k2cnH7jh8ejSdc/TFeSahrkjFfMZnlZt0hZt3OevuaxHv3Z3Vn3K3OR+lcFSvOfkjvp0IQ31Zs3WoG6lYRsSC2WdmxuPuepqnPM6MC7YTGVXpjIrPMixMSm4Mec+tQSSzTM2d57kjmslE0cjUuNRHBaXIIHB7fjVOa+aWTLuTt4GfSqflnG6XcfbvVxZrcx4UAqOzdfzotYV29wiu90SwBzlDlMnpUsVy6liOq53A/wAQ71AyW0oDRyhD/dYcU9Y8IdrAuM5UdDQM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" alt="Aktham Alarabi"/>
+        
         <h1 class="hname" style="margin-bottom:0;">Aktham<span>Alarabi</span></h1>
       </div>
       <p class="htitle reveal d2">// Network &amp; Cloud Security Engineer · CCNA</p>
@@ -1175,9 +1308,9 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
     </div>
     <div class="about-cards reveal-right d2">
       <div class="ac"><div class="ac-ico"><svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2v-4M9 21H5a2 2 0 01-2-2v-4m0 0h18"/></svg></div><div class="ac-t">Network Engineering</div><div class="ac-d">Policy-based routing, LAN/WAN design, redundancy and failover across enterprise-scale topologies</div></div>
-      <div class="ac"><div class="ac-ico"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div><div class="ac-t">Cloud Infrastructure</div><div class="ac-d">Azure AZ-104/500, IAM, virtual networks</div></div>
+      <div class="ac"><div class="ac-ico"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div><div class="ac-t">Cloud Infrastructure</div><div class="ac-d">Azure AZ-104/500 certified. Virtual networks, IAM, NSG, Security Center, and hybrid cloud deployments.</div></div>
       <div class="ac"><div class="ac-ico"><svg viewBox="0 0 24 24"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z"/></svg></div><div class="ac-t">Network Security</div><div class="ac-d">Threat detection, perimeter hardening, zero-trust access controls, and defence-in-depth across hybrid environments</div></div>
-      <div class="ac"><div class="ac-ico"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div class="ac-t">ITSM Services</div><div class="ac-d">OpenText SMAX, IT Service Manager, ITIL</div></div>
+      <div class="ac"><div class="ac-ico"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div class="ac-t">ITSM Services</div><div class="ac-d">OpenText SMAX implementation and IT Service Manager configuration aligned with ITIL service management practices.</div></div>
     </div>
   </div>
   <div class="sec-divider reveal"><div class="sec-divider-dot"></div></div>
@@ -1197,14 +1330,14 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
   <div class="eyebrow reveal">Arsenal</div>
   <h2 class="sec-title reveal d1">Tools &amp; <span>Technologies</span></h2>
   <div class="tools-grid reveal d2">
-    <div class="tc"><div class="tc-hd"><div class="tc-dot"></div><span class="tc-cat">Network Security</span></div><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="chip">OPNsense</span><span class="chip">FortiGate</span><span class="chip">Cisco IOS</span><span class="chip">Suricata IDS/IPS</span><span class="chip">Wireshark</span><span class="chip">IPSec VPN</span><span class="chip">AAA / TACACS+</span><span class="chip">ACLs</span></div></div>
+    <div class="tc" data-cat="security"><div class="tc-hd"><div class="tc-dot"></div><span class="tc-cat">Network Security</span></div><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="chip">OPNsense</span><span class="chip">FortiGate</span><span class="chip">Cisco IOS</span><span class="chip">Suricata IDS/IPS</span><span class="chip">Wireshark</span><span class="chip">IPSec VPN</span><span class="chip">AAA / TACACS+</span><span class="chip">ACLs</span></div></div>
     <div class="tc"><div class="tc-hd"><div class="tc-dot"></div><span class="tc-cat">Routing &amp; Switching</span></div><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="chip">OSPF</span><span class="chip">EIGRP</span><span class="chip">RIP</span><span class="chip">HSRP</span><span class="chip">VLANs &amp; Trunking</span><span class="chip">VTP / DTP</span><span class="chip">STP / EtherChannel</span><span class="chip">NAT / PAT</span><span class="chip">DHCP</span><span class="chip">SSH v2</span></div></div>
     <div class="tc"><div class="tc-hd"><div class="tc-dot"></div><span class="tc-cat">Network Emulation &amp; Simulation</span></div><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="chip">GNS3</span><span class="chip">Cisco Packet Tracer</span><span class="chip">EVE-NG</span></div></div>
-    <div class="tc"><div class="tc-hd"><div class="tc-dot"></div><span class="tc-cat">Cloud Engineering (Azure)</span></div><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="chip">Azure Virtual Networks</span><span class="chip">Entra ID / IAM</span><span class="chip">Azure Security Center</span><span class="chip">NSG / Firewall</span><span class="chip">VMs &amp; Scale Sets</span><span class="chip">Containerization</span><span class="chip">VMware</span><span class="chip">VirtualBox</span></div></div>
-    <div class="tc"><div class="tc-hd"><div class="tc-dot"></div><span class="tc-cat">SIEM &amp; Monitoring</span></div><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="chip">Splunk Enterprise</span><span class="chip">Sysmon</span><span class="chip">SPL Detection Rules</span><span class="chip">Tenable Nessus</span><span class="chip">Tcpdump</span><span class="chip">Tshark</span></div></div>
-    <div class="tc"><div class="tc-hd"><div class="tc-dot"></div><span class="tc-cat">Penetration Testing</span></div><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="chip">Metasploit</span><span class="chip">Hydra</span><span class="chip">Nessus</span><span class="chip">John the Ripper</span><span class="chip">Burp Suite</span><span class="chip">Kali Linux</span></div></div>
-    <div class="tc"><div class="tc-hd"><div class="tc-dot"></div><span class="tc-cat">ITSM Services</span></div><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="chip">OpenText SMAX</span><span class="chip">IT Service Manager</span><span class="chip">ITIL Framework</span><span class="chip">Incident Management</span><span class="chip">Change Management</span><span class="chip">SLA Workflows</span></div></div>
-    <div class="tc"><div class="tc-hd"><div class="tc-dot"></div><span class="tc-cat">Programming &amp; API</span></div><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="chip">Python</span><span class="chip">REST API</span><span class="chip">VirusTotal API</span><span class="chip">Bash</span><span class="chip">FastAPI</span></div></div>
+    <div class="tc" data-cat="cloud"><div class="tc-hd"><div class="tc-dot"></div><span class="tc-cat">Cloud Engineering (Azure)</span></div><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="chip">Azure Virtual Networks</span><span class="chip">Entra ID / IAM</span><span class="chip">Azure Security Center</span><span class="chip">NSG / Firewall</span><span class="chip">VMs &amp; Scale Sets</span><span class="chip">Containerization</span><span class="chip">VMware</span><span class="chip">VirtualBox</span></div></div>
+    <div class="tc" data-cat="siem"><div class="tc-hd"><div class="tc-dot"></div><span class="tc-cat">SIEM &amp; Monitoring</span></div><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="chip">Splunk Enterprise</span><span class="chip">Sysmon</span><span class="chip">SPL Detection Rules</span><span class="chip">Tenable Nessus</span><span class="chip">Tcpdump</span><span class="chip">Tshark</span></div></div>
+    <div class="tc" data-cat="pentest"><div class="tc-hd"><div class="tc-dot"></div><span class="tc-cat">Penetration Testing</span></div><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="chip">Metasploit</span><span class="chip">Hydra</span><span class="chip">Nessus</span><span class="chip">John the Ripper</span><span class="chip">Burp Suite</span><span class="chip">Kali Linux</span></div></div>
+    <div class="tc" data-cat="itsm"><div class="tc-hd"><div class="tc-dot"></div><span class="tc-cat">ITSM Services</span></div><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="chip">OpenText SMAX</span><span class="chip">IT Service Manager</span><span class="chip">ITIL Framework</span><span class="chip">Incident Management</span><span class="chip">Change Management</span><span class="chip">SLA Workflows</span></div></div>
+    <div class="tc" data-cat="api"><div class="tc-hd"><div class="tc-dot"></div><span class="tc-cat">Programming &amp; API</span></div><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="chip">Python</span><span class="chip">REST API</span><span class="chip">VirusTotal API</span><span class="chip">Bash</span><span class="chip">FastAPI</span></div></div>
   </div>
 </div>
 <footer class="site-footer">
@@ -1337,7 +1470,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
         <a href="https://www.credly.com/badges/d17649e0-b61d-473b-93a3-ff35fc203d67" target="_blank"
            onclick="event.stopPropagation()"
            style="font-family:var(--mono);font-size:.62rem;color:var(--acc);text-decoration:none;margin-right:.75rem;white-space:nowrap;">View Badge ↗</a>
-        <div class="oc-yr">May 2025</div>
+        <div class="oc-yr">May 2025</div><span class="oc-chevron">›</span>
       </div>
       <div class="oc-expand" id="ccna-exp">
         <div style="display:flex;gap:3px;margin-bottom:.65rem;">
@@ -1374,17 +1507,17 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
 
     <!-- Other certs -->
     <div class="oc-list">
-      <div class="oc" onclick="toggleOC(this,'btl1x')"><div class="oc-pill done">BTL-1</div><div class="oc-info"><div class="oc-nm">Blue Team Level 1</div><div class="oc-org">Security Blue Team (SBT) — Training Completed</div></div><button class="cert-view-btn" onclick="event.stopPropagation();openCertPdf('certs/btl1.pdf','Blue Team Level 1 (BTL-1)')">View Cert ↗</button><div class="oc-yr">Completed</div></div>
+      <div class="oc" onclick="toggleOC(this,'btl1x')"><div class="oc-pill done">BTL-1</div><div class="oc-info"><div class="oc-nm">Blue Team Level 1</div><div class="oc-org">Security Blue Team (SBT) — Training Completed</div></div><button class="cert-view-btn" onclick="event.stopPropagation();openCertPdf('certs/btl1.pdf','Blue Team Level 1 (BTL-1)')">View Cert ↗</button><div class="oc-yr">Completed</div><span class="oc-chevron">›</span></div>
       <div class="oc-expand" id="btl1x"><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="topic-chip">Phishing Analysis</span><span class="topic-chip">Security Fundamentals</span><span class="topic-chip">Threat Intelligence</span><span class="topic-chip">SIEM</span><span class="topic-chip">Incident Response</span><span class="topic-chip">Digital Forensics</span></div></div>
-      <div class="oc" onclick="toggleOC(this,'secx')"><div class="oc-pill done">SEC+</div><div class="oc-info"><div class="oc-nm">CompTIA Security+</div><div class="oc-org">CompTIA — Training Completed</div></div><button class="cert-view-btn" onclick="event.stopPropagation();openCertPdf('certs/security-plus.pdf','CompTIA Security+')">View Cert ↗</button><div class="oc-yr">Completed</div></div>
+      <div class="oc" onclick="toggleOC(this,'secx')"><div class="oc-pill done">SEC+</div><div class="oc-info"><div class="oc-nm">CompTIA Security+</div><div class="oc-org">CompTIA — Training Completed</div></div><button class="cert-view-btn" onclick="event.stopPropagation();openCertPdf('certs/security-plus.pdf','CompTIA Security+')">View Cert ↗</button><div class="oc-yr">Completed</div><span class="oc-chevron">›</span></div>
       <div class="oc-expand" id="secx"><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="topic-chip">Threats &amp; Vulnerabilities</span><span class="topic-chip">Architecture &amp; Design</span><span class="topic-chip">Cryptography &amp; PKI</span><span class="topic-chip">Identity &amp; Access</span><span class="topic-chip">Risk Management</span></div></div>
-      <div class="oc" onclick="toggleOC(this,'az900x')"><div class="oc-pill done">AZ-900</div><div class="oc-info"><div class="oc-nm">Microsoft Azure Fundamentals</div><div class="oc-org">Microsoft — Training Completed</div></div><button class="cert-view-btn" onclick="event.stopPropagation();openCertPdf('certs/az900.pdf','Microsoft Azure Fundamentals (AZ-900)')">View Cert ↗</button><div class="oc-yr">Completed</div></div>
+      <div class="oc" onclick="toggleOC(this,'az900x')"><div class="oc-pill done">AZ-900</div><div class="oc-info"><div class="oc-nm">Microsoft Azure Fundamentals</div><div class="oc-org">Microsoft — Training Completed</div></div><button class="cert-view-btn" onclick="event.stopPropagation();openCertPdf('certs/az900.pdf','Microsoft Azure Fundamentals (AZ-900)')">View Cert ↗</button><div class="oc-yr">Completed</div><span class="oc-chevron">›</span></div>
       <div class="oc-expand" id="az900x"><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="topic-chip">Cloud Concepts</span><span class="topic-chip">Core Azure Services</span><span class="topic-chip">Pricing &amp; SLA</span><span class="topic-chip">Azure Governance</span></div></div>
-      <div class="oc" onclick="toggleOC(this,'az104x')"><div class="oc-pill done">AZ-104</div><div class="oc-info"><div class="oc-nm">Microsoft Azure Administrator</div><div class="oc-org">Microsoft — Training Completed</div></div><button class="cert-view-btn" onclick="event.stopPropagation();openCertPdf('certs/az104.pdf','Microsoft Azure Administrator (AZ-104)')">View Cert ↗</button><div class="oc-yr">Completed</div></div>
+      <div class="oc" onclick="toggleOC(this,'az104x')"><div class="oc-pill done">AZ-104</div><div class="oc-info"><div class="oc-nm">Microsoft Azure Administrator</div><div class="oc-org">Microsoft — Training Completed</div></div><button class="cert-view-btn" onclick="event.stopPropagation();openCertPdf('certs/az104.pdf','Microsoft Azure Administrator (AZ-104)')">View Cert ↗</button><div class="oc-yr">Completed</div><span class="oc-chevron">›</span></div>
       <div class="oc-expand" id="az104x"><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="topic-chip">Entra ID / IAM</span><span class="topic-chip">Virtual Networks</span><span class="topic-chip">Storage</span><span class="topic-chip">VM Management</span><span class="topic-chip">Monitoring</span><span class="topic-chip">Load Balancer</span></div></div>
-      <div class="oc" onclick="toggleOC(this,'az500x')"><div class="oc-pill done">AZ-500</div><div class="oc-info"><div class="oc-nm">Microsoft Azure Security Engineer</div><div class="oc-org">Microsoft — Training Completed</div></div><button class="cert-view-btn" onclick="event.stopPropagation();openCertPdf('certs/az500.pdf','Microsoft Azure Security Engineer (AZ-500)')">View Cert ↗</button><div class="oc-yr">Completed</div></div>
+      <div class="oc" onclick="toggleOC(this,'az500x')"><div class="oc-pill done">AZ-500</div><div class="oc-info"><div class="oc-nm">Microsoft Azure Security Engineer</div><div class="oc-org">Microsoft — Training Completed</div></div><button class="cert-view-btn" onclick="event.stopPropagation();openCertPdf('certs/az500.pdf','Microsoft Azure Security Engineer (AZ-500)')">View Cert ↗</button><div class="oc-yr">Completed</div><span class="oc-chevron">›</span></div>
       <div class="oc-expand" id="az500x"><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="topic-chip">Azure Defender</span><span class="topic-chip">Key Vault</span><span class="topic-chip">RBAC</span><span class="topic-chip">NSG &amp; Firewall</span><span class="topic-chip">Sentinel</span><span class="topic-chip">Zero Trust</span></div></div>
-      <div class="oc" onclick="toggleOC(this,'az305x')"><div class="oc-pill prog">AZ-305</div><div class="oc-info"><div class="oc-nm">Microsoft Azure Solutions Architect</div><div class="oc-org">Microsoft — In Progress</div></div><div class="oc-yr">2025 →</div></div>
+      <div class="oc" onclick="toggleOC(this,'az305x')"><div class="oc-pill prog">AZ-305</div><div class="oc-info"><div class="oc-nm">Microsoft Azure Solutions Architect</div><div class="oc-org">Microsoft — In Progress</div></div><div class="oc-yr">2025 →</div><span class="oc-chevron">›</span></div>
       <div class="oc-expand" id="az305x"><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="topic-chip">Infrastructure Design</span><span class="topic-chip">High Availability</span><span class="topic-chip">Disaster Recovery</span><span class="topic-chip">Cost Optimization</span></div></div>
     </div>
   </div>
@@ -1395,13 +1528,13 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
     <div class="eyebrow">Research</div>
     <h2 class="sec-title" style="margin-bottom:1.2rem;">IEEE <span>Publications</span></h2>
     <div class="pub-wrap">
-      <div class="pub">
+      <div class="pub pub-published">
         <span class="pub-badge published">IEEE · Published</span>
         <div class="pub-title">Sustainability in Three Dimensions: Mapping the Metaverse's Blueprint on Sustainable Development Goals (SDGs) through a Bibliometric Journey</div>
         <div class="pub-meta">S. Alabidi, K. Alarabi, O. A. Khurma, A. Alarabi, R. Taani · 25th ACIT, Amman, Dec. 2024 · DOI: 10.1109/ACIT62805.2024.10876936</div>
         <a class="pub-link" href="https://ieeexplore.ieee.org/document/10876936/" target="_blank">View on IEEE Xplore <svg viewBox="0 0 10 10"><path d="M1 1h8v8M9 1L1 9" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </div>
-      <div class="pub">
+      <div class="pub pub-prep">
         <span class="pub-badge prep">Under Preparation</span>
         <div class="pub-title">Exploring the Role of the Metaverse in Achieving SDG 3: A Bibliometric Analysis of its Impact on Teacher Mental Pollution and Well-being</div>
         <div class="pub-meta">S. Alabidi, K. Alarabi, O. A. Khurma, A. Alarabi, R. Taani · EMCEI, Sfax, Tunisia, 2025</div>
@@ -1598,7 +1731,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
       <div class="fg"><label class="fl">Email</label><input class="fi" id="em" type="email" placeholder="your@email.com"/></div>
       <div class="fg"><label class="fl">Subject</label><input class="fi" id="sub" type="text" placeholder="Project inquiry, job opportunity..."/></div>
       <div class="fg"><label class="fl">Message</label><textarea class="ft" id="msg" placeholder="Tell me about your project or opportunity..."></textarea></div>
-      <button id="sendMsgBtn" class="btn-fill" onclick="sendMsg()" style="width:100%;justify-content:center;">Send Message →</button>
+      <button id="sendMsgBtn" class="btn-fill" onclick="sendMsg()" style="width:100%;justify-content:center;"><span class="btn-spinner"></span><span class="btn-arrow">Send Message →</span></button>
     </div>
   </div>
 </div>
@@ -1624,6 +1757,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
         <button class="modal-tab" onclick="switchModalTab('traffic',this)">Traffic Flows</button>
         <button class="modal-tab" onclick="switchModalTab('stack',this)">Tech Stack</button>
         <button class="modal-tab" onclick="switchModalTab('screenshots',this)">Screenshots</button>
+        <button class="modal-tab" onclick="switchModalTab('team',this)">Team</button>
       </div>
       <button class="modal-close" onclick="document.getElementById('projModal').classList.remove('open')" title="Close">✕</button>
     </div>
@@ -1704,6 +1838,64 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
               <div class="flow-step"><span class="flow-step-num">Firewall-first</span><div class="flow-step-text">All traffic — including API calls from the management PC — passes through OPNsense before reaching any internal host. The firewall validates source IPs, applies stateful inspection, and runs Suricata signatures on every flow. Even if the API backend is compromised, no lateral movement is possible without the firewall permitting it.</div></div>
             </div>
           </div>
+
+          <!-- ── TEAM ── -->
+          <div class="mp-section">
+            <div class="mp-section-title">Team Members</div>
+            <div class="team-grid">
+
+              <div class="team-card role-network">
+                <div class="team-name">Aktham Alarabi</div>
+                <div class="team-role-tag">Network & Firewall</div>
+                <div class="team-desc">GNS3 topology design, OPNsense NGFW configuration, OSPF dynamic routing, network simulation environments, and all firewall API endpoint mapping &amp; testing via Postman.</div>
+                <a class="team-linkedin" href="https://www.linkedin.com/in/aktham-alarabi/" target="_blank">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 10v7M12 13a3 3 0 016 0v4"/></svg>
+                  LinkedIn
+                </a>
+              </div>
+
+              <div class="team-card role-backend">
+                <div class="team-name">Zaid Aldarras</div>
+                <div class="team-role-tag">Backend & AI</div>
+                <div class="team-desc">Backend architecture, LangGraph agent orchestration, LLM tool-binding, FastAPI service design, and chatbot integration with PostgreSQL checkpointing.</div>
+                <a class="team-linkedin" href="https://www.linkedin.com/in/zaid-aldarras-76b717341/" target="_blank">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 10v7M12 13a3 3 0 016 0v4"/></svg>
+                  LinkedIn
+                </a>
+              </div>
+
+              <div class="team-card role-backend">
+                <div class="team-name">Almothana Altaweel</div>
+                <div class="team-role-tag">Backend & AI</div>
+                <div class="team-desc">Backend architecture, LangGraph agent orchestration, Python API scripts, LLM integration, and backend-to-firewall communication layer.</div>
+                <a class="team-linkedin" href="https://www.linkedin.com/in/almothana-altaweel-1b283316b/" target="_blank">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 10v7M12 13a3 3 0 016 0v4"/></svg>
+                  LinkedIn
+                </a>
+              </div>
+
+              <div class="team-card role-frontend">
+                <div class="team-name">Bashar Al-Abdallat</div>
+                <div class="team-role-tag">Frontend</div>
+                <div class="team-desc">ReactJS + TypeScript SPA development, dual-panel chat interface, real-time SSE monitoring dashboard, Tailwind CSS styling, and GNS3 topology embed.</div>
+                <a class="team-linkedin" href="https://www.linkedin.com/in/bashar-al-abdallat-a8157b256/" target="_blank">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 10v7M12 13a3 3 0 016 0v4"/></svg>
+                  LinkedIn
+                </a>
+              </div>
+
+              <div class="team-card role-frontend">
+                <div class="team-name">Osamah Alananzeh</div>
+                <div class="team-role-tag">Frontend</div>
+                <div class="team-desc">ReactJS frontend implementation, UI/UX component design, authentication interface, main menu navigation, and reports &amp; documentation portal.</div>
+                <a class="team-linkedin" href="https://www.linkedin.com/in/osamah-alananzeh/" target="_blank">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 10v7M12 13a3 3 0 016 0v4"/></svg>
+                  LinkedIn
+                </a>
+              </div>
+
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1767,7 +1959,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
           <!-- Normal traffic -->
           <div class="traffic-panel active" id="tf-normal">
             <div class="flow-diagram">
-              <svg viewBox="0 0 760 110" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono,monospace">
+              <svg viewBox="0 0 760 120" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono,monospace">
   <defs><marker id="an" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0,7 3.5,0 7" fill="#22c55e"/></marker></defs>
   <rect x="8" y="28" width="100" height="52" rx="6" fill="#0d1117" stroke="#22c55e" stroke-width="1.5"/>
   <text x="58" y="50" fill="#22c55e" font-size="9.5" text-anchor="middle" font-weight="600">PC2 / User</text>
@@ -1806,7 +1998,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
           <!-- API traffic -->
           <div class="traffic-panel" id="tf-api">
             <div class="flow-diagram">
-              <svg viewBox="0 0 760 140" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono,monospace">
+              <svg viewBox="0 0 760 120" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono,monospace">
   <defs>
     <marker id="ab" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0,7 3.5,0 7" fill="#3b82f6"/></marker>
     <marker id="abr" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0,7 3.5,0 7" fill="#60a5fa"/></marker>
@@ -1842,8 +2034,8 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
   <text x="705" y="46" fill="#fbbf24" font-size="9" text-anchor="middle" font-weight="600">Firewall</text>
   <text x="705" y="59" fill="#fbbf24" font-size="8" text-anchor="middle">Rule saved</text>
   <text x="705" y="72" fill="#7d8a9e" font-size="7.5" text-anchor="middle">+ Audit log</text>
-  <line x1="654" y1="106" x2="120" y2="106" stroke="#60a5fa" stroke-width="1.2" stroke-dasharray="4,2" marker-end="url(#abr)"/>
-  <text x="387" y="122" fill="#60a5fa" font-size="8" text-anchor="middle">← SSE stream: live alerts + rule confirmation pushed to browser</text>
+  <line x1="654" y1="100" x2="120" y2="100" stroke="#60a5fa" stroke-width="1.2" stroke-dasharray="4,2" marker-end="url(#abr)"/>
+  <text x="387" y="115" fill="#60a5fa" font-size="8" text-anchor="middle">← SSE stream: live alerts + rule confirmation pushed to browser</text>
 </svg>
             </div>
             <div class="flow-steps">
@@ -1857,7 +2049,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
           <!-- OSPF -->
           <div class="traffic-panel" id="tf-ospf">
             <div class="flow-diagram">
-              <svg viewBox="0 0 760 110" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono,monospace">
+              <svg viewBox="0 0 760 120" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono,monospace">
   <defs><marker id="ao" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0,7 3.5,0 7" fill="#fbbf24"/></marker>
   <marker id="aol" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0,7 3.5,0 7" fill="#fbbf24"/></marker></defs>
   <rect x="8" y="22" width="110" height="66" rx="6" fill="#0d1117" stroke="#f97316" stroke-width="1.8"/>
@@ -1902,7 +2094,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
           <!-- Firewall block -->
           <div class="traffic-panel" id="tf-block">
             <div class="flow-diagram">
-              <svg viewBox="0 0 760 110" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono,monospace">
+              <svg viewBox="0 0 760 120" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono,monospace">
   <defs>
     <marker id="ar" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0,7 3.5,0 7" fill="#ef4444"/></marker>
     <marker id="ard" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0,7 3.5,0 7" fill="#354050"/></marker>
@@ -1959,7 +2151,10 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
               <div class="stack-item"><div class="stack-item-name">Suricata IDS/IPS</div><div class="stack-item-role">Inline IDS engine on OPNsense. ET Open community ruleset; alert querying, policy toggling, and ruleset updates all chatbot-accessible.</div></div>
               <div class="stack-item"><div class="stack-item-name">Cisco IOS (R1–R5)</div><div class="stack-item-role">5 routers running OSPF Area 0. Seven /24 transit subnets; provide full reachability between all segments including OPNsense zones.</div></div>
               <div class="stack-item"><div class="stack-item-name">OSPF (FRR plugin)</div><div class="stack-item-role">OPNsense participates via FRRouting daemon. LAN/OPT1 passive interfaces; NVRAM persistence; adjacency with R1 verified via show ip ospf.</div></div>
-              <div class="stack-item"><div class="stack-item-name">GNS3</div><div class="stack-item-role">Network emulator running actual Cisco IOS and OPNsense FreeBSD VMs — far more accurate than purely simulated platforms. Web-UI embedded in frontend.</div></div>
+              <div class="stack-item"><div class="stack-item-name">Firewall Zones</div><div class="stack-item-role">LAN (192.168.2.0/24), WAN (10.0.0.0/24), OPT1 — separate security zones enforced by OPNsense interface rules.</div></div>
+              <div class="stack-item"><div class="stack-item-name">Cloudflare DDNS</div><div class="stack-item-role">Custom Python script + NSSM Windows service keeps jrx7.com A record updated. ui.jrx7.com points to the React UI server.</div></div>
+              <div class="stack-item"><div class="stack-item-name">Destination NAT</div><div class="stack-item-role">Port forwarding on edge device tunnels HTTPS (TCP/443) inbound traffic to OPNsense LAN interface for external API access.</div></div>
+              <div class="stack-item"><div class="stack-item-name">Kea DHCP</div><div class="stack-item-role">OPNsense Kea DHCPv4 service on OPT1 (192.168.2.50–200). Pool, reservations, and subnets all manageable via chatbot.</div></div>
             </div>
           </div>
 
@@ -1997,15 +2192,6 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
             </div>
           </div>
 
-          <div class="stack-section">
-            <div style="font-family:var(--mono);font-size:.62rem;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.65rem;">Network & Infrastructure</div>
-            <div class="stack-items">
-              <div class="stack-item"><div class="stack-item-name">Firewall Zones</div><div class="stack-item-role">LAN (192.168.2.0/24), WAN (10.0.0.0/24), OPT1 — separate security zones enforced by OPNsense interface rules.</div></div>
-              <div class="stack-item"><div class="stack-item-name">Cloudflare DDNS</div><div class="stack-item-role">Custom Python script + NSSM Windows service keeps jrx7.com A record updated. ui.jrx7.com points to the React UI server.</div></div>
-              <div class="stack-item"><div class="stack-item-name">Destination NAT</div><div class="stack-item-role">Port forwarding on edge device tunnels HTTPS (TCP/443) inbound traffic to OPNsense LAN interface for external API access.</div></div>
-              <div class="stack-item"><div class="stack-item-name">Kea DHCP</div><div class="stack-item-role">OPNsense Kea DHCPv4 service on OPT1 (192.168.2.50–200). Pool, reservations, and subnets all manageable via chatbot.</div></div>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -2099,10 +2285,76 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
         </div>
       </div>
 
+      <!-- ── TEAM PANEL ── -->
+      <div class="modal-panel" id="mp-team">
+        <div class="mp-body">
+          <div class="mp-section-title">Team Members</div>
+          <div class="team-grid">
+
+            <div class="team-card role-network">
+              <div class="team-name">Aktham Alarabi</div>
+              <div class="team-role-tag">Network & Firewall</div>
+              <div class="team-desc">GNS3 topology design, OPNsense NGFW configuration, OSPF dynamic routing, network simulation environments, Cloudflare DDNS automation, and all 40+ firewall API endpoint mapping &amp; Postman testing.</div>
+              <a class="team-linkedin" href="https://www.linkedin.com/in/aktham-alarabi/" target="_blank">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 10v7M12 13a3 3 0 016 0v4"/></svg>
+                LinkedIn
+              </a>
+            </div>
+
+            <div class="team-card role-backend">
+              <div class="team-name">Zaid Aldarras</div>
+              <div class="team-role-tag">Backend & AI</div>
+              <div class="team-desc">Backend architecture, LangGraph agent orchestration, LLM tool-binding and model routing, FastAPI async service design, chatbot integration, and PostgreSQL checkpointing.</div>
+              <a class="team-linkedin" href="https://www.linkedin.com/in/zaid-aldarras-76b717341/" target="_blank">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 10v7M12 13a3 3 0 016 0v4"/></svg>
+                LinkedIn
+              </a>
+            </div>
+
+            <div class="team-card role-backend">
+              <div class="team-name">Almothana Altaweel</div>
+              <div class="team-role-tag">Backend & AI</div>
+              <div class="team-desc">Backend architecture, LangGraph orchestration, Python API scripts, LLM integration, backend-to-OPNsense communication layer, and database schema design.</div>
+              <a class="team-linkedin" href="https://www.linkedin.com/in/almothana-altaweel-1b283316b/" target="_blank">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 10v7M12 13a3 3 0 016 0v4"/></svg>
+                LinkedIn
+              </a>
+            </div>
+
+            <div class="team-card role-frontend">
+              <div class="team-name">Bashar Al-Abdallat</div>
+              <div class="team-role-tag">Frontend</div>
+              <div class="team-desc">ReactJS + TypeScript SPA development, dual-panel chat interface, real-time SSE monitoring dashboard, Tailwind CSS styling, and GNS3 topology iframe embed.</div>
+              <a class="team-linkedin" href="https://www.linkedin.com/in/bashar-al-abdallat-a8157b256/" target="_blank">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 10v7M12 13a3 3 0 016 0v4"/></svg>
+                LinkedIn
+              </a>
+            </div>
+
+            <div class="team-card role-frontend">
+              <div class="team-name">Osamah Alananzeh</div>
+              <div class="team-role-tag">Frontend</div>
+              <div class="team-desc">ReactJS frontend implementation, UI/UX component design, authentication interface, main menu navigation hub, and reports &amp; documentation portal.</div>
+              <a class="team-linkedin" href="https://www.linkedin.com/in/osamah-alananzeh/" target="_blank">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 10v7M12 13a3 3 0 016 0v4"/></svg>
+                LinkedIn
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
     </div><!-- end modal-body -->
   </div><!-- end proj-modal -->
 </div><!-- end overlay -->
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ── CONSTANTS ──────────────────────────────────────────────
+const NAV_HEIGHT_DEFAULT = 66;  // px — matches #app top offset
+const NAV_HEIGHT_SHRUNK  = 54;  // px — compact on scroll
+const SCROLL_SHRINK_AT   = 40;  // px scrollTop before nav shrinks
+// ─────────────────────────────────────────────────────────────
+
 function toggleMobileNav(){
   document.getElementById('mobileDrawer').classList.toggle('open');
 }
@@ -2116,34 +2368,68 @@ document.addEventListener('click',function(e){
     drawer.classList.remove('open');
   }
 });
-function toggleTheme(){
-  const isLight=document.body.classList.toggle('light');
+function syncThemeIcons(isLight){
+  // Main nav icons
   document.getElementById('iconMoon').style.display=isLight?'none':'block';
   document.getElementById('iconSun').style.display=isLight?'block':'none';
+  // In-game icons (may not exist yet on first load)
+  const gm=document.getElementById('gameIconMoon');
+  const gs=document.getElementById('gameIconSun');
+  if(gm) gm.style.display=isLight?'none':'block';
+  if(gs) gs.style.display=isLight?'block':'none';
+}
+function toggleTheme(){
+  const isLight=document.body.classList.toggle('light');
+  syncThemeIcons(isLight);
   localStorage.setItem('theme',isLight?'light':'dark');
 }
 // Restore saved theme on load
 (function(){
   if(localStorage.getItem('theme')==='light'){
     document.body.classList.add('light');
-    document.getElementById('iconMoon').style.display='none';
-    document.getElementById('iconSun').style.display='block';
+    syncThemeIcons(true);
   }
 })();
 
 function goto(id,el){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('pg-'+id).classList.add('active');
-  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
-  if(el){el.classList.add('active');}
-  else{document.querySelectorAll('.nav-links a[data-page]').forEach(a=>{if(a.dataset.page===id)a.classList.add('active');});}
-  document.querySelectorAll('.nav-mobile-drawer a').forEach(a=>a.classList.toggle('active',a.dataset.page===id));
+  const target=document.getElementById('pg-'+id);
+  target.classList.add('active');
+  // Focus the page for screen readers, without scrolling
+  target.setAttribute('tabindex','-1');
+  setTimeout(()=>target.focus({preventScroll:true}),320);
+  // Update nav link active + aria-current in both desktop and mobile nav
+  document.querySelectorAll('.nav-links a, .nav-mobile-drawer a').forEach(a=>{
+    const match=a.dataset.page===id;
+    a.classList.toggle('active',match);
+    if(match) a.setAttribute('aria-current','page');
+    else a.removeAttribute('aria-current');
+  });
   setTimeout(()=>{observePage(id);if(id==='about')setTimeout(animSkills,300);},40);
 }
 function observePage(id){
   const pg=document.getElementById('pg-'+id);if(!pg)return;
-  const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});},{threshold:0.06});
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:0.06});
+  // Observe reveal elements
   pg.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>io.observe(el));
+  // Observe section dividers
+  pg.querySelectorAll('.sec-divider').forEach(el=>io.observe(el));
+  // Observe timeline items (for icon scale-in)
+  pg.querySelectorAll('.tl-item').forEach(el=>io.observe(el));
+  // Observe footers (for gradient animate-in)
+  pg.querySelectorAll('.site-footer').forEach(el=>{
+    const fio=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('footer-visible');fio.unobserve(e.target);}});
+    },{threshold:0.05});
+    fio.observe(el);
+  });
 }
 ['home','about','experience','projects','contact'].forEach(observePage);
 function animSkills(){
@@ -2157,7 +2443,6 @@ function animSkills(){
     const start=performance.now();
     function tick(now){
       const progress=Math.min((now-start)/duration,1);
-      // ease-out cubic
       const eased=1-Math.pow(1-progress,3);
       el.textContent=Math.round(eased*target)+'%';
       if(progress<1) requestAnimationFrame(tick);
@@ -2165,6 +2450,16 @@ function animSkills(){
     requestAnimationFrame(tick);
   });
 }
+// Also trigger via IntersectionObserver so skills animate even if About is the first page seen
+(function(){
+  const skillBars=document.getElementById('skillBars');
+  if(!skillBars) return;
+  let fired=false;
+  const io=new IntersectionObserver(entries=>{
+    if(entries[0].isIntersecting&&!fired){fired=true;animSkills();io.disconnect();}
+  },{threshold:0.15});
+  io.observe(skillBars);
+})();
 
 /* TERMINAL — very slow, like a real person typing */
 /* Each entry: [mode, command] where mode drives the prompt shown */
@@ -2399,7 +2694,9 @@ function sendMsg(){
   if(!fn||!em||!msg){alert('Please fill in your name, email, and message.');return;}
 
   const btn=document.getElementById('sendMsgBtn');
-  btn.textContent='Sending…';
+  const arrow=btn.querySelector('.btn-arrow');
+  btn.classList.add('sending');
+  if(arrow) arrow.textContent='Sending…';
   btn.disabled=true;
 
   fetch('https://formspree.io/f/mnjgwnwv',{
@@ -2415,22 +2712,25 @@ function sendMsg(){
   .then(r=>r.json())
   .then(data=>{
     if(data.ok){
-      btn.textContent='Message Sent ✓';
+      btn.classList.remove('sending');
+      if(arrow) arrow.textContent='Message Sent ✓';
       btn.style.background='var(--ok)';
       document.getElementById('fn').value='';
       document.getElementById('ln').value='';
       document.getElementById('em').value='';
       document.getElementById('sub').value='';
       document.getElementById('msg').value='';
-      setTimeout(()=>{btn.textContent='Send Message →';btn.style.background='';btn.disabled=false;},4000);
+      setTimeout(()=>{if(arrow) arrow.textContent='Send Message →';btn.style.background='';btn.disabled=false;},4000);
     } else {
-      btn.textContent='Send Message →';
+      btn.classList.remove('sending');
+      if(arrow) arrow.textContent='Send Message →';
       btn.disabled=false;
       alert('Something went wrong. Please try emailing me directly at aktham.alarabi@gmail.com');
     }
   })
   .catch(()=>{
-    btn.textContent='Send Message →';
+    btn.classList.remove('sending');
+    if(arrow) arrow.textContent='Send Message →';
     btn.disabled=false;
     alert('Network error. Please try emailing me directly at aktham.alarabi@gmail.com');
   });
@@ -2442,7 +2742,31 @@ function openProjectModal(){
   const m=document.getElementById('projModal');
   m.classList.add('open');
   switchModalTab('overview', document.querySelector('.modal-tab'));
+  // Focus first focusable element for keyboard/screen reader users
+  setTimeout(()=>{
+    const firstFocusable=m.querySelector('button,[href],[tabindex]:not([tabindex="-1"])');
+    if(firstFocusable) firstFocusable.focus();
+  },350);
 }
+
+// Focus trap utility — keeps Tab cycling inside an open modal
+function trapFocus(modal,e){
+  const focusable=[...modal.querySelectorAll('button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])')].filter(el=>!el.disabled&&el.offsetParent!==null);
+  if(!focusable.length) return;
+  const first=focusable[0];const last=focusable[focusable.length-1];
+  if(e.key==='Tab'){
+    if(e.shiftKey){if(document.activeElement===first){last.focus();e.preventDefault();}}
+    else{if(document.activeElement===last){first.focus();e.preventDefault();}}
+  }
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  const projModal=document.getElementById('projModal');
+  const certOverlay=document.getElementById('certPdfOverlay');
+  const lb=document.getElementById('lightbox');
+  if(projModal) projModal.addEventListener('keydown',e=>{ if(projModal.classList.contains('open')) trapFocus(projModal,e); });
+  if(certOverlay) certOverlay.addEventListener('keydown',e=>{ if(certOverlay.classList.contains('open')) trapFocus(certOverlay,e); });
+  if(lb) lb.addEventListener('keydown',e=>{ if(lb.classList.contains('open')) trapFocus(lb,e); });
+});
 function closeModal(e){
   if(e.target===document.getElementById('projModal')){
     document.getElementById('projModal').classList.remove('open');
@@ -2461,11 +2785,22 @@ function switchModalTab(name,btn){
   if(mb) mb.scrollTop=0;
 }
 function switchTrafficTab(name,btn){
-  document.querySelectorAll('.traffic-panel').forEach(p=>p.classList.remove('active'));
+  const current=document.querySelector('.traffic-panel.active');
+  const next=document.getElementById('tf-'+name);
+  if(!next||current===next) return;
+  // Deactivate tabs immediately
   document.querySelectorAll('.traffic-tab').forEach(t=>t.classList.remove('active'));
-  const panel=document.getElementById('tf-'+name);
-  if(panel) panel.classList.add('active');
   if(btn) btn.classList.add('active');
+  // Cross-fade: hide current, then show next
+  if(current){
+    current.classList.remove('active');
+    // display:none kicks in after transition — give it one frame
+    requestAnimationFrame(()=>{
+      next.classList.add('active');
+    });
+  } else {
+    next.classList.add('active');
+  }
 }
 /* ── LIGHTBOX ── */
 const galleryImgs=[
@@ -2593,18 +2928,18 @@ function closeCertPdf(){
 (function(){
   const nav=document.querySelector('nav');
   if(!nav)return;
+  const pages=[...document.querySelectorAll('.page')];
   function onScroll(){
     const pg=document.querySelector('.page.active');
-    const scrolled=pg&&pg.scrollTop>40;
-    nav.style.height=scrolled?'54px':'66px';
+    const scrolled=pg&&pg.scrollTop>SCROLL_SHRINK_AT;
+    nav.style.height=scrolled?NAV_HEIGHT_SHRUNK+'px':NAV_HEIGHT_DEFAULT+'px';
     nav.style.backdropFilter=scrolled?'blur(28px)':'blur(20px)';
     nav.style.transition='height .25s ease,backdrop-filter .25s ease,background .3s,border-color .3s';
   }
-  document.querySelectorAll('.page').forEach(pg=>{
+  const mo=new MutationObserver(onScroll);
+  pages.forEach(pg=>{
     pg.addEventListener('scroll',onScroll,{passive:true});
-  });
-  document.querySelectorAll('.page').forEach(pg=>{
-    new MutationObserver(onScroll).observe(pg,{attributes:true,attributeFilter:['class']});
+    mo.observe(pg,{attributes:true,attributeFilter:['class']});
   });
 })();
 
@@ -2624,28 +2959,29 @@ function animStats(){
     requestAnimationFrame(tick);
   });
 }
-// Run on home load (home is active by default on first load)
-setTimeout(animStats,500);
+// Trigger count-up when the stats row becomes visible (not on a blind timer)
+(function(){
+  const statsRow=document.querySelector('.hstats');
+  if(!statsRow){animStats();return;}
+  let fired=false;
+  const io=new IntersectionObserver(entries=>{
+    if(entries[0].isIntersecting&&!fired){fired=true;animStats();io.disconnect();}
+  },{threshold:0.5});
+  io.observe(statsRow);
+})();
 
 function copyEmail(el){
-  const EMAIL='aktham.alarabi@gmail.com';
+  // Read the email from the DOM rather than duplicating it here as a string
+  const cicVal=document.querySelector('.cic-val');
+  const EMAIL=cicVal?cicVal.textContent.trim():'aktham.alarabi@gmail.com';
   function flashCopied(){
     const btn=document.getElementById('emailCopyBtn');
     if(btn){btn.textContent='Copied!';btn.classList.add('copied');
       setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied');},2000);}
   }
+  // navigator.clipboard is supported in all modern browsers — no legacy fallback needed
   if(navigator.clipboard&&navigator.clipboard.writeText){
     navigator.clipboard.writeText(EMAIL).then(flashCopied).catch(()=>{});
-  } else {
-    // Legacy fallback for very old browsers
-    try{
-      const ta=document.createElement('textarea');
-      ta.value=EMAIL;ta.style.position='fixed';ta.style.opacity='0';
-      document.body.appendChild(ta);ta.focus();ta.select();
-      const ok=document.execCommand('copy');
-      document.body.removeChild(ta);
-      if(ok) flashCopied();
-    }catch(e){}
   }
 }
 </script>
