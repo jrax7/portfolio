@@ -6,6 +6,14 @@
 <title>portfolio.aktham.net | Network & Cloud Security Engineer</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23090b0f'/%3E%3Cpath d='M32 10l16 6v12c0 10.5-6.7 20.1-16 23.2C22.7 48.1 16 38.5 16 28V16l16-6z' fill='%233b82f6'/%3E%3Crect x='26' y='28' width='12' height='10' rx='2' fill='white'/%3E%3Cpath d='M28 28v-3a4 4 0 018 0v3' stroke='white' stroke-width='2' fill='none'/%3E%3C/svg%3E"/><meta name="theme-color" content="#090b0f"/>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+<!-- ╔══════════════════════════════════════════════════════════════════╗
+     ║  CLOUDFLARE WEB ANALYTICS                                       ║
+     ║  Replace XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX below with your       ║
+     ║  actual token from:                                             ║
+     ║  Cloudflare Dashboard → Analytics → Web Analytics → Add site   ║
+     ╚══════════════════════════════════════════════════════════════════╝ -->
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js'
+  data-cf-beacon='{"token": "6bd6abe361b04b22b447df6e36be5dcd"}'></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
@@ -2603,6 +2611,33 @@ function runMoba(){
   const body=document.getElementById('mobaBody');
   if(!body) return;
 
+  /* ── Smart auto-scroll (Linux-install style) ──────────────────────────
+     Track whether the user has manually scrolled up.
+     If they have, stop auto-scrolling. If they scroll back to the bottom,
+     resume auto-scrolling automatically — just like a real terminal.      */
+  let userScrolledUp = false;
+  const SNAP_THRESHOLD = 12; // px — within this of bottom = "at bottom"
+
+  function isAtBottom(){
+    return body.scrollHeight - body.scrollTop - body.clientHeight <= SNAP_THRESHOLD;
+  }
+
+  body.addEventListener('scroll', function(){
+    // If the user scrolled away from the bottom, pause auto-scroll
+    if(!isAtBottom()){
+      userScrolledUp = true;
+    } else {
+      // They scrolled back down — resume
+      userScrolledUp = false;
+    }
+  }, { passive: true });
+
+  function smartScroll(){
+    if(!userScrolledUp){
+      body.scrollTop = body.scrollHeight;
+    }
+  }
+
   let lineIdx=0;
 
   /* Each terminal line = one div: [prompt][command text] all in one row */
@@ -2615,7 +2650,7 @@ function runMoba(){
       const div=document.createElement('div');
       div.style.height='.3em';
       body.appendChild(div);
-      body.scrollTop=body.scrollHeight;
+      smartScroll();
       setTimeout(done,40);
       return;
     }
@@ -2630,7 +2665,7 @@ function runMoba(){
       function typeComment(){
         if(charIdx<=line.length){
           lineDiv.innerHTML=`<span class="l-cmt">${line.slice(0,charIdx)}</span><span class="l-cursor"></span>`;
-          body.scrollTop=body.scrollHeight;
+          smartScroll();
           charIdx++;
           setTimeout(typeComment,10);
         } else {
@@ -2651,7 +2686,7 @@ function runMoba(){
       if(charIdx<=line.length){
         const typed=line.slice(0,charIdx);
         lineDiv.innerHTML=promptHtml+`<span class="l-cmd">${typed}</span><span class="l-cursor"></span>`;
-        body.scrollTop=body.scrollHeight;
+        smartScroll();
         charIdx++;
         setTimeout(typeChar,charDelay);
       } else {
