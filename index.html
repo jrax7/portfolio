@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>portfolio.aktham.net | Network & Cloud Security Engineer</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23090b0f'/%3E%3Cpath d='M32 10l16 6v12c0 10.5-6.7 20.1-16 23.2C22.7 48.1 16 38.5 16 28V16l16-6z' fill='%233b82f6'/%3E%3Crect x='26' y='28' width='12' height='10' rx='2' fill='white'/%3E%3Cpath d='M28 28v-3a4 4 0 018 0v3' stroke='white' stroke-width='2' fill='none'/%3E%3C/svg%3E"/><meta name="theme-color" content="#090b0f"/>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Sora:wght@200;300;400;600;700;800&display=swap" rel="stylesheet"/>
 <!-- ╔══════════════════════════════════════════════════════════════════╗
      ║  CLOUDFLARE WEB ANALYTICS                                       ║
      ║  Replace XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX below with your       ║
@@ -164,8 +164,72 @@ body.light *{scrollbar-color:var(--text3) transparent;}
 .avail-dot{width:5px;height:5px;border-radius:50%;background:var(--acc);animation:pulse 2s infinite;}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(59,130,246,.4)}50%{box-shadow:0 0 0 5px rgba(59,130,246,0)}}
 .hero-row{display:grid;grid-template-columns:1fr minmax(0,560px);gap:2.5rem;align-items:start;flex:1;}
-h1.hname{font-size:clamp(2.6rem,5vw,4.8rem);font-weight:800;line-height:1.0;letter-spacing:-.03em;margin-bottom:.3rem;}
-h1.hname span{color:var(--acc);display:block;}
+/* ── HERO NAME — glitch split matching aktham.net ── */
+h1.hname{font-size:clamp(2.6rem,5vw,4.8rem);font-weight:800;line-height:1.0;letter-spacing:-.03em;margin-bottom:.3rem;display:flex;flex-direction:column;align-items:flex-start;}
+.hname-first{display:block;font-weight:200;font-style:italic;
+  color:rgba(238,241,248,.38);letter-spacing:-.02em;line-height:1;
+  font-size:clamp(2rem,4vw,3.8rem);}
+body.light .hname-first{color:rgba(15,23,42,.22);}
+.hname-last{display:block;font-weight:800;letter-spacing:-.04em;line-height:.9;
+  background:linear-gradient(125deg,#fff 0%,var(--acc2) 40%,var(--acc) 65%,var(--acc3) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  position:relative;}
+body.light .hname-last{background:linear-gradient(125deg,#0f172a 0%,var(--acc2) 40%,var(--acc) 65%,var(--acc3) 100%);-webkit-background-clip:text;background-clip:text;}
+.hname-last::before,.hname-last::after{
+  content:attr(data-t);position:absolute;left:0;top:0;width:100%;
+  background:inherit;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.hname-last::before{animation:hnGlA 6s 2s infinite;clip-path:polygon(0 0,100% 0,100% 33%,0 33%);}
+.hname-last::after {animation:hnGlB 6s 2.1s infinite;clip-path:polygon(0 67%,100% 67%,100% 100%,0 100%);}
+@keyframes hnGlA{
+  0%,91%,100%{transform:none;opacity:0;}
+  92%{transform:translate(-4px,1px) skewX(-2deg);opacity:.9;}
+  94%{transform:translate(4px,-2px) skewX(2deg);opacity:.9;}
+  96%{transform:none;opacity:0;}}
+@keyframes hnGlB{
+  0%,91%,100%{transform:none;opacity:0;}
+  92%{transform:translate(4px,-1px) skewX(2deg);opacity:.9;}
+  94%{transform:translate(-4px,2px) skewX(-2deg);opacity:.9;}
+  96%{transform:none;opacity:0;}}
+
+/* ── ANIMATED SECTION TITLES ── */
+/* Eyebrow pulse-in */
+.eyebrow{font-family:var(--mono);font-size:.67rem;font-weight:500;color:var(--acc);
+  letter-spacing:.18em;text-transform:uppercase;margin-bottom:.6rem;
+  display:flex;align-items:center;gap:.55rem;}
+.eyebrow::before{content:'';display:inline-block;width:3px;height:12px;
+  background:linear-gradient(to bottom,var(--acc),var(--acc3));
+  border-radius:2px;flex-shrink:0;opacity:.85;}
+/* Glitch sec-title */
+.sec-title{font-size:clamp(1.7rem,2.8vw,2.4rem);font-weight:800;color:var(--text);
+  letter-spacing:-.025em;line-height:1.1;margin-bottom:.9rem;position:relative;display:inline-block;}
+.sec-title span{color:var(--acc);}
+/* glitch layers */
+.sec-title::before,.sec-title::after{
+  content:attr(data-t);position:absolute;left:0;top:0;width:100%;
+  color:var(--text);pointer-events:none;}
+.sec-title span + *,.sec-title::before span,.sec-title::after span{color:var(--acc);}
+.sec-title::before{
+  animation:stGlA 8s 1s infinite;
+  clip-path:polygon(0 0,100% 0,100% 40%,0 40%);
+  color:var(--text);}
+.sec-title::after{
+  animation:stGlB 8s 1.15s infinite;
+  clip-path:polygon(0 60%,100% 60%,100% 100%,0 100%);
+  color:var(--text);}
+@keyframes stGlA{
+  0%,94%,100%{transform:none;opacity:0;}
+  95%{transform:translate(-3px,1px) skewX(-1.5deg);opacity:.85;}
+  97%{transform:translate(3px,-1px) skewX(1.5deg);opacity:.85;}
+  99%{transform:none;opacity:0;}}
+@keyframes stGlB{
+  0%,94%,100%{transform:none;opacity:0;}
+  95%{transform:translate(3px,-1px) skewX(1.5deg);opacity:.85;}
+  97%{transform:translate(-3px,1px) skewX(-1.5deg);opacity:.85;}
+  99%{transform:none;opacity:0;}}
+@media(prefers-reduced-motion:reduce){
+  .hname-last::before,.hname-last::after,
+  .sec-title::before,.sec-title::after{animation:none;opacity:0;}
+}
 .htitle{font-family:var(--mono);font-size:.85rem;color:var(--text2);margin:.6rem 0 1rem;letter-spacing:.04em;}
 .hdesc{font-size:.9rem;color:var(--text2);max-width:480px;line-height:1.85;margin-bottom:2rem;font-weight:300;}
 .hbtns{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2.5rem;}
@@ -842,9 +906,93 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
   #gHpBar{width:60px!important;}
   #gCombo{display:none;}
 }
+
+/* ═══════════════════════════════════════════
+   VISUAL LAYER — migrated from aktham.net
+   ═══════════════════════════════════════════ */
+@media(prefers-reduced-motion:reduce){
+  #pf-cur,#pf-cur-ring,.pf-trail-dot,
+  #pf-hex,#pf-bg,#pf-noise,#pf-vig,
+  #pf-scan,#pf-boot{display:none!important;}
+  body{cursor:auto!important;}
+}
+/* Custom cursor — fine pointer only */
+@media(pointer:fine){
+  body{cursor:none;}
+  #pf-cur{position:fixed;width:6px;height:6px;background:var(--acc2);border-radius:50%;
+    pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:screen;
+    transition:width .15s,height .15s;}
+  #pf-cur-ring{position:fixed;width:28px;height:28px;border:1px solid rgba(59,130,246,.32);
+    border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);
+    transition:width .2s,height .2s,border-color .2s;}
+  body:has(a:hover,button:hover) #pf-cur{width:12px;height:12px;}
+  body:has(a:hover,button:hover) #pf-cur-ring{width:44px;height:44px;border-color:rgba(59,130,246,.55);}
+  body.light #pf-cur{mix-blend-mode:normal;background:var(--acc);}
+}
+@media(pointer:coarse){#pf-cur,#pf-cur-ring{display:none;}}
+/* Canvases */
+#pf-bg{position:fixed;inset:0;z-index:0;pointer-events:none;}
+#pf-hex{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.12;}
+body.light #pf-hex{opacity:.05;}
+body.light #pf-bg{opacity:.3;}
+/* Noise */
+#pf-noise{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.025;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:200px 200px;}
+/* Vignette */
+#pf-vig{position:fixed;inset:0;z-index:2;pointer-events:none;
+  background:radial-gradient(ellipse 80% 80% at 50% 50%,transparent 30%,rgba(2,4,10,.7) 100%);}
+body.light #pf-vig{opacity:.08;}
+/* Scanline */
+#pf-scan{position:fixed;left:0;right:0;height:1px;top:-1px;z-index:4;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(59,130,246,.18) 50%,transparent);
+  animation:pfScan 12s linear infinite;opacity:.4;}
+@keyframes pfScan{0%{top:-1px;}100%{top:100vh;}}
+/* Click ripple */
+.pf-ripple{position:fixed;border-radius:50%;pointer-events:none;z-index:9;
+  border:1px solid rgba(59,130,246,.45);width:4px;height:4px;
+  transform:translate(-50%,-50%) scale(0);animation:pfRipple .7s ease-out forwards;}
+@keyframes pfRipple{to{transform:translate(-50%,-50%) scale(1);opacity:0;width:90px;height:90px;}}
+/* Corner brackets */
+.pf-corner{position:fixed;z-index:5;pointer-events:none;opacity:.13;}
+.pf-corner svg{width:22px;height:22px;stroke:var(--acc);fill:none;stroke-width:1.2;}
+.pf-c-tl{top:1.2rem;left:1.2rem;}.pf-c-tr{top:1.2rem;right:1.2rem;transform:scaleX(-1);}
+.pf-c-bl{bottom:1.2rem;left:1.2rem;transform:scaleY(-1);}.pf-c-br{bottom:1.2rem;right:1.2rem;transform:scale(-1);}
+/* Boot sequence */
+#pf-boot{position:fixed;inset:0;z-index:600;background:var(--bg);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.45rem;
+  font-family:var(--mono);font-size:.68rem;color:var(--acc);letter-spacing:.1em;
+  transition:opacity .5s ease;}
+#pf-boot.fade{opacity:0;pointer-events:none;}
+.pf-boot-line{opacity:0;animation:pfBootIn .15s ease forwards;}
+.pf-boot-bar{width:200px;height:2px;background:rgba(59,130,246,.12);border-radius:2px;margin-top:.75rem;overflow:hidden;}
+.pf-boot-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--acc3),var(--acc),var(--acc2));border-radius:2px;}
+#pf-boot-skip{position:absolute;bottom:2rem;right:2rem;font-family:var(--mono);font-size:.6rem;
+  color:var(--text2);letter-spacing:.1em;background:none;border:1px solid var(--border);
+  padding:.3rem .8rem;border-radius:5px;cursor:pointer;transition:color .2s,border-color .2s;}
+#pf-boot-skip:hover{color:var(--acc);border-color:var(--border2);}
+@keyframes pfBootIn{to{opacity:1;}}
+@media(max-width:768px){.pf-corner,#pf-scan{display:none;}}
 </style>
 </head>
 <body>
+
+<!-- ══ VISUAL LAYER ══ -->
+<div id="pf-boot" aria-hidden="true">
+  <div class="pf-boot-bar"><div class="pf-boot-fill" id="pf-bfill"></div></div>
+  <button id="pf-boot-skip">[ SKIP ]</button>
+</div>
+<div id="pf-cur" aria-hidden="true"></div>
+<div id="pf-cur-ring" aria-hidden="true"></div>
+<canvas id="pf-bg" aria-hidden="true"></canvas>
+<canvas id="pf-hex" aria-hidden="true"></canvas>
+<div id="pf-noise" aria-hidden="true"></div>
+<div id="pf-vig" aria-hidden="true"></div>
+<div id="pf-scan" aria-hidden="true"></div>
+<div class="pf-corner pf-c-tl" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2 12V2h10"/></svg></div>
+<div class="pf-corner pf-c-tr" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2 12V2h10"/></svg></div>
+<div class="pf-corner pf-c-bl" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2 12V2h10"/></svg></div>
+<div class="pf-corner pf-c-br" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2 12V2h10"/></svg></div>
 
 <div id="scroll-progress"></div>
 <nav>
@@ -1194,14 +1342,14 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
     <div>
       <div class="hero-name-row reveal d1">
         
-        <h1 class="hname" style="margin-bottom:0;">Aktham<span>Alarabi</span></h1>
+        <h1 class="hname" style="margin-bottom:0;"><span class="hname-first">Aktham</span><span class="hname-last" data-t="Al-Arabi">Al-Arabi</span></h1>
       </div>
       <p class="htitle reveal d2">// Network &amp; Cloud Security Engineer · CCNA</p>
       <p class="hdesc reveal d3">Network and systems security engineer with hands-on experience in enterprise networking, SOC operations, cloud infrastructure, and ITSM. Building secure, well-configured networks — one interface at a time.</p>
       <div class="hbtns reveal d4">
         <a class="btn-fill" href="#" onclick="goto('projects',null);return false;">View Projects →</a>
         <a class="btn-ghost" href="#" onclick="goto('contact',null);return false;">Contact Me</a>
-        <a class="btn-ghost" href="#" onclick="openCertPdf('cv/aktham_alarabi_cv.pdf','Aktham Alarabi — CV');return false;" style="gap:.4rem;">
+        <a class="btn-ghost" href="#" onclick="openCertPdf('cv/aktham_alarabi_cv.pdf','Aktham Al-Arabi — CV');return false;" style="gap:.4rem;">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
           View CV
         </a>
@@ -1238,7 +1386,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
 </div>
 <div class="home-nav-section">
   <div class="eyebrow reveal">Explore</div>
-  <h2 class="sec-title reveal d1">Portfolio <span>Sections</span></h2>
+  <h2 class="sec-title reveal d1" data-t="Portfolio Sections">Portfolio <span>Sections</span></h2>
   <div class="hn-grid reveal d2">
     <div class="hn-card" role="button" tabindex="0" onclick="goto('about',null)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goto('about',null)}"><div class="hn-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><div><div class="hn-title">About</div><div class="hn-desc">Background, skills, and a quick overview of my focus areas.</div></div></div>
     <div class="hn-card" role="button" tabindex="0" onclick="goto('experience',null)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goto('experience',null)}"><div class="hn-ico"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg></div><div><div class="hn-title">Experience</div><div class="hn-desc">Internships, certifications, volunteering, and training.</div></div></div>
@@ -1251,7 +1399,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
 <footer class="site-footer">
   <div class="footer-grid">
     <div>
-      <div class="footer-brand-name">Aktham<span> Alarabi</span></div>
+      <div class="footer-brand-name">Aktham<span> Al-Arabi</span></div>
       <p class="footer-tagline">Network &amp; Cloud Security Engineer — building secure, scalable infrastructure one lab at a time.</p>
     </div>
     <div>
@@ -1292,7 +1440,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
     </div>
   </div>
   <div class="footer-bottom">
-    <span class="footer-copy">© 2025 Aktham Khaleel Alarabi · All rights reserved.</span>
+    <span class="footer-copy">© 2026 Aktham Khaleel Al-Arabi · All rights reserved.</span>
     <span class="footer-built">portfolio<span>.aktham.net</span></span>
   </div>
 </footer>
@@ -1302,7 +1450,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
 <div class="page" id="pg-about" tabindex="-1">
 <div class="wrap">
   <div class="eyebrow reveal">About</div>
-  <h2 class="sec-title reveal d1">Background &amp; <span>Expertise</span></h2>
+  <h2 class="sec-title reveal d1" data-t="Background &amp; Expertise">Background &amp; <span>Expertise</span></h2>
   <div class="about-cols">
     <div class="reveal-left d1">
       <p class="about-p">I'm a network and systems security engineer based in Amman, Jordan. I graduated with a BSc in Electrical Engineering (Network &amp; Systems Security) from Al-Balqa Applied University in February 2026 with a GPA of 3.24/4.00.</p>
@@ -1323,7 +1471,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
   </div>
   <div class="sec-divider reveal"><div class="sec-divider-dot"></div></div>
   <div class="eyebrow reveal">Expertise</div>
-  <h2 class="sec-title reveal d1">Technical <span>Skills</span></h2>
+  <h2 class="sec-title reveal d1" data-t="Technical Skills">Technical <span>Skills</span></h2>
   <div class="skill-grid reveal d2" id="skillBars">
     <div class="sk"><div class="sk-head"><span class="sk-name">Network Engineering</span><span class="sk-pct">88%</span></div><div class="sk-track"><div class="sk-fill" data-w="88"></div></div></div>
     <div class="sk"><div class="sk-head"><span class="sk-name">Network Security</span><span class="sk-pct">82%</span></div><div class="sk-track"><div class="sk-fill" data-w="82"></div></div></div>
@@ -1336,7 +1484,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
   </div>
   <div class="sec-divider reveal"><div class="sec-divider-dot"></div></div>
   <div class="eyebrow reveal">Arsenal</div>
-  <h2 class="sec-title reveal d1">Tools &amp; <span>Technologies</span></h2>
+  <h2 class="sec-title reveal d1" data-t="Tools &amp; Technologies">Tools &amp; <span>Technologies</span></h2>
   <div class="tools-grid reveal d2">
     <div class="tc" data-cat="security"><div class="tc-hd"><div class="tc-dot"></div><span class="tc-cat">Network Security</span></div><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="chip">OPNsense</span><span class="chip">FortiGate</span><span class="chip">Cisco IOS</span><span class="chip">Suricata IDS/IPS</span><span class="chip">Wireshark</span><span class="chip">IPSec VPN</span><span class="chip">AAA / TACACS+</span><span class="chip">ACLs</span></div></div>
     <div class="tc"><div class="tc-hd"><div class="tc-dot"></div><span class="tc-cat">Routing &amp; Switching</span></div><div style="display:flex;flex-wrap:wrap;gap:.3rem;"><span class="chip">OSPF</span><span class="chip">EIGRP</span><span class="chip">RIP</span><span class="chip">HSRP</span><span class="chip">VLANs &amp; Trunking</span><span class="chip">VTP / DTP</span><span class="chip">STP / EtherChannel</span><span class="chip">NAT / PAT</span><span class="chip">DHCP</span><span class="chip">SSH v2</span></div></div>
@@ -1351,7 +1499,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
 <footer class="site-footer">
   <div class="footer-grid">
     <div>
-      <div class="footer-brand-name">Aktham<span> Alarabi</span></div>
+      <div class="footer-brand-name">Aktham<span> Al-Arabi</span></div>
       <p class="footer-tagline">Network &amp; Cloud Security Engineer — building secure, scalable infrastructure one lab at a time.</p>
     </div>
     <div>
@@ -1392,7 +1540,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
     </div>
   </div>
   <div class="footer-bottom">
-    <span class="footer-copy">© 2025 Aktham Khaleel Alarabi · All rights reserved.</span>
+    <span class="footer-copy">© 2026 Aktham Khaleel Al-Arabi · All rights reserved.</span>
     <span class="footer-built">portfolio<span>.aktham.net</span></span>
   </div>
 </footer>
@@ -1402,7 +1550,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
 <div class="page" id="pg-experience" tabindex="-1">
 <div class="wrap">
   <div class="eyebrow reveal">Journey</div>
-  <h2 class="sec-title reveal d1">Experience &amp; <span>Training</span></h2>
+  <h2 class="sec-title reveal d1" data-t="Experience &amp; Training">Experience &amp; <span>Training</span></h2>
   <p class="reveal d2" style="font-size:.87rem;color:var(--text2);max-width:540px;margin-bottom:3rem;font-weight:300;">A timeline of roles and experiences shaping my hands-on engineering and security work.</p>
   <div class="tl">
     <div class="tl-item reveal d1">
@@ -1445,7 +1593,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
   <div class="sec-divider reveal"><div class="sec-divider-dot"></div></div>
   <div class="reveal" style="margin-bottom:3rem;">
     <div class="eyebrow">Community</div>
-    <h2 class="sec-title" style="margin-bottom:1.1rem;">Volunteering — <span>IEEE Computer Society</span></h2>
+    <h2 class="sec-title" data-t="Volunteering — IEEE Computer Society" style="margin-bottom:1.1rem;">Volunteering — <span>IEEE Computer Society</span></h2>
     <p style="font-size:.84rem;color:var(--text2);max-width:540px;margin-bottom:1.4rem;font-weight:300;">Member Development (MD) Team, Amman · Feb 2026 – Present. Rotated through multiple leadership roles to maximise community impact.</p>
     <div class="vol-grid">
       <div class="vol-card"><div class="vol-badge">The Librarian</div><div class="vol-title">Knowledge Provider</div><div class="vol-desc">Shared technical articles, PDFs, and summaries in the community's technical-news channel to maintain consistent learning resources for all members.</div></div>
@@ -1464,7 +1612,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
   <div class="sec-divider reveal"><div class="sec-divider-dot"></div></div>
   <div class="reveal">
     <div class="eyebrow">Career Path</div>
-    <h2 class="sec-title" style="margin-bottom:1.4rem;">Certifications &amp; <span>Training</span></h2>
+    <h2 class="sec-title" data-t="Certifications &amp; Training" style="margin-bottom:1.4rem;">Certifications &amp; <span>Training</span></h2>
 
     <!-- CCNA as same accordion style -->
     <div class="oc-list" style="margin-bottom:1.2rem;">
@@ -1534,7 +1682,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
   <div class="sec-divider reveal"><div class="sec-divider-dot"></div></div>
   <div class="reveal">
     <div class="eyebrow">Research</div>
-    <h2 class="sec-title" style="margin-bottom:1.2rem;">IEEE <span>Publications</span></h2>
+    <h2 class="sec-title" data-t="IEEE Publications" style="margin-bottom:1.2rem;">IEEE <span>Publications</span></h2>
     <div class="pub-wrap">
       <div class="pub pub-published">
         <span class="pub-badge published">IEEE · Published</span>
@@ -1553,7 +1701,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
 <footer class="site-footer">
   <div class="footer-grid">
     <div>
-      <div class="footer-brand-name">Aktham<span> Alarabi</span></div>
+      <div class="footer-brand-name">Aktham<span> Al-Arabi</span></div>
       <p class="footer-tagline">Network &amp; Cloud Security Engineer — building secure, scalable infrastructure one lab at a time.</p>
     </div>
     <div>
@@ -1594,7 +1742,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
     </div>
   </div>
   <div class="footer-bottom">
-    <span class="footer-copy">© 2025 Aktham Khaleel Alarabi · All rights reserved.</span>
+    <span class="footer-copy">© 2026 Aktham Khaleel Al-Arabi · All rights reserved.</span>
     <span class="footer-built">portfolio<span>.aktham.net</span></span>
   </div>
 </footer>
@@ -1604,7 +1752,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
 <div class="page" id="pg-projects" tabindex="-1">
 <div class="wrap">
   <div class="eyebrow reveal">Work</div>
-  <h2 class="sec-title reveal d1">Selected <span>Projects</span></h2>
+  <h2 class="sec-title reveal d1" data-t="Selected Projects">Selected <span>Projects</span></h2>
   <p class="reveal d2" style="font-size:.87rem;color:var(--text2);max-width:560px;margin-bottom:2.5rem;font-weight:300;">GNS3, Cisco Packet Tracer, and real-world lab projects covering routing, switching, security, VPN, wireless, and more.</p>
   <div class="proj-grid reveal d3">
     <div class="pc" onclick="openProjectModal()" style="cursor:pointer;"><div class="pc-badge">Capstone · AI + Security</div><div class="pc-num">001</div><div class="pc-title">Conversational Firewall Management</div><div class="pc-desc">LangGraph-orchestrated chatbot that translates plain-English commands into OPNsense REST API calls. 40+ integrated endpoints covering firewall rules, DHCP, IDS/IPS, diagnostics, and routing — deployed on a GNS3 multi-router OSPF topology.</div><div style="display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.85rem;"><span class="chip">LangGraph</span><span class="chip">FastAPI</span><span class="chip">OPNsense</span><span class="chip">GNS3</span></div><div class="pc-arrow" style="color:var(--acc);">View project details + topology →</div></div>
@@ -1620,7 +1768,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
 <footer class="site-footer">
   <div class="footer-grid">
     <div>
-      <div class="footer-brand-name">Aktham<span> Alarabi</span></div>
+      <div class="footer-brand-name">Aktham<span> Al-Arabi</span></div>
       <p class="footer-tagline">Network &amp; Cloud Security Engineer — building secure, scalable infrastructure one lab at a time.</p>
     </div>
     <div>
@@ -1661,7 +1809,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
     </div>
   </div>
   <div class="footer-bottom">
-    <span class="footer-copy">© 2025 Aktham Khaleel Alarabi · All rights reserved.</span>
+    <span class="footer-copy">© 2026 Aktham Khaleel Al-Arabi · All rights reserved.</span>
     <span class="footer-built">portfolio<span>.aktham.net</span></span>
   </div>
 </footer>
@@ -1675,7 +1823,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
     <!-- LEFT: eyebrow + title + info cards + socials -->
     <div>
       <div class="eyebrow">Connect</div>
-      <h2 class="sec-title d1">Reach <span>Out</span></h2>
+      <h2 class="sec-title d1" data-t="Reach Out">Reach <span>Out</span></h2>
       <p class="contact-intro-text">Open to full-time roles, freelance security and networking projects, research collaborations, and consulting across network engineering, cloud infrastructure, and ITSM.</p>
 
       <div class="contact-info-cards">
@@ -1734,7 +1882,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
       <div class="fw-sub">I'll get back to you within 24 hours.</div>
       <div class="fgrow">
         <div class="fg"><label class="fl">First Name</label><input class="fi" id="fn" type="text" placeholder="Aktham"/></div>
-        <div class="fg"><label class="fl">Last Name</label><input class="fi" id="ln" type="text" placeholder="Alarabi"/></div>
+        <div class="fg"><label class="fl">Last Name</label><input class="fi" id="ln" type="text" placeholder="Al-Arabi"/></div>
       </div>
       <div class="fg"><label class="fl">Email</label><input class="fi" id="em" type="email" placeholder="your@email.com"/></div>
       <div class="fg"><label class="fl">Subject</label><input class="fi" id="sub" type="text" placeholder="Project inquiry, job opportunity..."/></div>
@@ -1853,7 +2001,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
             <div class="team-grid">
 
               <div class="team-card role-network">
-                <div class="team-name">Aktham Alarabi</div>
+                <div class="team-name">Aktham Al-Arabi</div>
                 <div class="team-role-tag">Network & Firewall</div>
                 <div class="team-desc">GNS3 topology design, OPNsense NGFW configuration, OSPF dynamic routing, network simulation environments, and all firewall API endpoint mapping &amp; testing via Postman.</div>
                 <a class="team-linkedin" href="https://www.linkedin.com/in/aktham-alarabi/" target="_blank">
@@ -2300,7 +2448,7 @@ body.light .nav-mobile-drawer{background:rgba(240,244,248,.97);}
           <div class="team-grid">
 
             <div class="team-card role-network">
-              <div class="team-name">Aktham Alarabi</div>
+              <div class="team-name">Aktham Al-Arabi</div>
               <div class="team-role-tag">Network & Firewall</div>
               <div class="team-desc">GNS3 topology design, OPNsense NGFW configuration, OSPF dynamic routing, network simulation environments, Cloudflare DDNS automation, and all 40+ firewall API endpoint mapping &amp; Postman testing.</div>
               <a class="team-linkedin" href="https://www.linkedin.com/in/aktham-alarabi/" target="_blank">
@@ -3055,3 +3203,223 @@ function copyEmail(el){
     <button onclick="lightboxNav(1)" aria-label="Next image">Next →</button>
   </div>
 </div>
+
+<script>
+/* ══════════════════════════════════════════
+   VISUAL LAYER — migrated from aktham.net
+   ══════════════════════════════════════════ */
+(function(){
+'use strict';
+const reducedMotion = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+const coarsePointer = window.matchMedia('(pointer:coarse)').matches;
+
+/* ── shared mouse ── */
+const M = { x:-9999, y:-9999 };
+document.addEventListener('mousemove', e => { M.x=e.clientX; M.y=e.clientY; }, {passive:true});
+
+/* ══ BOOT SEQUENCE ══ */
+(function(){
+  const boot  = document.getElementById('pf-boot');
+  const fill  = document.getElementById('pf-bfill');
+  const skip  = document.getElementById('pf-boot-skip');
+  if(!boot) return;
+  const lines = ['LOADING PORTFOLIO...','VERIFYING IDENTITY...','DECRYPTING ASSETS...','ACCESS GRANTED.'];
+  lines.forEach((txt,i) => {
+    const el = document.createElement('div');
+    el.className = 'pf-boot-line'; el.textContent = txt;
+    el.style.animationDelay = (i*140)+'ms';
+    boot.insertBefore(el, boot.querySelector('.pf-boot-bar'));
+  });
+  function dismiss(){ boot.classList.add('fade'); setTimeout(()=>boot.remove(), 550); }
+  if(skip) skip.addEventListener('click', dismiss);
+  if(reducedMotion){ dismiss(); return; }
+  let w=0;
+  const iv = setInterval(()=>{
+    w += 3.5 + Math.random()*5;
+    if(w>=100){ w=100; clearInterval(iv); setTimeout(dismiss,260); }
+    if(fill) fill.style.width = w+'%';
+  }, 28);
+})();
+
+/* ══ CURSOR + TRAIL ══ */
+if(!reducedMotion && !coarsePointer){
+  const cur  = document.getElementById('pf-cur');
+  const ring = document.getElementById('pf-cur-ring');
+  let rx=-300, ry=-300;
+  const TRAIL=8;
+  const trail = Array.from({length:TRAIL}, ()=>{
+    const d=document.createElement('div');
+    d.className='pf-trail-dot'; d.setAttribute('aria-hidden','true');
+    d.style.cssText='position:fixed;border-radius:50%;pointer-events:none;z-index:9996;transform:translate(-50%,-50%);background:rgba(59,130,246,.18);';
+    document.body.appendChild(d); return {el:d, x:-300, y:-300};
+  });
+  const hist=Array(TRAIL*4).fill({x:-300,y:-300}); let hi=0;
+  (function loop(){
+    if(cur){ cur.style.left=M.x+'px'; cur.style.top=M.y+'px'; }
+    if(ring){ rx+=(M.x-rx)*.09; ry+=(M.y-ry)*.09; ring.style.left=rx+'px'; ring.style.top=ry+'px'; }
+    hist[hi%hist.length]={x:M.x,y:M.y}; hi++;
+    trail.forEach((t,i)=>{
+      const idx=((hi-1)-(i+1)*3+hist.length*10)%hist.length;
+      const h=hist[idx]; if(!h) return;
+      t.x+=(h.x-t.x)*.22; t.y+=(h.y-t.y)*.22;
+      const size=(TRAIL-i)/TRAIL*3;
+      t.el.style.left=t.x+'px'; t.el.style.top=t.y+'px';
+      t.el.style.width=size+'px'; t.el.style.height=size+'px';
+      t.el.style.opacity=(TRAIL-i)/TRAIL*.28;
+    });
+    requestAnimationFrame(loop);
+  })();
+}
+
+/* ══ HEX GRID ══ */
+if(!reducedMotion){
+  try{
+    const c=document.getElementById('pf-hex');
+    const ctx=c&&c.getContext('2d'); if(!ctx) throw new Error('no ctx');
+    let W,H,hexes=[],frame=0;
+    const SIZE=36, HW=SIZE*Math.sqrt(3), HH=SIZE*2;
+    function build(){
+      hexes=[];
+      const cols=Math.ceil(W/HW)+2, rows=Math.ceil(H/(HH*.75))+2;
+      for(let r=-1;r<rows;r++) for(let col=-1;col<cols;col++)
+        hexes.push({x:col*HW+(r%2)*HW/2, y:r*HH*.75,
+          phase:Math.random()*Math.PI*2, spd:.15+Math.random()*.3, bright:0});
+    }
+    function hexPath(x,y,s){
+      ctx.beginPath();
+      for(let i=0;i<6;i++){const a=Math.PI/3*i-Math.PI/6;
+        i===0?ctx.moveTo(x+s*Math.cos(a),y+s*Math.sin(a)):ctx.lineTo(x+s*Math.cos(a),y+s*Math.sin(a));}
+      ctx.closePath();
+    }
+    function resize(){ W=c.width=innerWidth; H=c.height=innerHeight; build(); }
+    function draw(){
+      ctx.clearRect(0,0,W,H); frame++;
+      const t=frame*.006;
+      hexes.forEach(h=>{
+        const dx=h.x-M.x, dy=h.y-M.y, dist=Math.sqrt(dx*dx+dy*dy);
+        h.bright+=((dist<200?(1-dist/200)*.7:0)-h.bright)*.05;
+        const pulse=(Math.sin(t*h.spd+h.phase)+1)/2*.025;
+        const a=pulse+h.bright*.12;
+        hexPath(h.x,h.y,SIZE-2);
+        ctx.strokeStyle=`rgba(59,130,246,${a})`; ctx.lineWidth=.6; ctx.stroke();
+        if(h.bright>.1){ hexPath(h.x,h.y,SIZE-2); ctx.fillStyle=`rgba(59,130,246,${h.bright*.04})`; ctx.fill(); }
+      });
+      requestAnimationFrame(draw);
+    }
+    resize(); window.addEventListener('resize',resize,{passive:true}); draw();
+  } catch(e){ console.warn('hex grid:',e); }
+}
+
+/* ══ PARTICLE GRAPH ══ */
+if(!reducedMotion){
+  try{
+    const c=document.getElementById('pf-bg');
+    const ctx=c&&c.getContext('2d'); if(!ctx) throw new Error('no ctx');
+    let W,H,nodes=[],frame=0;
+    const CELL=130;
+    function init(){
+      const n=Math.min(Math.floor(W*H/14000),65);
+      nodes=Array.from({length:n},()=>({
+        x:Math.random()*W, y:Math.random()*H,
+        vx:(Math.random()-.5)*.35, vy:(Math.random()-.5)*.35,
+        r:Math.random()*1.2+.35, op:Math.random()*.35+.12, phase:Math.random()*Math.PI*2
+      }));
+    }
+    function buildGrid(){
+      const g=new Map();
+      nodes.forEach((n,i)=>{const k=`${Math.floor(n.x/CELL)},${Math.floor(n.y/CELL)}`;
+        if(!g.has(k)) g.set(k,[]); g.get(k).push(i);}); return g;
+    }
+    function resize(){ W=c.width=innerWidth; H=c.height=innerHeight; init(); }
+    function draw(){
+      ctx.clearRect(0,0,W,H); frame++;
+      const t=frame*.008;
+      const bg=ctx.createRadialGradient(W/2,H/2,0,W/2,H/2,Math.max(W,H)*.6);
+      bg.addColorStop(0,'rgba(29,78,216,0.025)'); bg.addColorStop(1,'transparent');
+      ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
+      if(M.x>-1000){
+        const mg=ctx.createRadialGradient(M.x,M.y,0,M.x,M.y,200);
+        mg.addColorStop(0,'rgba(59,130,246,0.055)'); mg.addColorStop(1,'transparent');
+        ctx.fillStyle=mg; ctx.fillRect(0,0,W,H);
+      }
+      nodes.forEach(n=>{
+        n.x+=n.vx; n.y+=n.vy;
+        if(n.x<0||n.x>W) n.vx*=-1; if(n.y<0||n.y>H) n.vy*=-1;
+        const dx=M.x-n.x, dy=M.y-n.y, d2=dx*dx+dy*dy;
+        if(d2<180*180){const f=(1-Math.sqrt(d2)/180)*.009; n.vx+=dx*f; n.vy+=dy*f;
+          const s=Math.sqrt(n.vx*n.vx+n.vy*n.vy); if(s>1.5){n.vx=n.vx/s*1.5;n.vy=n.vy/s*1.5;}}
+        ctx.beginPath(); ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+        ctx.fillStyle=`rgba(96,165,250,${n.op+Math.sin(t+n.phase)*.06})`; ctx.fill();
+      });
+      const grid=buildGrid(), checked=new Set();
+      nodes.forEach((n,i)=>{
+        const cx=Math.floor(n.x/CELL), cy=Math.floor(n.y/CELL);
+        for(let ox=-1;ox<=1;ox++) for(let oy=-1;oy<=1;oy++){
+          const nb=grid.get(`${cx+ox},${cy+oy}`); if(!nb) continue;
+          nb.forEach(j=>{
+            if(j<=i) return;
+            const k=i<j?`${i}-${j}`:`${j}-${i}`;
+            if(checked.has(k)) return; checked.add(k);
+            const m=nodes[j],ex=n.x-m.x,ey=n.y-m.y,ed=Math.sqrt(ex*ex+ey*ey);
+            if(ed<120){ctx.beginPath();ctx.moveTo(n.x,n.y);ctx.lineTo(m.x,m.y);
+              ctx.strokeStyle=`rgba(59,130,246,${(1-ed/120)*.11})`;ctx.lineWidth=.4;ctx.stroke();}
+          });
+        }
+      });
+      requestAnimationFrame(draw);
+    }
+    resize(); window.addEventListener('resize',resize,{passive:true}); draw();
+  } catch(e){ console.warn('particle graph:',e); }
+}
+
+/* ══ CLICK RIPPLE ══ */
+if(!reducedMotion){
+  document.addEventListener('click', e=>{
+    const r=document.createElement('div');
+    r.className='pf-ripple'; r.setAttribute('aria-hidden','true');
+    r.style.left=e.clientX+'px'; r.style.top=e.clientY+'px';
+    document.body.appendChild(r); setTimeout(()=>r.remove(),750);
+  });
+}
+
+/* ══ AUDIO MICRO-FEEDBACK ══ */
+let actx=null;
+function initAudio(){ if(actx) return; try{ actx=new(window.AudioContext||window.webkitAudioContext)(); }catch(e){} }
+document.addEventListener('pointerdown',()=>{ initAudio(); if(actx&&actx.state==='suspended') actx.resume(); },{once:true});
+function tick(f=900,d=.05){
+  if(!actx) return;
+  try{
+    if(actx.state==='suspended') actx.resume();
+    const o=actx.createOscillator(), g=actx.createGain();
+    o.connect(g); g.connect(actx.destination);
+    o.frequency.value=f; o.type='sine';
+    g.gain.setValueAtTime(.025,actx.currentTime);
+    g.gain.exponentialRampToValueAtTime(.0001,actx.currentTime+d);
+    o.start(); o.stop(actx.currentTime+d);
+  }catch(e){}
+}
+document.querySelectorAll('.nav-links a,.hn-card,.pc').forEach(el=>{
+  el.addEventListener('mouseenter',()=>tick(880,.04));
+});
+document.querySelectorAll('.btn-fill').forEach(el=>{
+  el.addEventListener('click',()=>tick(1200,.07));
+});
+
+/* ══ 3D TILT ON CARDS ══ */
+if(!reducedMotion && !coarsePointer){
+  document.querySelectorAll('.pc,.hn-card,.ac,.vol-card').forEach(card=>{
+    card.style.transformStyle='preserve-3d';
+    card.addEventListener('mousemove',e=>{
+      const r=card.getBoundingClientRect();
+      const rx=(e.clientY-r.top-r.height/2)/(r.height/2)*-5;
+      const ry=(e.clientX-r.left-r.width/2)/(r.width/2)*5;
+      card.style.transform=`translateY(-3px) scale(1.01) rotateX(${rx}deg) rotateY(${ry}deg)`;
+    });
+    card.addEventListener('mouseleave',()=>{ card.style.transform=''; });
+  });
+}
+
+})();
+</script>
+</body>
+</html>
