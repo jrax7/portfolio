@@ -1026,12 +1026,28 @@ body.light #pf-vig{opacity:.08;}
   <a href="#" data-page="experience" onclick="goto('experience',this);closeMobileNav();return false;">Experience</a>
   <a href="#" data-page="projects"   onclick="goto('projects',this);closeMobileNav();return false;">Projects</a>
   <a href="#" data-page="contact"    onclick="goto('contact',this);closeMobileNav();return false;">Contact</a>
-  <a href="#" onclick="openGame();closeMobileNav();return false;" style="color:var(--acc);opacity:.7;font-size:.8rem;border-top:1px solid var(--border);margin-top:.25rem;padding-top:.9rem;">🛡️ Firewall Defender <span style="font-size:.65rem;opacity:.7;font-family:var(--mono);">— mini game</span></a>
+  <a href="#" onclick="openGame();closeMobileNav();return false;" style="color:var(--acc);opacity:.7;font-size:.8rem;border-top:1px solid var(--border);margin-top:.25rem;padding-top:.9rem;">⚡ Firewall Defender <span style="font-size:.65rem;opacity:.7;font-family:var(--mono);">— mini game</span></a>
 </div>
 
 <!-- ═══════════════════════════ GAME OVERLAY ═══════════════════════════ -->
-<div id="gameOverlay" style="display:none;position:fixed;inset:0;z-index:2000;background:var(--bg);flex-direction:column;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;padding:24px;overflow:auto;">
+<style>
+#gameOverlay{display:none;position:fixed;inset:0;z-index:2000;background:var(--bg);flex-direction:column;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;padding:24px;overflow:auto;}
+.g-diff-btn{font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:700;letter-spacing:.06em;
+  padding:.7rem 1.6rem;border-radius:8px;cursor:pointer;transition:all .18s;border:1px solid transparent;
+  display:flex;flex-direction:column;align-items:center;gap:4px;min-width:110px;}
+.g-diff-btn:hover{transform:translateY(-2px);}
+.g-diff-btn .g-diff-sub{font-size:.58rem;font-weight:400;opacity:.7;letter-spacing:.04em;}
+#gMuteBtn{width:32px;height:32px;border-radius:7px;border:1px solid var(--border2);background:var(--card);
+  color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all .18s;flex-shrink:0;font-size:14px;line-height:1;}
+#gMuteBtn:hover{color:var(--text);border-color:var(--border3);}
+@keyframes gPktPop{0%{transform:translateY(-50%) scale(1.25);opacity:1;}100%{transform:translateY(-50%) scale(0);opacity:0;}}
+@keyframes gShake{0%,100%{transform:translateX(0);}20%{transform:translateX(-6px);}40%{transform:translateX(6px);}60%{transform:translateX(-4px);}80%{transform:translateX(4px);}}
+.g-shake{animation:gShake .35s ease;}
+</style>
+<div id="gameOverlay">
   <div style="position:absolute;top:1.2rem;right:1.5rem;display:flex;align-items:center;gap:.5rem;z-index:10;">
+    <button id="gMuteBtn" title="Toggle sound" aria-label="Toggle sound">🔊</button>
     <button id="gameThemeToggle" onclick="toggleTheme()" title="Toggle light/dark mode" aria-label="Toggle light/dark mode" style="width:36px;height:36px;border-radius:8px;border:1px solid var(--border2);background:var(--card);color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .18s;flex-shrink:0;">
       <svg id="gameIconMoon" viewBox="0 0 24 24" style="width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
       <svg id="gameIconSun"  viewBox="0 0 24 24" style="width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;display:none;"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
@@ -1045,44 +1061,75 @@ body.light #pf-vig{opacity:.08;}
         <span id="gScore" style="font-size:1.1rem;font-weight:700;color:var(--text);">SCORE: 0</span>
         <span id="gBest" style="font-size:.7rem;color:var(--text2);margin-left:12px;">BEST: 0</span>
       </div>
-      <div id="gWave" style="font-size:.85rem;color:#60a5fa;font-weight:600;">WAVE 1</div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div id="gWave" style="font-size:.85rem;color:#60a5fa;font-weight:600;">WAVE 1</div>
+        <div id="gDiffBadge" style="font-size:.6rem;color:#fbbf24;font-weight:600;background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.22);padding:.15rem .5rem;border-radius:4px;letter-spacing:.06em;display:none;"></div>
+      </div>
       <div style="display:flex;align-items:center;gap:8px;">
         <div id="gCombo" style="font-size:.75rem;color:#fbbf24;font-weight:700;min-width:80px;text-align:right;"></div>
         <div style="background:var(--bg2);border:1px solid #3b82f630;border-radius:6px;overflow:hidden;width:140px;height:14px;">
-          <div id="gHpBar" style="height:100%;width:100%;background:#34d399;transition:width .2s,background .3s;border-radius:6px;"></div>
+          <div id="gHpBar" style="height:100%;width:100%;background:#34d399;transition:width .25s,background .3s;border-radius:6px;"></div>
         </div>
         <div id="gHpTxt" style="font-size:.7rem;color:var(--text);min-width:42px;">HP 100%</div>
       </div>
     </div>
     <!-- Arena -->
     <div id="gArena" style="position:relative;width:min(1040px,96vw);height:min(560px,62vh);background:#07090e;border:1px solid #3b82f618;border-radius:12px;overflow:hidden;">
-      <!-- Grid bg via CSS -->
+      <!-- Grid bg -->
       <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(59,130,246,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;"></div>
       <!-- Firewall wall -->
       <div style="position:absolute;top:0;bottom:0;left:62%;width:4px;background:linear-gradient(to bottom,transparent,#3b82f6aa,#3b82f6,#3b82f6aa,transparent);box-shadow:0 0 18px #3b82f688;pointer-events:none;"></div>
       <div style="position:absolute;top:50%;left:62%;transform:translate(-50%,-50%) rotate(90deg);font-size:9px;color:#3b82f655;letter-spacing:.12em;white-space:nowrap;pointer-events:none;">FIREWALL</div>
       <!-- Server -->
       <div id="gServer" style="position:absolute;right:18px;top:50%;transform:translateY(-50%);width:48px;height:90px;background:#0d1117;border:2px solid #34d399;border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;">
-        <div style="width:8px;height:8px;border-radius:50%;background:#34d399;box-shadow:0 0 6px #34d399;"></div>
+        <div id="gSrvLed" style="width:8px;height:8px;border-radius:50%;background:#34d399;box-shadow:0 0 6px #34d399;transition:background .3s,box-shadow .3s;"></div>
         <div style="width:8px;height:8px;border-radius:50%;background:#3b82f6;"></div>
         <div style="width:8px;height:8px;border-radius:50%;background:#3b82f6;"></div>
         <div style="font-size:7px;color:#475569;margin-top:2px;">SRV</div>
       </div>
       <!-- Packets injected here by JS -->
       <!-- Game over screen -->
-      <div id="gOver" style="display:none;position:absolute;inset:0;background:rgba(5,7,11,.92);flex-direction:column;align-items:center;justify-content:center;cursor:pointer;" onclick="gameRestart()">
-        <div style="font-size:2rem;font-weight:800;color:#ef4444;margin-bottom:8px;">BREACH DETECTED</div>
+      <div id="gOver" style="display:none;position:absolute;inset:0;background:rgba(5,7,11,.93);flex-direction:column;align-items:center;justify-content:center;">
+        <div style="font-size:2rem;font-weight:800;color:#ef4444;margin-bottom:8px;letter-spacing:-.01em;">BREACH DETECTED</div>
         <div style="font-size:.78rem;color:#7d8a9e;margin-bottom:20px;">The server has been compromised.</div>
         <div id="gOverScore" style="font-size:1.6rem;font-weight:700;color:#eef1f8;margin-bottom:6px;"></div>
-        <div id="gOverHS" style="font-size:.75rem;color:#fbbf24;margin-bottom:24px;min-height:20px;"></div>
-        <div style="font-size:.8rem;color:#3b82f6;border:1px solid #3b82f640;padding:.5rem 1.4rem;border-radius:6px;">[ CLICK TO RESTART ]</div>
+        <div id="gOverHS" style="font-size:.75rem;color:#fbbf24;margin-bottom:28px;min-height:20px;"></div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">
+          <button onclick="gameRestart()" style="font-family:'JetBrains Mono',monospace;font-size:.8rem;color:#fff;background:#3b82f6;border:none;padding:.6rem 1.4rem;border-radius:7px;cursor:pointer;transition:background .18s;" onmouseover="this.style.background='#60a5fa'" onmouseout="this.style.background='#3b82f6'">↺ PLAY AGAIN</button>
+          <button onclick="showDifficultyPicker()" style="font-family:'JetBrains Mono',monospace;font-size:.8rem;color:#7d8a9e;background:transparent;border:1px solid #3b82f640;padding:.6rem 1.4rem;border-radius:7px;cursor:pointer;transition:all .18s;" onmouseover="this.style.color='#eef1f8';this.style.borderColor='#3b82f6'" onmouseout="this.style.color='#7d8a9e';this.style.borderColor='#3b82f640'">⚙ CHANGE DIFFICULTY</button>
+        </div>
       </div>
-      <!-- Start screen -->
-      <div id="gStart" style="position:absolute;inset:0;background:rgba(5,7,11,.88);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;" onclick="gameStart()">
-        <div style="font-size:1.95rem;font-weight:800;color:#eef1f8;margin-bottom:8px;">🛡️ FIREWALL DEFENDER</div>
-        <div style="font-size:.78rem;color:#7d8a9e;margin-bottom:4px;">Protect the server from incoming attacks.</div>
-        <div style="font-size:.72rem;color:#60a5fa;margin-bottom:24px;">Click <span style="color:#ef4444">RED</span> packets to block · Let <span style="color:#34d399">GREEN</span> ones through</div>
-        <div style="font-size:.8rem;color:#3b82f6;border:1px solid #3b82f640;padding:.5rem 1.4rem;border-radius:6px;">[ CLICK TO START ]</div>
+      <!-- Start / Difficulty screen -->
+      <div id="gStart" style="position:absolute;inset:0;background:rgba(5,7,11,.9);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;">
+        <div style="font-size:1.95rem;font-weight:800;color:#eef1f8;margin-bottom:6px;letter-spacing:-.02em;">FIREWALL DEFENDER</div>
+        <div style="font-size:.75rem;color:#7d8a9e;margin-bottom:6px;">Protect the server from incoming attacks.</div>
+        <div style="font-size:.7rem;color:#60a5fa;margin-bottom:28px;">Click <span style="color:#ef4444;font-weight:700;">RED</span> packets to block &nbsp;·&nbsp; Let <span style="color:#34d399;font-weight:700;">GREEN</span> ones through</div>
+        <!-- Difficulty picker -->
+        <div id="gDiffPicker" style="display:flex;flex-direction:column;align-items:center;gap:16px;">
+          <div style="font-size:.65rem;color:#475569;letter-spacing:.14em;text-transform:uppercase;margin-bottom:2px;">Select Difficulty</div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">
+            <button class="g-diff-btn" id="gDiffEasy"
+              style="background:rgba(52,211,153,.1);border-color:rgba(52,211,153,.35);color:#34d399;"
+              onclick="gameStart('easy')">
+              EASY<span class="g-diff-sub">Slow · Forgiving</span>
+            </button>
+            <button class="g-diff-btn" id="gDiffNormal"
+              style="background:rgba(59,130,246,.1);border-color:rgba(59,130,246,.4);color:#60a5fa;"
+              onclick="gameStart('normal')">
+              NORMAL<span class="g-diff-sub">Balanced</span>
+            </button>
+            <button class="g-diff-btn" id="gDiffHard"
+              style="background:rgba(251,191,36,.08);border-color:rgba(251,191,36,.35);color:#fbbf24;"
+              onclick="gameStart('hard')">
+              HARD<span class="g-diff-sub">Fast · High stakes</span>
+            </button>
+            <button class="g-diff-btn" id="gDiffInsane"
+              style="background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.4);color:#ef4444;"
+              onclick="gameStart('insane')">
+              INSANE<span class="g-diff-sub">No mercy</span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
     <div style="font-size:.65rem;color:var(--text3);margin-top:8px;text-align:center;">Click red attack packets before they reach the firewall · Green = legitimate traffic, don't block!</div>
@@ -1091,22 +1138,81 @@ body.light #pf-vig{opacity:.08;}
 
 <script>
 (function(){
+  /* ── DIFFICULTY PRESETS ── */
+  var DIFF={
+    easy:  {spawnI:2600, spdBase:50,  spdMob:38,  spdWave:12, spdMobWave:9,  badChance:.35, waveMs:15000, dmgBad:8,  dmgGood:7,  label:'EASY'},
+    normal:{spawnI:2000, spdBase:80,  spdMob:55,  spdWave:18, spdMobWave:12, badChance:.40, waveMs:12000, dmgBad:12, dmgGood:10, label:'NORMAL'},
+    hard:  {spawnI:1300, spdBase:105, spdMob:72,  spdWave:24, spdMobWave:16, badChance:.50, waveMs:9000,  dmgBad:15, dmgGood:14, label:'HARD'},
+    insane:{spawnI:850,  spdBase:140, spdMob:95,  spdWave:32, spdMobWave:22, badChance:.60, waveMs:7000,  dmgBad:20, dmgGood:18, label:'INSANE'},
+  };
+  var diff='normal', cfg=DIFF.normal;
+
   var score=0,hp=100,wave=1,combo=0,comboT=0,running=false,over=false;
-  var spawnT=0,spawnI=2200,waveT=0,pkts=[];
+  var spawnI=cfg.spawnI, pkts=[];
   var hs=parseInt(localStorage.getItem('fwHS')||'0');
-  var interval=null,waveInt=null;
+  var interval=null, waveInt=null, spawnTimeout=null, rafId=null;
+  var muted=false;
 
-  var BAD=['SYN FLOOD','DDOS','MALWARE','SQL INJECT','RANSOMWARE','EXPLOIT','BRUTE FORCE','ZERO-DAY','PORT SCAN','SPOOF'];
-  var GOOD=['HTTP GET','DNS QUERY','HTTPS','SSH AUTH','NTP SYNC','BGP UPDATE','TLS 1.3','ICMP PING'];
+  var BAD=['SYN FLOOD','DDOS','MALWARE','SQL INJECT','RANSOMWARE','EXPLOIT','BRUTE FORCE','ZERO-DAY','PORT SCAN','SPOOF','MITM','PHISHING'];
+  var GOOD=['HTTP GET','DNS QUERY','HTTPS','SSH AUTH','NTP SYNC','BGP UPDATE','TLS 1.3','ICMP PING','SMTP','FTP AUTH'];
 
+  /* ── AUDIO ── */
+  var actx=null;
+  function initAudio(){
+    if(actx)return;
+    try{actx=new(window.AudioContext||window.webkitAudioContext)();}catch(e){}
+  }
+  function resumeAudio(){if(actx&&actx.state==='suspended')actx.resume();}
+  function playTone(freq,dur,type,vol,detune){
+    if(muted||!actx)return;
+    try{
+      resumeAudio();
+      var o=actx.createOscillator(),g=actx.createGain();
+      o.connect(g);g.connect(actx.destination);
+      o.frequency.value=freq;o.type=type||'sine';
+      if(detune)o.detune.value=detune;
+      g.gain.setValueAtTime(vol||.07,actx.currentTime);
+      g.gain.exponentialRampToValueAtTime(.0001,actx.currentTime+dur);
+      o.start();o.stop(actx.currentTime+dur);
+    }catch(e){}
+  }
+  function sndBlock(){
+    playTone(520,.05,'square',.06);
+    setTimeout(function(){playTone(780,.07,'square',.05);},55);
+  }
+  function sndPenalty(){
+    playTone(200,.08,'sawtooth',.06);
+    setTimeout(function(){playTone(140,.12,'sawtooth',.05);},80);
+  }
+  function sndBreach(){
+    playTone(150,.2,'sawtooth',.08);
+    setTimeout(function(){playTone(100,.3,'sawtooth',.07);},180);
+  }
+  function sndCombo(n){
+    var f=520+Math.min(n,10)*60;
+    playTone(f,.06,'square',.05);
+  }
+  function sndWave(){
+    playTone(440,.08,'sine',.05);
+    setTimeout(function(){playTone(660,.1,'sine',.05);},90);
+  }
+
+  /* ── MUTE BUTTON ── */
+  document.getElementById('gMuteBtn').addEventListener('click',function(){
+    muted=!muted;
+    this.textContent=muted?'🔇':'🔊';
+  });
+  document.getElementById('gameOverlay').addEventListener('pointerdown',function(){
+    initAudio();resumeAudio();
+  },{once:true});
+
+  /* ── PUBLIC API ── */
   window.openGame=function(){
     var overlay=document.getElementById('gameOverlay');
     overlay.style.display='flex';
-    // If game is over or never started, reset to start screen
     if(!running){
       stopGame();
       score=0;hp=100;wave=1;combo=0;comboT=0;over=false;
-      spawnI=2200;
       document.getElementById('gOver').style.display='none';
       document.getElementById('gStart').style.display='flex';
       updateHUD();
@@ -1116,49 +1222,67 @@ body.light #pf-vig{opacity:.08;}
     document.getElementById('gameOverlay').style.display='none';
     stopGame();
   };
-  window.gameStart=function(){
+  window.gameStart=function(d){
+    diff=d||'normal';
+    cfg=DIFF[diff]||DIFF.normal;
+    spawnI=cfg.spawnI;
     document.getElementById('gStart').style.display='none';
+    var badge=document.getElementById('gDiffBadge');
+    badge.style.display='block';
+    badge.textContent=cfg.label;
     startGame();
   };
   window.gameRestart=function(){
     document.getElementById('gOver').style.display='none';
     stopGame();
     score=0;hp=100;wave=1;combo=0;comboT=0;over=false;
-    spawnI=2200;
+    spawnI=cfg.spawnI;
     updateHUD();
     startGame();
   };
+  window.showDifficultyPicker=function(){
+    document.getElementById('gOver').style.display='none';
+    stopGame();
+    score=0;hp=100;wave=1;combo=0;comboT=0;over=false;
+    spawnI=cfg.spawnI;
+    updateHUD();
+    document.getElementById('gDiffBadge').style.display='none';
+    document.getElementById('gStart').style.display='flex';
+  };
 
+  /* ── GAME LOOP ── */
   function startGame(){
     running=true;
-    last=Date.now(); // reset timestamp so first tick has dt≈0
-    // reset server border
+    last=performance.now();
     var srv=document.getElementById('gServer');
     if(srv)srv.style.borderColor='#34d399';
+    var led=document.getElementById('gSrvLed');
+    if(led){led.style.background='#34d399';led.style.boxShadow='0 0 6px #34d399';}
     scheduleSpawn();
     waveInt=setInterval(function(){
       if(!running||over)return;
       wave++;
-      spawnI=Math.max(600,spawnI-150);
+      spawnI=Math.max(500,spawnI-Math.round(cfg.spawnI*.1));
       document.getElementById('gWave').textContent='WAVE '+wave;
       showWaveBanner();
-    },12000);
-    interval=setInterval(tick,33);
+      sndWave();
+    },cfg.waveMs);
+    rafLoop();
   }
 
   function stopGame(){
     running=false;
     clearInterval(interval);clearInterval(waveInt);
-    clearTimeout(spawnTimeout); // prevent stale spawns after close
+    clearTimeout(spawnTimeout);
+    if(rafId){cancelAnimationFrame(rafId);rafId=null;}
     interval=null;waveInt=null;spawnTimeout=null;
     pkts.forEach(function(p){if(p.el&&p.el.parentNode)p.el.parentNode.removeChild(p.el);});
     pkts=[];
   }
 
-  var spawnTimeout=null;
   function scheduleSpawn(){
     if(!running||over)return;
-    var jitter=(Math.random()*.4+.8)*spawnI;
+    var jitter=(Math.random()*.45+.78)*spawnI;
     spawnTimeout=setTimeout(function(){
       if(running&&!over){spawnPacket();scheduleSpawn();}
     },jitter);
@@ -1167,91 +1291,113 @@ body.light #pf-vig{opacity:.08;}
   var isMobile=('ontouchstart' in window)||navigator.maxTouchPoints>0;
 
   function spawnPacket(){
-    var bad=Math.random()<(0.4+wave*0.04);
+    var bad=Math.random()<(cfg.badChance+wave*0.025);
     var lbl=bad?BAD[Math.floor(Math.random()*BAD.length)]:GOOD[Math.floor(Math.random()*GOOD.length)];
-    // Slower on mobile — smaller arena means less travel distance
-    var spdBase=isMobile?55:80;
-    var spd=spdBase+wave*(isMobile?12:18)+Math.random()*20;
+    var spdBase=isMobile?cfg.spdMob:cfg.spdBase;
+    var spdWave=isMobile?cfg.spdMobWave:cfg.spdWave;
+    var spd=spdBase+wave*spdWave+Math.random()*18;
     var arena=document.getElementById('gArena');
     var aH=arena.offsetHeight;
-    var margin=isMobile?30:40;
+    var margin=isMobile?34:44;
     var y=margin+Math.random()*(aH-margin*2);
     var el=document.createElement('div');
-    var hue=bad?(Math.random()*18):(130+Math.random()*20);
-    var col='hsl('+hue+',85%,55%)';
-    // Bigger tap targets on mobile
-    var fs=isMobile?'10px':'7px';
-    var pad=isMobile?'8px 14px':'5px 10px';
-    el.style.cssText='position:absolute;left:-140px;top:'+y+'px;transform:translateY(-50%);'+
+    /* bad = red tones, good = green tones */
+    var hue=bad?(Math.random()*22):(130+Math.random()*20);
+    var col='hsl('+hue+',88%,56%)';
+    var glowCol=bad?'rgba(239,68,68,0.55)':'rgba(52,211,153,0.45)';
+    var fs=isMobile?'11px':'8px';
+    var pad=isMobile?'9px 15px':'5px 11px';
+    el.style.cssText='position:absolute;left:-160px;top:'+y+'px;transform:translateY(-50%);'+
       'background:'+col+';color:#fff;font-family:\'JetBrains Mono\',monospace;font-size:'+fs+';font-weight:700;'+
-      'padding:'+pad+';border-radius:4px;cursor:pointer;user-select:none;white-space:nowrap;'+
-      'box-shadow:0 0 12px '+col+'88;border:1px solid rgba(255,255,255,0.15);'+
-      'transition:transform .08s;z-index:5;touch-action:manipulation;';
-    el.innerHTML=lbl+'<span style="margin-left:6px;opacity:.7;pointer-events:none;">▶</span>';
-    // Use pointerdown for instant response on both mouse and touch — no 300ms delay,
-    // no missed clicks from the element moving between mousedown and mouseup.
+      'padding:'+pad+';border-radius:5px;cursor:pointer;user-select:none;white-space:nowrap;'+
+      'box-shadow:0 0 14px '+glowCol+',0 2px 6px rgba(0,0,0,.4);'+
+      'border:1px solid rgba(255,255,255,0.18);will-change:left;'+
+      'transition:transform .07s,box-shadow .07s;z-index:5;touch-action:manipulation;';
+    el.innerHTML=lbl+'<span style="margin-left:6px;opacity:.65;pointer-events:none;font-size:.9em;">▶</span>';
+
+    /* ── CLICK / TAP — pointerdown is instant, no 300ms delay ── */
     el.addEventListener('pointerdown',function(e){
-      e.stopPropagation();
-      e.preventDefault();
-      if(!p.alive||over) return;
-      el.style.transform='translateY(-50%) scale(0.88)';
+      e.stopPropagation();e.preventDefault();
+      if(!p.alive||over)return;
+      el.style.transform='translateY(-50%) scale(0.85)';
+      el.style.boxShadow='none';
       clickPacket(p);
     },{passive:false});
-    // Hover feedback on pointer devices only
     el.addEventListener('pointerenter',function(){
-      if(p.alive) el.style.transform='translateY(-50%) scale(1.1)';
+      if(p.alive)el.style.transform='translateY(-50%) scale(1.12)';
     });
     el.addEventListener('pointerleave',function(){
-      if(p.alive) el.style.transform='translateY(-50%) scale(1)';
+      if(p.alive)el.style.transform='translateY(-50%) scale(1)';
     });
+
     arena.appendChild(el);
-    var p={el:el,bad:bad,lbl:lbl,x:-130,y:y,spd:spd,col:col,alive:true};
+    var p={el:el,bad:bad,lbl:lbl,x:-150,y:y,spd:spd,col:col,alive:true};
     pkts.push(p);
   }
 
-  var last=Date.now();
-  function tick(){
+  /* ── rAF-based game loop — silky smooth, no setInterval jank ── */
+  var last=performance.now();
+  function rafLoop(){
     if(!running||over)return;
-    var now=Date.now(),dt=(now-last)/1000;last=now;
-    if(dt>0.1)dt=0.1;
+    rafId=requestAnimationFrame(function(now){
+      var dt=(now-last)/1000;
+      last=now;
+      if(dt>0.1)dt=0.1; /* cap on tab switch / jank */
+      tick(dt);
+      if(running&&!over)rafLoop();
+    });
+  }
+
+  function tick(dt){
     var arena=document.getElementById('gArena');
+    if(!arena)return;
     var aW=arena.offsetWidth;
     var fwX=aW*0.62;
 
-    if(comboT>0){comboT-=dt*1000;if(comboT<=0){combo=0;document.getElementById('gCombo').textContent='';}}
+    if(comboT>0){
+      comboT-=dt*1000;
+      if(comboT<=0){combo=0;var gc=document.getElementById('gCombo');if(gc)gc.textContent='';}
+    }
 
-    pkts=pkts.filter(function(p){
-      if(!p.alive)return false;
+    var toRemove=[];
+    for(var i=0;i<pkts.length;i++){
+      var p=pkts[i];
+      if(!p.alive){toRemove.push(i);continue;}
       p.x+=p.spd*dt;
       if(p.el)p.el.style.left=p.x+'px';
-      // bad packet hits firewall
-      if(p.bad&&p.x>=fwX-60){
+
+      if(p.bad&&p.x>=fwX-55){
         removePacket(p);
-        takeDamage(12);
+        takeDamage(cfg.dmgBad);
         flashArena('#ef4444');
-        combo=0;document.getElementById('gCombo').textContent='';
-        return false;
+        sndBreach();
+        combo=0;var gc=document.getElementById('gCombo');if(gc)gc.textContent='';
+        shakeArena();
+        toRemove.push(i);continue;
       }
-      // good packet exits right — fine
-      if(!p.bad&&p.x>aW+20){removePacket(p);return false;}
-      // bad packet that somehow exits — shouldn't happen but just in case
-      if(p.bad&&p.x>aW+20){removePacket(p);return false;}
-      return true;
-    });
+      if(!p.bad&&p.x>aW+30){removePacket(p);toRemove.push(i);continue;}
+      if(p.bad&&p.x>aW+30){removePacket(p);toRemove.push(i);continue;}
+    }
+    /* remove dead packets in reverse order */
+    for(var j=toRemove.length-1;j>=0;j--)pkts.splice(toRemove[j],1);
   }
 
   function clickPacket(p){
     if(!p.alive||over)return;
     p.alive=false;
     if(p.bad){
-      score+=10*(1+Math.min(combo,9));
-      combo++;comboT=1500;
-      document.getElementById('gCombo').textContent='x'+combo+' COMBO!';
-      popEffect(p,'#34d399','BLOCKED!');
+      var pts=10*(1+Math.min(combo,9));
+      score+=pts;
+      combo++;comboT=1800;
+      var gc=document.getElementById('gCombo');
+      if(gc)gc.textContent='x'+combo+(combo>=5?' 🔥':'');
+      popEffect(p,'#34d399',combo>1?'x'+combo+' BLOCKED!':'BLOCKED!',pts);
+      sndBlock();sndCombo(combo);
     } else {
-      takeDamage(10);
-      combo=0;document.getElementById('gCombo').textContent='';
-      popEffect(p,'#ef4444','PENALTY!');
+      takeDamage(cfg.dmgGood);
+      combo=0;var gc=document.getElementById('gCombo');if(gc)gc.textContent='';
+      popEffect(p,'#ef4444','PENALTY!',-cfg.dmgGood);
+      sndPenalty();
     }
     removePacket(p);
     updateHUD();
@@ -1268,64 +1414,86 @@ body.light #pf-vig{opacity:.08;}
     if(hp<=0)gameOver();
   }
 
-  function popEffect(p,col,txt){
+  function popEffect(p,col,txt,pts){
     var arena=document.getElementById('gArena');
     var pop=document.createElement('div');
-    pop.style.cssText='position:absolute;left:'+(p.x+30)+'px;top:'+(p.y-30)+'px;'+
-      'color:'+col+';font-family:\'JetBrains Mono\',monospace;font-size:.7rem;font-weight:700;'+
-      'pointer-events:none;z-index:20;transition:all .5s ease;';
+    var xPos=Math.min(p.x+40, arena.offsetWidth-80);
+    pop.style.cssText='position:absolute;left:'+xPos+'px;top:'+(p.y-20)+'px;'+
+      'color:'+col+';font-family:\'JetBrains Mono\',monospace;font-size:.72rem;font-weight:700;'+
+      'pointer-events:none;z-index:20;white-space:nowrap;'+
+      'text-shadow:0 0 8px '+col+'88;';
     pop.textContent=txt;
     arena.appendChild(pop);
-    requestAnimationFrame(function(){
-      pop.style.transform='translateY(-28px)';pop.style.opacity='0';
-    });
-    setTimeout(function(){if(pop.parentNode)pop.parentNode.removeChild(pop);},500);
+    var start=null;
+    (function anim(ts){
+      if(!start)start=ts;
+      var prog=(ts-start)/550;
+      if(prog>=1){if(pop.parentNode)pop.parentNode.removeChild(pop);return;}
+      pop.style.transform='translateY('+(prog*-36)+'px)';
+      pop.style.opacity=String(1-prog*prog);
+      requestAnimationFrame(anim);
+    })(performance.now());
   }
 
   function flashArena(col){
     var arena=document.getElementById('gArena');
     var f=document.createElement('div');
-    f.style.cssText='position:absolute;inset:0;background:'+col+';opacity:.18;pointer-events:none;z-index:30;border-radius:12px;';
+    f.style.cssText='position:absolute;inset:0;background:'+col+';opacity:.22;pointer-events:none;z-index:30;border-radius:12px;transition:opacity .18s;';
     arena.appendChild(f);
-    setTimeout(function(){if(f.parentNode)f.parentNode.removeChild(f);},200);
+    requestAnimationFrame(function(){f.style.opacity='0';});
+    setTimeout(function(){if(f.parentNode)f.parentNode.removeChild(f);},280);
+  }
+
+  function shakeArena(){
+    var arena=document.getElementById('gArena');
+    arena.classList.remove('g-shake');
+    void arena.offsetWidth; /* force reflow */
+    arena.classList.add('g-shake');
+    setTimeout(function(){arena.classList.remove('g-shake');},360);
   }
 
   function updateHUD(){
-    document.getElementById('gScore').textContent='SCORE: '+score;
-    document.getElementById('gBest').textContent='BEST: '+Math.max(score,hs);
-    var pct=Math.max(0,hp);
-    document.getElementById('gHpBar').style.width=pct+'%';
-    document.getElementById('gHpBar').style.background=hp>50?'#34d399':hp>25?'#fbbf24':'#ef4444';
-    document.getElementById('gHpTxt').textContent='HP '+hp+'%';
-    // server border color
+    var sc=document.getElementById('gScore');
+    var bst=document.getElementById('gBest');
+    var bar=document.getElementById('gHpBar');
+    var txt=document.getElementById('gHpTxt');
     var srv=document.getElementById('gServer');
-    if(srv)srv.style.borderColor=hp>50?'#34d399':hp>25?'#fbbf24':'#ef4444';
-    // server led
-    var led=srv?srv.querySelector('div'):null;
-    if(led)led.style.background=hp>50?'#34d399':hp>25?'#fbbf24':'#ef4444';
+    var led=document.getElementById('gSrvLed');
+    var col=hp>50?'#34d399':hp>25?'#fbbf24':'#ef4444';
+    if(sc)sc.textContent='SCORE: '+score;
+    if(bst)bst.textContent='BEST: '+Math.max(score,hs);
+    if(bar){bar.style.width=Math.max(0,hp)+'%';bar.style.background=col;}
+    if(txt)txt.textContent='HP '+hp+'%';
+    if(srv)srv.style.borderColor=col;
+    if(led){led.style.background=col;led.style.boxShadow='0 0 6px '+col;}
   }
 
   function showWaveBanner(){
     var arena=document.getElementById('gArena');
     var b=document.createElement('div');
-    var bannerFs=('ontouchstart' in window)||navigator.maxTouchPoints>0?'1.8rem':'2.8rem';
     b.style.cssText='position:absolute;inset:0;display:flex;align-items:center;justify-content:center;'+
-      'font-family:\'Sora\',sans-serif;font-size:'+bannerFs+';font-weight:800;color:#3b82f6;'+
-      'pointer-events:none;z-index:25;transition:opacity .8s;';
+      'font-family:\'Sora\',sans-serif;font-size:'+(isMobile?'1.8rem':'2.8rem')+';font-weight:800;color:#3b82f6;'+
+      'pointer-events:none;z-index:25;opacity:1;transition:opacity .7s ease;'+
+      'text-shadow:0 0 30px rgba(59,130,246,.6);';
     b.textContent='WAVE '+wave;
     arena.appendChild(b);
-    setTimeout(function(){b.style.opacity='0';},1200);
-    setTimeout(function(){if(b.parentNode)b.parentNode.removeChild(b);},2000);
+    setTimeout(function(){b.style.opacity='0';},1100);
+    setTimeout(function(){if(b.parentNode)b.parentNode.removeChild(b);},1900);
   }
 
   function gameOver(){
     over=true;running=false;
     clearInterval(interval);clearInterval(waveInt);
     clearTimeout(spawnTimeout);
+    if(rafId){cancelAnimationFrame(rafId);rafId=null;}
+    /* clear remaining packets */
+    pkts.forEach(function(p){if(p.el&&p.el.parentNode)p.el.parentNode.removeChild(p.el);});
+    pkts=[];
     if(score>hs){hs=score;localStorage.setItem('fwHS',score);}
     document.getElementById('gOverScore').textContent='SCORE: '+score;
     document.getElementById('gOverHS').textContent=score>=hs&&score>0?'🏆 NEW HIGH SCORE!':'Best: '+hs;
     document.getElementById('gOver').style.display='flex';
+    playTone(110,.5,'sawtooth',.1);
   }
 })();
 </script>
@@ -3386,23 +3554,52 @@ if(!reducedMotion){
 let actx=null;
 function initAudio(){ if(actx) return; try{ actx=new(window.AudioContext||window.webkitAudioContext)(); }catch(e){} }
 document.addEventListener('pointerdown',()=>{ initAudio(); if(actx&&actx.state==='suspended') actx.resume(); },{once:true});
-function tick(f=900,d=.05){
+
+function uiTone(f,d,type='sine',vol=.014){
   if(!actx) return;
   try{
     if(actx.state==='suspended') actx.resume();
     const o=actx.createOscillator(), g=actx.createGain();
     o.connect(g); g.connect(actx.destination);
-    o.frequency.value=f; o.type='sine';
-    g.gain.setValueAtTime(.025,actx.currentTime);
-    g.gain.exponentialRampToValueAtTime(.0001,actx.currentTime+d);
+    o.frequency.value=f; o.type=type;
+    g.gain.setValueAtTime(vol, actx.currentTime);
+    g.gain.exponentialRampToValueAtTime(.0001, actx.currentTime+d);
     o.start(); o.stop(actx.currentTime+d);
   }catch(e){}
 }
-document.querySelectorAll('.nav-links a,.hn-card,.pc').forEach(el=>{
-  el.addEventListener('mouseenter',()=>tick(880,.04));
+
+/* Sounds only on elements that actually do something when clicked */
+/* Nav links — page navigation */
+document.querySelectorAll('.nav-links a, .nav-mobile-drawer a').forEach(el=>{
+  el.addEventListener('click', ()=>uiTone(880,.05,'sine',.013));
 });
+/* Primary action buttons */
 document.querySelectorAll('.btn-fill').forEach(el=>{
-  el.addEventListener('click',()=>tick(1200,.07));
+  el.addEventListener('click', ()=>{ uiTone(1080,.04,'sine',.016); setTimeout(()=>uiTone(1340,.06,'sine',.011),42); });
+});
+/* Ghost / secondary buttons */
+document.querySelectorAll('.btn-ghost').forEach(el=>{
+  el.addEventListener('click', ()=>uiTone(760,.05,'sine',.013));
+});
+/* Theme toggle */
+document.querySelectorAll('.theme-toggle').forEach(el=>{
+  el.addEventListener('click', ()=>{ uiTone(1100,.06,'sine',.013); setTimeout(()=>uiTone(820,.08,'sine',.009),60); });
+});
+/* Cert accordions — they open/close content */
+document.querySelectorAll('.oc, .cc').forEach(el=>{
+  el.addEventListener('click', ()=>uiTone(500,.05,'triangle',.013));
+});
+/* Modal tabs — switching content views */
+document.querySelectorAll('.modal-tab, .traffic-tab').forEach(el=>{
+  el.addEventListener('click', ()=>uiTone(700,.04,'sine',.011));
+});
+/* Modal close / back */
+document.querySelectorAll('.modal-close, .modal-back-btn, .lightbox-close, .cert-pdf-close').forEach(el=>{
+  el.addEventListener('click', ()=>{ uiTone(580,.04,'sine',.013); setTimeout(()=>uiTone(420,.05,'sine',.009),38); });
+});
+/* Copy-to-clipboard — satisfying double-chime on success */
+document.querySelectorAll('.cic').forEach(el=>{
+  el.addEventListener('click', ()=>setTimeout(()=>{ uiTone(880,.05,'sine',.016); setTimeout(()=>uiTone(1320,.07,'sine',.012),55); },50));
 });
 
 /* ══ 3D TILT ON CARDS ══ */
