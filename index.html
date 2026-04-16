@@ -6,13 +6,26 @@
 <meta name="theme-color" content="#090b0f" media="(prefers-color-scheme: dark)"/>
 <meta name="theme-color" content="#f0f4f8" media="(prefers-color-scheme: light)"/>
 <title>portfolio.aktham.net | Network & Cloud Security Engineer</title>
+<meta name="description" content="Portfolio of Aktham Al-Arabi — Network & Cloud Security Engineer specialising in OPNsense, Cisco, Azure, SIEM, and AI-assisted firewall management."/>
+<meta name="author" content="Aktham Al-Arabi"/>
+<meta property="og:title" content="Aktham Al-Arabi — Network & Cloud Security Engineer"/>
+<meta property="og:description" content="CCNA-certified engineer building secure, scalable infrastructure. Capstone: AI-driven OPNsense firewall management via LangGraph + FastAPI."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://portfolio.aktham.net"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Aktham Al-Arabi — Network & Cloud Security Engineer"/>
+<meta name="twitter:description" content="CCNA-certified engineer specialising in network security, cloud, and SIEM."/>
+<!-- Preconnect to reduce Google Fonts latency -->
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"/>
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png"/>
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
 <link rel="manifest" href="/site.webmanifest"/><meta name="theme-color" content="#090b0f"/>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Sora:wght@200;300;400;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Sora:wght@200;300;400;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'"/>
+<noscript><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Sora:wght@200;300;400;600;700;800&display=swap" rel="stylesheet"/></noscript>
 <!-- ╔══════════════════════════════════════════════════════════════════╗
      ║  CLOUDFLARE WEB ANALYTICS                                       ║
      ║  Replace XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX below with your       ║
@@ -28,7 +41,7 @@
   --border:#ffffff0d;--border2:#3b82f622;--border3:#3b82f638;
   --acc:#3b82f6;--acc2:#60a5fa;--acc3:#1d4ed8;
   --acc-dim:rgba(59,130,246,0.07);
-  --text:#eef1f8;--text2:#7d8a9e;--text3:#354050;
+  --text:#eef1f8;--text2:#7d8a9e;--text3:#4a5a70;
   --warn:#fbbf24;--ok:#34d399;
   --mono:'JetBrains Mono',monospace;--display:'Sora',sans-serif;
 }
@@ -37,7 +50,7 @@ body.light{
   --border:#00000012;--border2:#3b82f630;--border3:#3b82f650;
   --acc:#2563eb;--acc2:#3b82f6;--acc3:#1d4ed8;
   --acc-dim:rgba(59,130,246,0.08);
-  --text:#0f172a;--text2:#475569;--text3:#94a3b8;
+  --text:#0f172a;--text2:#475569;--text3:#6b7a8d;
 }
 body{transition:background .3s,color .3s;}
 /* GPU compositing for animated canvases */
@@ -66,6 +79,16 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     radial-gradient(1px 1px at 52% 72%,rgba(255,255,255,.12) 0,transparent 100%);}
 
 body.light::before{opacity:0;}
+/* Light mode — subtle warm dot texture instead of nothing */
+body.light::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.35;
+  background-image:
+    radial-gradient(1px 1px at 15% 20%,rgba(30,64,175,.18) 0,transparent 100%),
+    radial-gradient(1px 1px at 40% 70%,rgba(30,64,175,.12) 0,transparent 100%),
+    radial-gradient(1px 1px at 65% 35%,rgba(30,64,175,.14) 0,transparent 100%),
+    radial-gradient(1px 1px at 80% 80%,rgba(30,64,175,.10) 0,transparent 100%),
+    radial-gradient(1px 1px at 55% 10%,rgba(30,64,175,.09) 0,transparent 100%);
+}
 .hero-name-row{display:flex;align-items:flex-start;margin-bottom:.5rem;}
 .hero-photo{display:none;}/* photo removed */
 
@@ -216,17 +239,8 @@ body.light .hname-last{background:linear-gradient(125deg,#0f172a 0%,var(--acc2) 
   96%{transform:none;opacity:0;}}
 
 /* ── ANIMATED SECTION TITLES ── */
-/* Eyebrow pulse-in */
-.eyebrow{font-family:var(--mono);font-size:.67rem;font-weight:500;color:var(--acc);
-  letter-spacing:.18em;text-transform:uppercase;margin-bottom:.6rem;
-  display:flex;align-items:center;gap:.55rem;}
-.eyebrow::before{content:'';display:inline-block;width:3px;height:12px;
-  background:linear-gradient(to bottom,var(--acc),var(--acc3));
-  border-radius:2px;flex-shrink:0;opacity:.85;}
-/* Glitch sec-title */
-.sec-title{font-size:clamp(1.7rem,2.8vw,2.4rem);font-weight:800;color:var(--text);
-  letter-spacing:-.025em;line-height:1.1;margin-bottom:.9rem;position:relative;display:inline-block;}
-.sec-title span{color:var(--acc);}
+/* Glitch sec-title — extends the base .sec-title defined above */
+.sec-title{position:relative;display:inline-block;}
 /* glitch layers */
 .sec-title::before,.sec-title::after{
   content:attr(data-t);position:absolute;left:0;top:0;width:100%;
@@ -1018,9 +1032,25 @@ body.light #pf-vig{opacity:.08;}
 #pf-boot-skip:hover{color:var(--acc);border-color:var(--border2);}
 @keyframes pfBootIn{to{opacity:1;}}
 @media(max-width:768px){.pf-corner,#pf-scan{display:none;}}
+/* ── SKIP LINK ── */
+.skip-link{
+  position:absolute;top:-100px;left:1rem;z-index:9999;
+  font-family:var(--mono);font-size:.72rem;font-weight:600;color:#fff;
+  background:var(--acc);padding:.5rem 1.1rem;border-radius:6px;text-decoration:none;
+  transition:top .2s;letter-spacing:.04em;}
+.skip-link:focus{top:1rem;}
+/* ── REDUCED MOTION — cover avail glow & pulse ── */
+@media(prefers-reduced-motion:reduce){
+  .avail{animation:none;}
+  .avail-dot{animation:none;}
+  .pc-soon-dot{animation:none;}
+}
+
 </style>
 </head>
 <body>
+<!-- Skip to main content — keyboard / screen reader accessibility -->
+<a href="#pg-home" class="skip-link" tabindex="0">Skip to main content</a>
 
 <!-- ══ VISUAL LAYER ══ -->
 <div id="pf-boot" aria-hidden="true">
@@ -1045,7 +1075,7 @@ body.light #pf-vig{opacity:.08;}
     <div class="nav-logo-wordmark"><span class="nl-first">portfolio</span><span class="nl-dot">.</span><span class="nl-last">aktham</span><span class="nl-domain">.net</span>
     </div>
   </a>
-  <ul class="nav-links" role="list">
+  <ul class="nav-links" role="list" aria-label="Main navigation">
     <li><a href="#" class="active" data-page="home"       aria-current="page" onclick="goto('home',this);return false;">Home</a></li>
     <li><a href="#" data-page="about"      onclick="goto('about',this);return false;">About</a></li>
     <li><a href="#" data-page="experience" onclick="goto('experience',this);return false;">Experience</a></li>
@@ -1054,7 +1084,7 @@ body.light #pf-vig{opacity:.08;}
   </ul>
   <div style="display:flex;align-items:center;gap:.5rem;">
   <a href="https://aktham.net" title="Back to aktham.net" aria-label="Back to aktham.net" style="font-family:var(--mono);font-size:.68rem;font-weight:500;color:var(--text2);background:var(--card);border:1px solid var(--border2);padding:.3rem .75rem;border-radius:6px;text-decoration:none;display:inline-flex;align-items:center;gap:.35rem;transition:color .18s,border-color .18s;letter-spacing:.02em;flex-shrink:0;" onmouseover="this.style.color='var(--acc)';this.style.borderColor='var(--border3)'" onmouseout="this.style.color='var(--text2)';this.style.borderColor='var(--border2)'"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink:0;"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>aktham.net</a>
-  <button class="nav-hamburger" id="navHamburger" onclick="toggleMobileNav()" aria-label="Toggle menu">
+  <button class="nav-hamburger" id="navHamburger" onclick="toggleMobileNav()" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobileDrawer">
     <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
   </button>
   <button class="nav-psst" onclick="openGame()" title="Open Firewall Defender game" aria-label="Open Firewall Defender game">psst.</button>
@@ -1547,7 +1577,7 @@ body.light #pf-vig{opacity:.08;}
 
 
 
-<div id="app">
+<div id="app" role="main">
 
 <!-- ═══════════════════════════ HOME ═══════════════════════════ -->
 <div class="page active" id="pg-home" tabindex="-1">
@@ -1570,12 +1600,12 @@ body.light #pf-vig{opacity:.08;}
         </a>
       </div>
       <div class="hsocials reveal d5">
-        <a href="https://www.linkedin.com/in/aktham-alarabi/" target="_blank" title="LinkedIn">
+        <a href="https://www.linkedin.com/in/aktham-alarabi/" target="_blank" rel="noopener noreferrer" title="LinkedIn">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 10v7M12 13a3 3 0 016 0v4"/></svg></a>
         <a onclick="copyEmail(null);return false;" href="#" title="Email">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg></a>
         <div class="hdiv"></div>
-        <a href="https://www.youtube.com/@Jrx70611" target="_blank" title="YouTube">
+        <a href="https://www.youtube.com/@Jrx70611" target="_blank" rel="noopener noreferrer" title="YouTube">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg></a>
       </div>
       <div class="hstats reveal d6">
@@ -1631,24 +1661,24 @@ body.light #pf-vig{opacity:.08;}
       <div class="footer-col-title">Credentials</div>
       <ul class="footer-links">
         <li><a href="#" onclick="goto('experience',null);return false;">Certifications</a></li>
-        <li><a href="https://ieeexplore.ieee.org/document/10876936/" target="_blank">IEEE Publication</a></li>
-        <li><a href="https://www.credly.com/badges/f7942c42-d4d7-4867-b42a-ca9032456cc4" target="_blank">CCNA Badge</a></li>
-        <li><a href="cv/aktham_alarabi_cv.pdf" target="_blank">Download CV</a></li>
+        <li><a href="https://ieeexplore.ieee.org/document/10876936/" target="_blank" rel="noopener noreferrer">IEEE Publication</a></li>
+        <li><a href="https://www.credly.com/badges/f7942c42-d4d7-4867-b42a-ca9032456cc4" target="_blank" rel="noopener noreferrer">CCNA Badge</a></li>
+        <li><a href="cv/aktham_alarabi_cv.pdf" target="_blank" rel="noopener noreferrer">Download CV</a></li>
       </ul>
     </div>
     <div>
       <div class="footer-col-title">Connect</div>
       <div class="footer-socials">
-        <a class="footer-soc" href="https://www.linkedin.com/in/aktham-alarabi/" target="_blank" title="LinkedIn">
+        <a class="footer-soc" href="https://www.linkedin.com/in/aktham-alarabi/" target="_blank" rel="noopener noreferrer" title="LinkedIn">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 10v7M12 13a3 3 0 016 0v4"/></svg>
         </a>
         <a class="footer-soc" onclick="copyEmail(null)" style="cursor:pointer;" title="Copy Email">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
         </a>
-        <a class="footer-soc" href="https://www.youtube.com/@Jrx70611" target="_blank" title="YouTube">
+        <a class="footer-soc" href="https://www.youtube.com/@Jrx70611" target="_blank" rel="noopener noreferrer" title="YouTube">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg>
         </a>
-        <a class="footer-soc" href="https://www.instagram.com/vfbb/" target="_blank" title="Instagram">
+        <a class="footer-soc" href="https://www.instagram.com/vfbb/" target="_blank" rel="noopener noreferrer" title="Instagram">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor"/></svg>
         </a>
       </div>
@@ -1731,24 +1761,24 @@ body.light #pf-vig{opacity:.08;}
       <div class="footer-col-title">Credentials</div>
       <ul class="footer-links">
         <li><a href="#" onclick="goto('experience',null);return false;">Certifications</a></li>
-        <li><a href="https://ieeexplore.ieee.org/document/10876936/" target="_blank">IEEE Publication</a></li>
-        <li><a href="https://www.credly.com/badges/f7942c42-d4d7-4867-b42a-ca9032456cc4" target="_blank">CCNA Badge</a></li>
-        <li><a href="cv/aktham_alarabi_cv.pdf" target="_blank">Download CV</a></li>
+        <li><a href="https://ieeexplore.ieee.org/document/10876936/" target="_blank" rel="noopener noreferrer">IEEE Publication</a></li>
+        <li><a href="https://www.credly.com/badges/f7942c42-d4d7-4867-b42a-ca9032456cc4" target="_blank" rel="noopener noreferrer">CCNA Badge</a></li>
+        <li><a href="cv/aktham_alarabi_cv.pdf" target="_blank" rel="noopener noreferrer">Download CV</a></li>
       </ul>
     </div>
     <div>
       <div class="footer-col-title">Connect</div>
       <div class="footer-socials">
-        <a class="footer-soc" href="https://www.linkedin.com/in/aktham-alarabi/" target="_blank" title="LinkedIn">
+        <a class="footer-soc" href="https://www.linkedin.com/in/aktham-alarabi/" target="_blank" rel="noopener noreferrer" title="LinkedIn">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 10v7M12 13a3 3 0 016 0v4"/></svg>
         </a>
         <a class="footer-soc" onclick="copyEmail(null)" style="cursor:pointer;" title="Copy Email">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
         </a>
-        <a class="footer-soc" href="https://www.youtube.com/@Jrx70611" target="_blank" title="YouTube">
+        <a class="footer-soc" href="https://www.youtube.com/@Jrx70611" target="_blank" rel="noopener noreferrer" title="YouTube">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg>
         </a>
-        <a class="footer-soc" href="https://www.instagram.com/vfbb/" target="_blank" title="Instagram">
+        <a class="footer-soc" href="https://www.instagram.com/vfbb/" target="_blank" rel="noopener noreferrer" title="Instagram">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor"/></svg>
         </a>
       </div>
@@ -1903,7 +1933,7 @@ body.light #pf-vig{opacity:.08;}
         <span class="pub-badge published">IEEE · Published</span>
         <div class="pub-title">Sustainability in Three Dimensions: Mapping the Metaverse's Blueprint on Sustainable Development Goals (SDGs) through a Bibliometric Journey</div>
         <div class="pub-meta">S. Alabidi, K. Alarabi, O. A. Khurma, A. Alarabi, R. Taani · 25th ACIT, Amman, Dec. 2024 · DOI: 10.1109/ACIT62805.2024.10876936</div>
-        <a class="pub-link" href="https://ieeexplore.ieee.org/document/10876936/" target="_blank">View on IEEE Xplore <svg viewBox="0 0 10 10"><path d="M1 1h8v8M9 1L1 9" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="pub-link" href="https://ieeexplore.ieee.org/document/10876936/" target="_blank" rel="noopener noreferrer">View on IEEE Xplore <svg viewBox="0 0 10 10"><path d="M1 1h8v8M9 1L1 9" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </div>
       <div class="pub pub-prep">
         <span class="pub-badge prep">Under Preparation</span>
@@ -1933,24 +1963,24 @@ body.light #pf-vig{opacity:.08;}
       <div class="footer-col-title">Credentials</div>
       <ul class="footer-links">
         <li><a href="#" onclick="goto('experience',null);return false;">Certifications</a></li>
-        <li><a href="https://ieeexplore.ieee.org/document/10876936/" target="_blank">IEEE Publication</a></li>
-        <li><a href="https://www.credly.com/badges/f7942c42-d4d7-4867-b42a-ca9032456cc4" target="_blank">CCNA Badge</a></li>
-        <li><a href="cv/aktham_alarabi_cv.pdf" target="_blank">Download CV</a></li>
+        <li><a href="https://ieeexplore.ieee.org/document/10876936/" target="_blank" rel="noopener noreferrer">IEEE Publication</a></li>
+        <li><a href="https://www.credly.com/badges/f7942c42-d4d7-4867-b42a-ca9032456cc4" target="_blank" rel="noopener noreferrer">CCNA Badge</a></li>
+        <li><a href="cv/aktham_alarabi_cv.pdf" target="_blank" rel="noopener noreferrer">Download CV</a></li>
       </ul>
     </div>
     <div>
       <div class="footer-col-title">Connect</div>
       <div class="footer-socials">
-        <a class="footer-soc" href="https://www.linkedin.com/in/aktham-alarabi/" target="_blank" title="LinkedIn">
+        <a class="footer-soc" href="https://www.linkedin.com/in/aktham-alarabi/" target="_blank" rel="noopener noreferrer" title="LinkedIn">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 10v7M12 13a3 3 0 016 0v4"/></svg>
         </a>
         <a class="footer-soc" onclick="copyEmail(null)" style="cursor:pointer;" title="Copy Email">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
         </a>
-        <a class="footer-soc" href="https://www.youtube.com/@Jrx70611" target="_blank" title="YouTube">
+        <a class="footer-soc" href="https://www.youtube.com/@Jrx70611" target="_blank" rel="noopener noreferrer" title="YouTube">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg>
         </a>
-        <a class="footer-soc" href="https://www.instagram.com/vfbb/" target="_blank" title="Instagram">
+        <a class="footer-soc" href="https://www.instagram.com/vfbb/" target="_blank" rel="noopener noreferrer" title="Instagram">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor"/></svg>
         </a>
       </div>
@@ -2000,24 +2030,24 @@ body.light #pf-vig{opacity:.08;}
       <div class="footer-col-title">Credentials</div>
       <ul class="footer-links">
         <li><a href="#" onclick="goto('experience',null);return false;">Certifications</a></li>
-        <li><a href="https://ieeexplore.ieee.org/document/10876936/" target="_blank">IEEE Publication</a></li>
-        <li><a href="https://www.credly.com/badges/f7942c42-d4d7-4867-b42a-ca9032456cc4" target="_blank">CCNA Badge</a></li>
-        <li><a href="cv/aktham_alarabi_cv.pdf" target="_blank">Download CV</a></li>
+        <li><a href="https://ieeexplore.ieee.org/document/10876936/" target="_blank" rel="noopener noreferrer">IEEE Publication</a></li>
+        <li><a href="https://www.credly.com/badges/f7942c42-d4d7-4867-b42a-ca9032456cc4" target="_blank" rel="noopener noreferrer">CCNA Badge</a></li>
+        <li><a href="cv/aktham_alarabi_cv.pdf" target="_blank" rel="noopener noreferrer">Download CV</a></li>
       </ul>
     </div>
     <div>
       <div class="footer-col-title">Connect</div>
       <div class="footer-socials">
-        <a class="footer-soc" href="https://www.linkedin.com/in/aktham-alarabi/" target="_blank" title="LinkedIn">
+        <a class="footer-soc" href="https://www.linkedin.com/in/aktham-alarabi/" target="_blank" rel="noopener noreferrer" title="LinkedIn">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 10v7M12 13a3 3 0 016 0v4"/></svg>
         </a>
         <a class="footer-soc" onclick="copyEmail(null)" style="cursor:pointer;" title="Copy Email">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
         </a>
-        <a class="footer-soc" href="https://www.youtube.com/@Jrx70611" target="_blank" title="YouTube">
+        <a class="footer-soc" href="https://www.youtube.com/@Jrx70611" target="_blank" rel="noopener noreferrer" title="YouTube">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg>
         </a>
-        <a class="footer-soc" href="https://www.instagram.com/vfbb/" target="_blank" title="Instagram">
+        <a class="footer-soc" href="https://www.instagram.com/vfbb/" target="_blank" rel="noopener noreferrer" title="Instagram">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor"/></svg>
         </a>
       </div>
@@ -2055,7 +2085,7 @@ body.light #pf-vig{opacity:.08;}
         </div>
 
         <!-- LinkedIn -->
-        <a class="cic" href="https://www.linkedin.com/in/aktham-alarabi/" target="_blank">
+        <a class="cic" href="https://www.linkedin.com/in/aktham-alarabi/" target="_blank" rel="noopener noreferrer">
           <div class="cic-ico" style="background:rgba(10,102,194,.12);border:1px solid rgba(10,102,194,.25);">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0a66c2" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 10v7M12 13a3 3 0 016 0v4"/></svg>
           </div>
@@ -2080,11 +2110,11 @@ body.light #pf-vig{opacity:.08;}
       <!-- Social links row -->
       <div style="font-family:var(--mono);font-size:.58rem;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.65rem;">Also find me on</div>
       <div class="contact-socials-row">
-        <a class="cs-btn" href="https://www.youtube.com/@Jrx70611" target="_blank">
+        <a class="cs-btn" href="https://www.youtube.com/@Jrx70611" target="_blank" rel="noopener noreferrer">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ff4444" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#ff4444" stroke="none"/></svg>
           YouTube
         </a>
-        <a class="cs-btn" href="https://www.instagram.com/vfbb/" target="_blank">
+        <a class="cs-btn" href="https://www.instagram.com/vfbb/" target="_blank" rel="noopener noreferrer">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#e1306c" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><circle cx="17.5" cy="6.5" r=".5" fill="#e1306c"/></svg>
           Instagram
         </a>
@@ -2219,7 +2249,7 @@ body.light #pf-vig{opacity:.08;}
                 <div class="team-name">Aktham Al-Arabi</div>
                 <div class="team-role-tag">Network & Firewall Architect</div>
                 <div class="team-desc">Designed the full GNS3 multi-router OSPF topology and owned all OPNsense NGFW configuration — interface zones, NAT policies, IDS/IPS tuning, and the complete REST API surface mapping across 40+ endpoints validated via Postman.</div>
-                <a class="team-linkedin" href="https://www.linkedin.com/in/aktham-alarabi/" target="_blank">
+                <a class="team-linkedin" href="https://www.linkedin.com/in/aktham-alarabi/" target="_blank" rel="noopener noreferrer">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 10v7M12 13a3 3 0 016 0v4"/></svg>
                   LinkedIn
                 </a>
@@ -2229,7 +2259,7 @@ body.light #pf-vig{opacity:.08;}
                 <div class="team-name">Zaid Aldarras</div>
                 <div class="team-role-tag">AI Orchestration Lead</div>
                 <div class="team-desc">Architected the LangGraph stateful agent graph — designing the Agent → Router → Tool → Logging node cycle, implementing LLM tool-binding with the <code>@tool</code> decorator pattern, and integrating PostgreSQL checkpointing for persistent cross-session conversation state.</div>
-                <a class="team-linkedin" href="https://www.linkedin.com/in/zaid-aldarras-76b717341/" target="_blank">
+                <a class="team-linkedin" href="https://www.linkedin.com/in/zaid-aldarras-76b717341/" target="_blank" rel="noopener noreferrer">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 10v7M12 13a3 3 0 016 0v4"/></svg>
                   LinkedIn
                 </a>
@@ -2239,7 +2269,7 @@ body.light #pf-vig{opacity:.08;}
                 <div class="team-name">Almothana Altaweel</div>
                 <div class="team-role-tag">Backend API & Integration Engineer</div>
                 <div class="team-desc">Built the FastAPI service layer — async endpoints, the OPNsense abstraction client (httpx-based), Python scripting for all 40+ tool functions, and the middleware pipeline connecting the LangGraph agent output to live firewall commands.</div>
-                <a class="team-linkedin" href="https://www.linkedin.com/in/almothana-altaweel-1b283316b/" target="_blank">
+                <a class="team-linkedin" href="https://www.linkedin.com/in/almothana-altaweel-1b283316b/" target="_blank" rel="noopener noreferrer">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 10v7M12 13a3 3 0 016 0v4"/></svg>
                   LinkedIn
                 </a>
@@ -2249,7 +2279,7 @@ body.light #pf-vig{opacity:.08;}
                 <div class="team-name">Bashar Al-Abdallat</div>
                 <div class="team-role-tag">Frontend Architect & Dashboard Lead</div>
                 <div class="team-desc">Engineered the ReactJS + TypeScript SPA from the ground up — dual-panel chat interface with SSE streaming, the real-time CPU/memory/traffic monitoring dashboard, GNS3 topology iframe embed, and the dynamic LLM model switcher component.</div>
-                <a class="team-linkedin" href="https://www.linkedin.com/in/bashar-al-abdallat-a8157b256/" target="_blank">
+                <a class="team-linkedin" href="https://www.linkedin.com/in/bashar-al-abdallat-a8157b256/" target="_blank" rel="noopener noreferrer">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 10v7M12 13a3 3 0 016 0v4"/></svg>
                   LinkedIn
                 </a>
@@ -2259,7 +2289,7 @@ body.light #pf-vig{opacity:.08;}
                 <div class="team-name">Osamah Alananzeh</div>
                 <div class="team-role-tag">UI/UX Engineer & Documentation Portal</div>
                 <div class="team-desc">Owned the authentication flow UI, collapsible sidebar navigation, and the role-based access control front-end enforcement. Also built the reports and documentation portal, ensuring SOC Analyst and Administrator views render the correct restricted controls.</div>
-                <a class="team-linkedin" href="https://www.linkedin.com/in/osamah-alananzeh/" target="_blank">
+                <a class="team-linkedin" href="https://www.linkedin.com/in/osamah-alananzeh/" target="_blank" rel="noopener noreferrer">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 10v7M12 13a3 3 0 016 0v4"/></svg>
                   LinkedIn
                 </a>
@@ -2568,7 +2598,7 @@ body.light #pf-vig{opacity:.08;}
           <div class="gallery-grid">
               <div class="gallery-item" onclick="openLightbox(0)">
                 <div class="gallery-item-img">
-                  <img src="projects/conversational-firewall/ss-chatbot-home.png" alt="Warden Chatbot Home"
+                  <img src="projects/conversational-firewall/ss-chatbot-home.png" alt="Warden Chatbot Home" loading="lazy"
                     onerror="this.parentElement.style.background='#131720';this.style.display='none'"/>
                 </div>
                 <div class="gallery-item-cap">
@@ -2577,7 +2607,7 @@ body.light #pf-vig{opacity:.08;}
               </div>
               <div class="gallery-item" onclick="openLightbox(1)">
                 <div class="gallery-item-img">
-                  <img src="projects/conversational-firewall/ss-chat-session.png" alt="Live Chat Session"
+                  <img src="projects/conversational-firewall/ss-chat-session.png" alt="Live Chat Session" loading="lazy"
                     onerror="this.parentElement.style.background='#131720';this.style.display='none'"/>
                 </div>
                 <div class="gallery-item-cap">
@@ -2586,7 +2616,7 @@ body.light #pf-vig{opacity:.08;}
               </div>
               <div class="gallery-item" onclick="openLightbox(2)">
                 <div class="gallery-item-img">
-                  <img src="projects/conversational-firewall/arch-overview.png" alt="High-Level Architecture"
+                  <img src="projects/conversational-firewall/arch-overview.png" alt="High-Level Architecture" loading="lazy"
                     onerror="this.parentElement.style.background='#131720';this.style.display='none'"/>
                 </div>
                 <div class="gallery-item-cap">
@@ -2595,7 +2625,7 @@ body.light #pf-vig{opacity:.08;}
               </div>
               <div class="gallery-item" onclick="openLightbox(3)">
                 <div class="gallery-item-img">
-                  <img src="projects/conversational-firewall/arch-detailed.png" alt="Detailed Data Flow"
+                  <img src="projects/conversational-firewall/arch-detailed.png" alt="Detailed Data Flow" loading="lazy"
                     onerror="this.parentElement.style.background='#131720';this.style.display='none'"/>
                 </div>
                 <div class="gallery-item-cap">
@@ -2604,7 +2634,7 @@ body.light #pf-vig{opacity:.08;}
               </div>
               <div class="gallery-item" onclick="openLightbox(4)">
                 <div class="gallery-item-img">
-                  <img src="projects/conversational-firewall/flow-agent.png" alt="LangGraph Agent Flow"
+                  <img src="projects/conversational-firewall/flow-agent.png" alt="LangGraph Agent Flow" loading="lazy"
                     onerror="this.parentElement.style.background='#131720';this.style.display='none'"/>
                 </div>
                 <div class="gallery-item-cap">
@@ -2613,7 +2643,7 @@ body.light #pf-vig{opacity:.08;}
               </div>
               <div class="gallery-item" onclick="openLightbox(5)">
                 <div class="gallery-item-img">
-                  <img src="projects/conversational-firewall/flow-llm.png" alt="LLM Model Selection"
+                  <img src="projects/conversational-firewall/flow-llm.png" alt="LLM Model Selection" loading="lazy"
                     onerror="this.parentElement.style.background='#131720';this.style.display='none'"/>
                 </div>
                 <div class="gallery-item-cap">
@@ -2622,7 +2652,7 @@ body.light #pf-vig{opacity:.08;}
               </div>
               <div class="gallery-item" onclick="openLightbox(6)">
                 <div class="gallery-item-img">
-                  <img src="projects/conversational-firewall/ss-opnsense-routes.png" alt="OPNsense Static Routes"
+                  <img src="projects/conversational-firewall/ss-opnsense-routes.png" alt="OPNsense Static Routes" loading="lazy"
                     onerror="this.parentElement.style.background='#131720';this.style.display='none'"/>
                 </div>
                 <div class="gallery-item-cap">
@@ -2631,7 +2661,7 @@ body.light #pf-vig{opacity:.08;}
               </div>
               <div class="gallery-item" onclick="openLightbox(7)">
                 <div class="gallery-item-img">
-                  <img src="projects/conversational-firewall/ss-vscode-backend.png" alt="FastAPI Backend"
+                  <img src="projects/conversational-firewall/ss-vscode-backend.png" alt="FastAPI Backend" loading="lazy"
                     onerror="this.parentElement.style.background='#131720';this.style.display='none'"/>
                 </div>
                 <div class="gallery-item-cap">
@@ -2640,7 +2670,7 @@ body.light #pf-vig{opacity:.08;}
               </div>
               <div class="gallery-item" onclick="openLightbox(8)">
                 <div class="gallery-item-img">
-                  <img src="projects/conversational-firewall/topology.png" alt="GNS3 Network Topology"
+                  <img src="projects/conversational-firewall/topology.png" alt="GNS3 Network Topology" loading="lazy"
                     onerror="this.parentElement.style.background='#131720';this.style.display='none'"/>
                 </div>
                 <div class="gallery-item-cap">
@@ -2669,7 +2699,7 @@ body.light #pf-vig{opacity:.08;}
               <div class="team-name">Aktham Al-Arabi</div>
               <div class="team-role-tag">Network & Firewall</div>
               <div class="team-desc">GNS3 topology design, OPNsense NGFW configuration, OSPF dynamic routing, network simulation environments, Cloudflare DDNS automation, and all 40+ firewall API endpoint mapping &amp; Postman testing.</div>
-              <a class="team-linkedin" href="https://www.linkedin.com/in/aktham-alarabi/" target="_blank">
+              <a class="team-linkedin" href="https://www.linkedin.com/in/aktham-alarabi/" target="_blank" rel="noopener noreferrer">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 10v7M12 13a3 3 0 016 0v4"/></svg>
                 LinkedIn
               </a>
@@ -2679,7 +2709,7 @@ body.light #pf-vig{opacity:.08;}
               <div class="team-name">Zaid Aldarras</div>
               <div class="team-role-tag">Backend & AI</div>
               <div class="team-desc">Backend architecture, LangGraph agent orchestration, LLM tool-binding and model routing, FastAPI async service design, chatbot integration, and PostgreSQL checkpointing.</div>
-              <a class="team-linkedin" href="https://www.linkedin.com/in/zaid-aldarras-76b717341/" target="_blank">
+              <a class="team-linkedin" href="https://www.linkedin.com/in/zaid-aldarras-76b717341/" target="_blank" rel="noopener noreferrer">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 10v7M12 13a3 3 0 016 0v4"/></svg>
                 LinkedIn
               </a>
@@ -2689,7 +2719,7 @@ body.light #pf-vig{opacity:.08;}
               <div class="team-name">Almothana Altaweel</div>
               <div class="team-role-tag">Backend & AI</div>
               <div class="team-desc">Backend architecture, LangGraph orchestration, Python API scripts, LLM integration, backend-to-OPNsense communication layer, and database schema design.</div>
-              <a class="team-linkedin" href="https://www.linkedin.com/in/almothana-altaweel-1b283316b/" target="_blank">
+              <a class="team-linkedin" href="https://www.linkedin.com/in/almothana-altaweel-1b283316b/" target="_blank" rel="noopener noreferrer">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 10v7M12 13a3 3 0 016 0v4"/></svg>
                 LinkedIn
               </a>
@@ -2699,7 +2729,7 @@ body.light #pf-vig{opacity:.08;}
               <div class="team-name">Bashar Al-Abdallat</div>
               <div class="team-role-tag">Frontend</div>
               <div class="team-desc">ReactJS + TypeScript SPA development, dual-panel chat interface, real-time SSE monitoring dashboard, Tailwind CSS styling, and GNS3 topology iframe embed.</div>
-              <a class="team-linkedin" href="https://www.linkedin.com/in/bashar-al-abdallat-a8157b256/" target="_blank">
+              <a class="team-linkedin" href="https://www.linkedin.com/in/bashar-al-abdallat-a8157b256/" target="_blank" rel="noopener noreferrer">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 10v7M12 13a3 3 0 016 0v4"/></svg>
                 LinkedIn
               </a>
@@ -2709,7 +2739,7 @@ body.light #pf-vig{opacity:.08;}
               <div class="team-name">Osamah Alananzeh</div>
               <div class="team-role-tag">Frontend</div>
               <div class="team-desc">ReactJS frontend implementation, UI/UX component design, authentication interface, main menu navigation hub, and reports &amp; documentation portal.</div>
-              <a class="team-linkedin" href="https://www.linkedin.com/in/osamah-alananzeh/" target="_blank">
+              <a class="team-linkedin" href="https://www.linkedin.com/in/osamah-alananzeh/" target="_blank" rel="noopener noreferrer">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.5M12 10v7M12 13a3 3 0 016 0v4"/></svg>
                 LinkedIn
               </a>
@@ -2722,7 +2752,7 @@ body.light #pf-vig{opacity:.08;}
     </div><!-- end modal-body -->
   </div><!-- end proj-modal -->
 </div><!-- end overlay -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── CONSTANTS ──────────────────────────────────────────────
 const NAV_HEIGHT_DEFAULT = 66;  // px — matches #app top offset
 const NAV_HEIGHT_SHRUNK  = 54;  // px — compact on scroll
@@ -2730,10 +2760,15 @@ const SCROLL_SHRINK_AT   = 40;  // px scrollTop before nav shrinks
 // ─────────────────────────────────────────────────────────────
 
 function toggleMobileNav(){
-  document.getElementById('mobileDrawer').classList.toggle('open');
+  const drawer=document.getElementById('mobileDrawer');
+  const btn=document.getElementById('navHamburger');
+  const isOpen=drawer.classList.toggle('open');
+  if(btn) btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
 }
 function closeMobileNav(){
   document.getElementById('mobileDrawer').classList.remove('open');
+  const btn=document.getElementById('navHamburger');
+  if(btn) btn.setAttribute('aria-expanded','false');
 }
 document.addEventListener('click',function(e){
   const drawer=document.getElementById('mobileDrawer');
@@ -3390,6 +3425,15 @@ function animStats(){
   io.observe(statsRow);
 })();
 
+// Mark glitch pseudo-element hosts so screen readers only read the real text
+document.querySelectorAll('[data-t]').forEach(el=>{
+  // The ::before/::after layers duplicate text — suppress via aria-label on the element
+  // so the real text node is used, not the attr(data-t) CSS content
+  if(!el.getAttribute('aria-label')){
+    el.setAttribute('aria-label', el.textContent.trim());
+  }
+});
+
 function copyEmail(el){
   // Read the email from the DOM rather than duplicating it here as a string
   const cicVal=document.querySelector('.cic-val');
@@ -3529,8 +3573,10 @@ if(!reducedMotion){
         i===0?ctx.moveTo(x+s*Math.cos(a),y+s*Math.sin(a)):ctx.lineTo(x+s*Math.cos(a),y+s*Math.sin(a));}
       ctx.closePath();
     }
+    let hexRafId=null, hexPaused=false;
     function resize(){ W=c.width=innerWidth; H=c.height=innerHeight; build(); }
     function draw(){
+      if(hexPaused){ hexRafId=null; return; }
       ctx.clearRect(0,0,W,H); frame++;
       const t=frame*.006;
       hexes.forEach(h=>{
@@ -3542,9 +3588,14 @@ if(!reducedMotion){
         ctx.strokeStyle=`rgba(59,130,246,${a})`; ctx.lineWidth=.6; ctx.stroke();
         if(h.bright>.1){ hexPath(h.x,h.y,SIZE-2); ctx.fillStyle=`rgba(59,130,246,${h.bright*.04})`; ctx.fill(); }
       });
-      requestAnimationFrame(draw);
+      hexRafId=requestAnimationFrame(draw);
     }
-    resize(); window.addEventListener('resize',resize,{passive:true}); draw();
+    resize(); window.addEventListener('resize',resize,{passive:true});
+    document.addEventListener('visibilitychange',()=>{
+      if(document.hidden){ hexPaused=true; if(hexRafId){cancelAnimationFrame(hexRafId);hexRafId=null;} }
+      else { hexPaused=false; draw(); }
+    });
+    draw();
   } catch(e){ console.warn('hex grid:',e); }
 }
 
@@ -3554,7 +3605,13 @@ if(!reducedMotion){
     const c=document.getElementById('pf-bg');
     const ctx=c&&c.getContext('2d'); if(!ctx) throw new Error('no ctx');
     let W,H,nodes=[],frame=0;
-    const CELL=130;
+    /* Named constants — no more magic numbers */
+    const CELL=130, MOUSE_ATTRACT_R=180, MOUSE_ATTRACT_R2=MOUSE_ATTRACT_R*MOUSE_ATTRACT_R;
+    const EDGE_DIST=120, MAX_SPEED=1.5, MOUSE_FORCE=0.009;
+    /* Reuse checked Set across frames — clear() is much cheaper than new Set() */
+    const checked=new Set();
+    let pgRafId=null, pgPaused=false;
+
     function init(){
       const isMobile = innerWidth < 769;
       const n=Math.min(Math.floor(W*H/(isMobile ? 28000 : 14000)), isMobile ? 30 : 65);
@@ -3564,13 +3621,19 @@ if(!reducedMotion){
         r:Math.random()*1.2+.35, op:Math.random()*.35+.12, phase:Math.random()*Math.PI*2
       }));
     }
+    /* Spatial grid rebuilt only when needed — throttled to every 3 frames */
+    let cachedGrid=new Map(), gridFrame=-1;
     function buildGrid(){
-      const g=new Map();
+      if(frame===gridFrame) return cachedGrid;
+      gridFrame=frame;
+      cachedGrid=new Map();
       nodes.forEach((n,i)=>{const k=`${Math.floor(n.x/CELL)},${Math.floor(n.y/CELL)}`;
-        if(!g.has(k)) g.set(k,[]); g.get(k).push(i);}); return g;
+        if(!cachedGrid.has(k)) cachedGrid.set(k,[]); cachedGrid.get(k).push(i);});
+      return cachedGrid;
     }
     function resize(){ W=c.width=innerWidth; H=c.height=innerHeight; init(); }
     function draw(){
+      if(pgPaused){ pgRafId=null; return; }
       ctx.clearRect(0,0,W,H); frame++;
       const t=frame*.008;
       const bg=ctx.createRadialGradient(W/2,H/2,0,W/2,H/2,Math.max(W,H)*.6);
@@ -3585,12 +3648,13 @@ if(!reducedMotion){
         n.x+=n.vx; n.y+=n.vy;
         if(n.x<0||n.x>W) n.vx*=-1; if(n.y<0||n.y>H) n.vy*=-1;
         const dx=M.x-n.x, dy=M.y-n.y, d2=dx*dx+dy*dy;
-        if(d2<180*180){const f=(1-Math.sqrt(d2)/180)*.009; n.vx+=dx*f; n.vy+=dy*f;
-          const s=Math.sqrt(n.vx*n.vx+n.vy*n.vy); if(s>1.5){n.vx=n.vx/s*1.5;n.vy=n.vy/s*1.5;}}
+        if(d2<MOUSE_ATTRACT_R2){const f=(1-Math.sqrt(d2)/MOUSE_ATTRACT_R)*MOUSE_FORCE; n.vx+=dx*f; n.vy+=dy*f;
+          const s=Math.sqrt(n.vx*n.vx+n.vy*n.vy); if(s>MAX_SPEED){n.vx=n.vx/s*MAX_SPEED;n.vy=n.vy/s*MAX_SPEED;}}
         ctx.beginPath(); ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
         ctx.fillStyle=`rgba(96,165,250,${n.op+Math.sin(t+n.phase)*.06})`; ctx.fill();
       });
-      const grid=buildGrid(), checked=new Set();
+      const grid=buildGrid();
+      checked.clear();
       nodes.forEach((n,i)=>{
         const cx=Math.floor(n.x/CELL), cy=Math.floor(n.y/CELL);
         for(let ox=-1;ox<=1;ox++) for(let oy=-1;oy<=1;oy++){
@@ -3600,14 +3664,19 @@ if(!reducedMotion){
             const k=i<j?`${i}-${j}`:`${j}-${i}`;
             if(checked.has(k)) return; checked.add(k);
             const m=nodes[j],ex=n.x-m.x,ey=n.y-m.y,ed=Math.sqrt(ex*ex+ey*ey);
-            if(ed<120){ctx.beginPath();ctx.moveTo(n.x,n.y);ctx.lineTo(m.x,m.y);
-              ctx.strokeStyle=`rgba(59,130,246,${(1-ed/120)*.11})`;ctx.lineWidth=.4;ctx.stroke();}
+            if(ed<EDGE_DIST){ctx.beginPath();ctx.moveTo(n.x,n.y);ctx.lineTo(m.x,m.y);
+              ctx.strokeStyle=`rgba(59,130,246,${(1-ed/EDGE_DIST)*.11})`;ctx.lineWidth=.4;ctx.stroke();}
           });
         }
       });
-      requestAnimationFrame(draw);
+      pgRafId=requestAnimationFrame(draw);
     }
-    resize(); window.addEventListener('resize',resize,{passive:true}); draw();
+    resize(); window.addEventListener('resize',resize,{passive:true});
+    document.addEventListener('visibilitychange',()=>{
+      if(document.hidden){ pgPaused=true; if(pgRafId){cancelAnimationFrame(pgRafId);pgRafId=null;} }
+      else { pgPaused=false; draw(); }
+    });
+    draw();
   } catch(e){ console.warn('particle graph:',e); }
 }
 
